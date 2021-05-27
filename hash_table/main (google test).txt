@@ -1,0 +1,41 @@
+#include <iostream>
+#include "HashTable.h"
+
+int main() {
+    HashTable *hash_table = new HashTable(20);
+
+    hash_table->insert(0, 20);
+    hash_table->insert(0, 20);
+
+    hash_table->insert(2, 70);
+    hash_table->insert(42, 80);
+    hash_table->insert(4, 25);
+    hash_table->insert(12, 44);
+    hash_table->insert(14, 32);
+    hash_table->insert(17, 11);
+    hash_table->insert(13, 78);
+    hash_table->insert(37, 97);
+
+    hash_table->display();
+
+
+    DataItem *item = hash_table->search(37);
+
+    if (item != nullptr && item->getKey() != -1) {
+        printf("Element found: %d\n", item->getData());
+    } else {
+        printf("Element not found\n");
+    }
+
+    hash_table->deleteItem(item);
+    item = hash_table->search(37);
+
+    if (item != nullptr && item->getKey() != -1) {
+        printf("Element found: %d\n", item->getData());
+    } else {
+        printf("Element not found\n");
+    }
+    hash_table->display();
+    return 0;
+
+}

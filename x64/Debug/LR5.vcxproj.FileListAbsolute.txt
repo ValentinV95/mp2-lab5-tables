@@ -1,0 +1,2 @@
+C:\Users\GLEBKOSH\Desktop\Github\LR5\x64\Debug\LR5.exe
+H:\C++\LR5\x64\Debug\LR5.exe

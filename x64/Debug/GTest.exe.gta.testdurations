@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<GtaTestDurations xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+  <Executable>H:\C++\LR5\x64\Debug\GTest.exe</Executable>
+  <TestDurations>
+    <TestDuration Test="TestTables.TesrOrdered" Duration="1" />
+    <TestDuration Test="TestTables.TesrHashTab" Duration="1" />
+    <TestDuration Test="TestTables.TesrUnordered" Duration="1" />
+    <TestDuration Test="TestTables.TestAVL" Duration="1" />
+  </TestDurations>
+</GtaTestDurations>

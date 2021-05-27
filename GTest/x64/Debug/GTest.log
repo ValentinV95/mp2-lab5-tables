@@ -1,0 +1,4 @@
+﻿  pch.cpp
+  test.cpp
+H:\C++\LR5\Ordered.h(106): warning C4715: Ordered<int,int>::find: значение возвращается не при всех путях выполнения
+  GTest.vcxproj -> H:\C++\LR5\x64\Debug\GTest.exe
