@@ -1,0 +1,32 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <Filter Include="Файлы заголовков">
+      <UniqueIdentifier>{93995380-89BD-4b04-88EB-625FBE52EBFB}</UniqueIdentifier>
+      <Extensions>h;hh;hpp;hxx;h++;hm;inl;inc;ipp;xsd</Extensions>
+    </Filter>
+    <Filter Include="Исходные файлы">
+      <UniqueIdentifier>{621d1356-2c29-4800-ace0-0951806bb3ba}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Файлы заголовков\Tables">
+      <UniqueIdentifier>{f0bedd25-9215-478b-b8f5-df33dcdcc2bf}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="..\..\..\include\TRbTree.hpp">
+      <Filter>Файлы заголовков</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\include\Logger.hpp">
+      <Filter>Файлы заголовков</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\include\THashTable.hpp">
+      <Filter>Файлы заголовков\Tables</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\include\TRbTreeTable.hpp">
+      <Filter>Файлы заголовков\Tables</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\include\TTable.hpp">
+      <Filter>Файлы заголовков\Tables</Filter>
+    </ClInclude>
+  </ItemGroup>
+</Project>
