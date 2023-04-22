@@ -59,6 +59,7 @@ private:
 		} 
 		while (index != first_index);
 		return nullptr;
+		
 	}
 
 	int mutually_prime;

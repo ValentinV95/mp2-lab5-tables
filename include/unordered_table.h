@@ -71,9 +71,8 @@ public:
 		{
 			if (++operations_count && table[index]->key == _key)
 			{
-				Entry* tmp = table[index];
+				delete table[index];
 				table[index] = table[length - 1];
-				delete tmp;
 				table[length - 1] = nullptr;
 				length--;
 				return;
