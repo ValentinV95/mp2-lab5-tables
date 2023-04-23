@@ -1,4 +1,5 @@
 #include <stdexcept>
+#include <iostream>
 
 using std::string;
 
@@ -27,7 +28,8 @@ private:
         Node* node = root;
         while (!cmp_nodes(node, nil))
         {
-            if (++operations_count && _key < node->key)
+            operations_count++;
+            if (_key < node->key)
             {
                 node = node->left;
             }
@@ -119,17 +121,16 @@ private:
                 }
                 else // INSERT-CASE 1.2: BLACK-UNCLE
                 {
-                    if (child == parent->right) // INSERT-CASE 1.2.1: RIGHT-CHILD
+                    if (child == parent->right)
                     {
                         left_rotate(child);
                         child = child->left;
+                        parent = child->parent;
+                        grandparent = parent->parent;
                     }
-                    else // INSERT-CASE 1.2.2: LEFT-CHILD
-                    {
-                        set_color(parent, Color::black);
-                        set_color(grandparent, Color::red);
-                        right_rotate(parent);
-                    }
+                    set_color(parent, Color::black);
+                    set_color(grandparent, Color::red);
+                    right_rotate(parent);
                 }
             }
             else // INSERT-CASE 2: RIGHT-SUBTREE
@@ -143,17 +144,16 @@ private:
                 }
                 else // INSERT-CASE 2.2: BLACK-UNCLE
                 {
-                    if (child == parent->left) // INSERT-CASE 2.2.1: LEFT-CHILD
+                    if (child == parent->left)
                     {
                         right_rotate(child);
                         child = child->right;
+                        parent = child->parent;
+                        grandparent = parent->parent;
                     }
-                    else // INSERT-CASE 2.2.2: RIGHT-CHILD
-                    {
-                        set_color(parent, Color::black);
-                        set_color(grandparent, Color::red);
-                        left_rotate(parent);
-                    }
+                    set_color(parent, Color::black);
+                    set_color(grandparent, Color::red);
+                    left_rotate(parent);
                 }
             }
         }
@@ -281,7 +281,8 @@ public:
         Node* node = root;
         while (++operations_count && _key != node->key)
         {
-            if (++operations_count && _key < node->key)
+            operations_count++;
+            if (_key < node->key)
             {
                 if (cmp_nodes(node->left, nil))
                 {

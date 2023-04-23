@@ -1,8 +1,12 @@
 #include <stdexcept>
 #include <cmath>
-#define GOLDEN_RATIO (sqrt(5) - 1) / 2
 
 using std::string;
+
+namespace ht_constants
+{
+	const double GOLDEN_RATIO = (sqrt(5) - 1) / 2;
+}
 
 template<class T>
 class HashTable
@@ -29,7 +33,7 @@ private:
 		{
 			sum += character;
 		}
-		return capacity * fmod(sum * GOLDEN_RATIO, 1);
+		return static_cast<int>(capacity * fmod(sum * ht_constants::GOLDEN_RATIO, 1.0));
 	}
 	int probe(int hash_index)
 	{
@@ -59,17 +63,16 @@ private:
 		} 
 		while (index != first_index);
 		return nullptr;
-		
 	}
 
 	int mutually_prime;
-	int mutually_prime_number(int _number)
+	int get_mutually_prime(int _number)
 	{
 		int number = _number;
-		int mutually_prime = number / 4 + 1;
+		int mutually_prime_number = number / 4 + 1;
 		int remainder = 1;
-		int divisor = mutually_prime;
-		while (mutually_prime > 1)
+		int divisor = mutually_prime_number;
+		while (mutually_prime_number > 1)
 		{
 			while (remainder != 0)
 			{
@@ -77,8 +80,8 @@ private:
 				number = divisor;
 				divisor = remainder;
 			}
-			if (number == 1) return mutually_prime;
-			divisor = --mutually_prime;
+			if (number == 1) return mutually_prime_number;
+			divisor = --mutually_prime_number;
 			number = _number;
 			remainder++;
 		}
@@ -98,7 +101,7 @@ public:
 			for (size_t i = 0; i < capacity; i++) 
 				table[i] = nil;
 
-			mutually_prime = mutually_prime_number(capacity);
+			mutually_prime = get_mutually_prime(capacity);
 		}
 	}
 
@@ -111,6 +114,7 @@ public:
 		return operations_count;
 	}
 	
+	/// Return entry's value pointer
 	T* find(string _key)
 	{
 		operations_count = 0;
@@ -133,7 +137,7 @@ public:
 			{
 			case Status::occupied:
 			{
-				if (table[index]->key == _key) // checking for a dublicate
+				if (table[index]->key == _key) // checking for a duplicate
 				{
 					throw std::exception("key duplicate insert failure");
 				}
@@ -173,9 +177,9 @@ public:
 	}
 	void remove(string _key) 
 	{
+		operations_count = 0;
 		Entry* entry = find_entry(_key);
-
-		if (find_entry(_key) != nullptr)
+		if (entry != nullptr)
 		{
 			entry->state = Status::deleted;
 			length--;
@@ -188,9 +192,13 @@ public:
 
 	~HashTable()
 	{
-		for (size_t i = 0; i < capacity; i++)
+		for (size_t index = 0; index < capacity; index++)
 		{
-			if (table[i] != nil) delete table[i];
+
+			if (table[index] != nil)
+			{
+				delete table[index];
+			}
 		}
 		delete nil;
 		delete[] table;

@@ -68,10 +68,22 @@ TEST(UnorderedTable, cant_remove_entry_when_key_is_not_found)
 	ASSERT_ANY_THROW(table.remove("second"));
 }
 
+TEST(UnorderedTable, cant_find_entry_after_remove)
+{
+	UnorderedTable<int> table(2);
+	table.insert("first", 1);
+	table.remove("first");
+	EXPECT_EQ(table.find("first"), nullptr);
+}
+
 TEST(UnorderedTable, can_insert_entry_after_remove)
 {
 	UnorderedTable<int> table(2);
 	table.insert("first", 1);
+	table.remove("first");
+	table.insert("first", 2);
+	EXPECT_EQ(table.get_length(), 1);
+	EXPECT_EQ(*table.find("first"), 2);
 	table.insert("second", 2);
 	table.remove("second");
 	table.insert("second", 3);

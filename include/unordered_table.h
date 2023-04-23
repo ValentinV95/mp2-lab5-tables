@@ -40,36 +40,39 @@ public:
 		return operations_count;
 	}
 
+	/// Return entry's data pointer
 	T* find(string _key)
 	{
 		operations_count = 0;
-		for (size_t i = 0; i < length; i++)
+		for (size_t index = 0; index < length; index++)
 		{
-			if (++operations_count && table[i]->key == _key)
+			operations_count++;
+			if (table[index]->key == _key)
 			{
-				return &table[i]->data;
+				return &table[index]->data;
 			}
 		}
 		return nullptr;
 	}
 	void insert(string _key, T _data)
 	{
-		if (find(_key)) // checking for a dublicate
-		{
-			throw std::exception("key duplicate insert failure");
-		}
 		if (length == capacity)
 		{
 			throw std::exception("table is full");
+		}
+		if (find(_key)) // checking for a duplicate
+		{
+			throw std::exception("key duplicate insert failure");
 		}
 		table[length++] = new Entry{ _key, _data };
 	}
 	void remove(string _key)
 	{
 		operations_count = 0;
-		for (int index = 0; index < length; index++)
+		for (size_t index = 0; index < length; index++)
 		{
-			if (++operations_count && table[index]->key == _key)
+			operations_count++;
+			if (table[index]->key == _key)
 			{
 				delete table[index];
 				table[index] = table[length - 1];
@@ -83,9 +86,12 @@ public:
 
 	~UnorderedTable()
 	{
-		for (size_t i = 0; i < capacity; i++)
+		for (size_t index = 0; index < length; index++)
 		{
-			if (table[i] != nullptr) delete table[i];
+			if (table[index] != nullptr)
+			{
+				delete table[index];
+			}
 		}
 		delete[] table;
 	}

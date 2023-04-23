@@ -62,6 +62,9 @@ TEST(OrderedTable, can_insert_entry_after_remove)
 {
 	OrderedTable<int> table;
 	table.insert("first", 1);
+	table.remove("first");
+	table.insert("first", 2);
+	EXPECT_EQ(*table.find("first"), 2);
 	table.insert("second", 2);
 	table.remove("second");
 	table.insert("second", 3);
