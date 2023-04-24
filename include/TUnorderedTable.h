@@ -1,20 +1,22 @@
 #include<vector>
+
 using namespace std;
 
 template<class TKey, class TValue>
 class TUnorderedTable
 {
-private:
 	struct TTableRec
 	{
 		TKey key;
 		TValue value;
 	};
+
 	struct Logger
 	{
 		size_t comp;
 		string log;
 	}logger;
+
 	vector<TTableRec> data;
 public:
 	TUnorderedTable() = default;

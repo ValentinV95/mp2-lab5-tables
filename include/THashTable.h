@@ -1,7 +1,7 @@
 #include<vector>
 #include <string>
-using namespace std;
 
+using namespace std;
 
 template<class TKey, class TValue>
 class THashTable
@@ -70,7 +70,6 @@ class THashTable
 		return res % sz;
 	}
 public:
-
 	THashTable(size_t size) :sz(size), table(size) {}
 
 	~THashTable() = default;
@@ -139,6 +138,7 @@ public:
 				return;
 			}
 		}
+		throw exception("Element not found!");
 	}
 
 	string log()

@@ -55,6 +55,13 @@ TEST(RBT_TABLE, can_find_element)
 	EXPECT_EQ(table.Find(string("One")), 1);
 }
 
+TEST(RBT_TABLE, cant_find_element_with_wrong_key)
+{
+	TRBTreeTable<string, size_t> table;
+	table.Insert(string("One"), 1);
+	ASSERT_ANY_THROW(table.Find(string("O")));
+}
+
 TEST(RBT_TABLE, cant_find_deleted_element)
 {
 	TRBTreeTable<string, size_t> table;

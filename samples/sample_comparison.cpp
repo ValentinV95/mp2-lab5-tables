@@ -15,12 +15,18 @@ void Insert(THashTable<string, Polinom>& hash,
     string polName;
     cin >> polName;
 
-    hash.Insert(polName, pol);
-    cout << "HashTable." << hash.log() << endl;
-    arr.Insert(polName, pol);
-    cout << "UnorderedTable." << arr.log() << endl;
-    rb.Insert(polName, pol);
-    cout << "RBTreeTable." << rb.log() << endl;
+    try 
+    {
+        hash.Insert(polName, pol);
+        cout << "HashTable." << hash.log() << endl;
+        arr.Insert(polName, pol);
+        cout << "UnorderedTable." << arr.log() << endl;
+        rb.Insert(polName, pol);
+        cout << "RBTreeTable." << rb.log() << endl;
+    }catch(exception& ex)
+    {
+        cout << ex.what();
+    }
 }
 
 Polinom Find(THashTable<string, Polinom>& hash,
@@ -31,14 +37,20 @@ Polinom Find(THashTable<string, Polinom>& hash,
     string polName;
     cin >> polName;
 
-    auto& res = hash.Find(polName);
-    cout << "HashTable." << hash.log() << endl;
-    arr.Find(polName);
-    cout << "UnorderedTable." << arr.log() << endl;
-    rb.Find(polName);
-    cout << "RBTreeTable." << rb.log() << endl;
-
-    return res;
+    try 
+    {
+        auto& res = hash.Find(polName);
+        cout << "HashTable." << hash.log() << endl;
+        arr.Find(polName);
+        cout << "UnorderedTable." << arr.log() << endl;
+        rb.Find(polName);
+        cout << "RBTreeTable." << rb.log() << endl;
+        return res;
+    }catch(exception& ex)
+    {
+        cout << ex.what() << endl;
+    }
+    return Polinom();
 }
 
 
@@ -50,12 +62,18 @@ void Delete(THashTable<string, Polinom>& hash,
     string polName;
     cin >> polName;
 
-    hash.Delete(polName);
-    cout << "HashTable." << hash.log() << endl;
-    arr.Delete(polName);
-    cout << "UnorderedTable." << arr.log() << endl;
-    rb.Delete(polName);
-    cout << "RBTreeTable." << rb.log() << endl;
+    try 
+    {
+        hash.Delete(polName);
+        cout << "HashTable." << hash.log() << endl;
+        arr.Delete(polName);
+        cout << "UnorderedTable." << arr.log() << endl;
+        rb.Delete(polName);
+        cout << "RBTreeTable." << rb.log() << endl;
+    }catch(exception& ex)
+    {
+        cout << ex.what() << endl;
+    }
 }
 
 void Arifmetic(THashTable<string, Polinom>& hash,

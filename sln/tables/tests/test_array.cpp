@@ -43,6 +43,13 @@ TEST(UNORDERED_TABLE, can_find_element)
 	EXPECT_EQ(table.Find(string("One")), 1);
 }
 
+TEST(UNORDERED_TABLE, cant_find_element_with_wrong_key)
+{
+	TUnorderedTable<string, size_t> table;
+	table.Insert(string("One"), 1);
+	ASSERT_ANY_THROW(table.Find(string("O")));
+}
+
 TEST(UNORDERED_TABLE, cant_find_deleted_element)
 {
 	TUnorderedTable<string, size_t> table;

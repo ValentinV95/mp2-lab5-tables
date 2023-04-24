@@ -1,4 +1,6 @@
 #include<string>
+#include<stack>
+
 using namespace std;
 
 enum Colors{RED, BLACK};
@@ -18,7 +20,7 @@ class TRBTree
 	struct Logger
 	{
 		size_t comp;
-		std::string log;
+		string log;
 	}logger;
 
 	Node* root;
@@ -320,7 +322,7 @@ class TRBTree
 		}
 		node->parent = prev;
 	}
-
+	
 	void insertCase1(Node* node)
 	{
 		if (node->parent == null)
@@ -329,11 +331,11 @@ class TRBTree
 		}
 		else 
 		{
-			insertÑase2(node);
+			insertCase2(node);
 		}
 	}
 
-	void insertÑase2(Node* node)
+	void insertCase2(Node* node)
 	{
 		if (node->parent->color == BLACK)
 		{
@@ -341,11 +343,11 @@ class TRBTree
 		}
 		else 
 		{
-			insertÑase3(node);
+			insertCase3(node);
 		}
 	}
 
-	void insertÑase3(Node* node)
+	void insertCase3(Node* node)
 	{
 		Node* un = uncle(node);
 
@@ -403,6 +405,32 @@ public:
 		root = null;
 	}
 
+	~TRBTree()
+	{
+		if(root == null)
+		{
+			delete null;
+			return;
+		}
+		stack<Node*> st;
+		st.push(root);
+		while (!st.empty())
+		{
+			Node* top = st.top();
+			st.pop();
+			if (top->rChild != null)
+			{
+				st.push(top->rChild);
+			}
+			if (top->lChild != null)
+			{
+				st.push(top->lChild);
+			}
+			delete top;
+		}
+		delete null;
+	}
+
 	const T& Search(const T& data)
 	{
 		logger.log = string("Operation Find: ");
@@ -455,7 +483,7 @@ public:
 				{
 					deleteOneChild(cur);
 				}
-				break;
+				return;
 			}
 			else if (data > cur->data)
 			{
@@ -467,6 +495,7 @@ public:
 			}
 			logger.comp++;
 		}
+		throw exception("Element not found!");
 	}
 
 	string log()
@@ -516,6 +545,8 @@ class TRBTreeTable
 	TRBTree<TTableRec> tree;
 public:
 	TRBTreeTable() = default;
+
+	~TRBTreeTable() = default;
 
 	const TValue& Find(const TKey& key)
 	{

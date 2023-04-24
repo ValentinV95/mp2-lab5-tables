@@ -42,6 +42,13 @@ TEST(HASH_TABLE, can_find_element)
 	EXPECT_EQ(table.Find(string("One")), 1);
 }
 
+TEST(HASH_TABLE, cant_find_element_with_wrong_key)
+{
+	THashTable<string, size_t> table(10);
+	table.Insert(string("One"), 1);
+	ASSERT_ANY_THROW(table.Find(string("O")));
+}
+
 TEST(HASH_TABLE, cant_find_deleted_element)
 {
 	THashTable<string, size_t> table(10);
