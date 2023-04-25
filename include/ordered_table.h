@@ -24,9 +24,9 @@ private:
     Node* find_node(string _key)
     {
         operations_count = 0;
-        if (cmp_nodes(root, nil)) return nullptr;
+        if (root == nil) return nullptr;
         Node* node = root;
-        while (!cmp_nodes(node, nil))
+        while (node != nil)
         {
             operations_count++;
             if (_key < node->key)
@@ -95,11 +95,6 @@ private:
     bool cmp_color(Node* node, Color color)
     {
         return node->color == color;
-    }
-    bool cmp_nodes(Node* node_1, Node* node_2) // comparison method with operation counter increment
-    {
-        operations_count++;
-        return node_1 == node_2;
     }
 
     void fix_insert(Node* child)
@@ -266,14 +261,14 @@ public:
     {
         Node* node = find_node(_key);
 
-        if (cmp_nodes(node, nullptr)) return nullptr;
+        if (node == nullptr) return nullptr;
 
         return &node->data;
     }
     void insert(string _key, T _data)
     {
         operations_count = 0;
-        if (cmp_nodes(root, nil))
+        if (root == nil)
         {
             root = new Node{ Color::black, _key, _data, nil, nil, nullptr };
             return;
@@ -284,7 +279,7 @@ public:
             operations_count++;
             if (_key < node->key)
             {
-                if (cmp_nodes(node->left, nil))
+                if (node->left == nil)
                 {
                     node->left = new Node{ Color::red, _key, _data, nil, nil, node };
                     fix_insert(node->left);
@@ -294,7 +289,7 @@ public:
             }
             else
             {
-                if (cmp_nodes(node->right, nil))
+                if (node->right == nil)
                 {
                     node->right = new Node{ Color::red, _key, _data, nil, nil, node };
                     fix_insert(node->right);
@@ -308,15 +303,15 @@ public:
     void remove(string _key)
     {
         Node* node = find_node(_key);
-        if (cmp_nodes(node, nullptr))
+        if (node == nullptr)
         {
             throw std::exception("key was not found");
         }
-        if (cmp_nodes(node->left, nil) && cmp_nodes(node->right, nil))
+        if (node->left == nil && node->right == nil)
         {
-            if (!cmp_nodes(node, root))
+            if (node != root)
             {
-                if (cmp_nodes(node->parent->left, node))
+                if (node->parent->left == node)
                 {
                     node->parent->left = nil;
                 }
@@ -325,11 +320,11 @@ public:
             }
             else root = nil;
         }
-        else if (!cmp_nodes(node->left, nil) && cmp_nodes(node->right, nil))
+        else if (node->left != nil && node->right == nil)
         {
-            if (!cmp_nodes(node, root))
+            if (node != root)
             {
-                if (cmp_nodes(node->parent->left, node))
+                if (node->parent->left == node)
                 {
                     node->parent->left = node->left;
                 }
@@ -339,11 +334,11 @@ public:
             else root = node->left;
             fix_remove(node->left);
         }
-        else if (cmp_nodes(node->left, nil) && !cmp_nodes(node->right, nil))
+        else if (node->left == nil && node->right != nil)
         {
-            if (!cmp_nodes(node, root))
+            if (node != root)
             {
-                if (cmp_nodes(node->parent->right, node))
+                if (node->parent->right == node)
                 {
                     node->parent->right = node->right;
                 }
@@ -356,7 +351,7 @@ public:
         else
         {
             Node* sub = node->left;
-            while (!cmp_nodes(sub->right, nil))
+            while (sub->right != nil)
             {
                 sub = sub->right;
             }
@@ -364,9 +359,9 @@ public:
             Node* first_sub_left = sub->left;
 
             // processing of parents and childs
-            if (!cmp_nodes(sub->parent, node))
+            if (sub->parent != node)
             {
-                if (!cmp_nodes(sub->left, nil))
+                if (sub->left != nil)
                 {
                     sub->left->parent = sub->parent;
                 }
@@ -379,9 +374,9 @@ public:
             sub->parent, node->parent;
 
             // processing of root
-            if (!cmp_nodes(node, root))
+            if (node != root)
             {
-                if (cmp_nodes(node->parent->left, node))
+                if (node->parent->left == node)
                 {
                     node->parent->left = sub;
                 }
@@ -395,13 +390,13 @@ public:
             set_color(node, sub_color);
 
             // fixing properties after removal
-            if (!cmp_nodes(first_sub_left, nil))
+            if (first_sub_left != nil)
             {
                 fix_remove(first_sub_left);
             }
             else
             {
-                if (!cmp_nodes(node, first_sub_parent))
+                if (node != first_sub_parent)
                 {
                     node->parent = first_sub_parent;
                 }

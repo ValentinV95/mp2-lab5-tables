@@ -51,12 +51,15 @@ public:
                 delete head;
                 head = node;
             }
-            Node* new_node = head = new Node{ *list.head };
-            for (; new_node->next != nullptr; new_node = new_node->next)
+            if (!list.isEmpty())
             {
-                new_node->next = new Node{ *new_node->next };
+                Node* new_node = head = new Node{ *list.head };
+                for (; new_node->next != nullptr; new_node = new_node->next)
+                {
+                    new_node->next = new Node{ *new_node->next };
+                }
+                tail = new_node;
             }
-            tail = new_node;
         }
         return *this;
     }

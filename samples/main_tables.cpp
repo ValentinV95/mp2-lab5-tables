@@ -325,7 +325,11 @@ int main()
 			}
 			case PERFORM_POLYNOMIAL_OPERATIONS:
 			{
-				if (!perform_operations(unorderedT, orderedT, hashT)) return 1;
+				if (!perform_operations(unorderedT, orderedT, hashT))
+				{
+					reset_logger();
+					return 1;
+				}
 				break;
 			}
 			default:
