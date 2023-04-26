@@ -1,12 +1,12 @@
 #include <gtest.h>
-//#include "tree.h"
+#include "tree.hpp"
 
-//TEST(Tree, can_create_tree)
-//
-    //ASSERT_NO_THROW(Tree<int> tree);
-//}
+TEST(Tree, can_create_tree)
+{
+    ASSERT_NO_THROW(Tree<int> tree);
+}
 
-/*TEST(Tree, can_create_tree_with_one_element)
+TEST(Tree, can_create_tree_with_one_element)
 {
     ASSERT_NO_THROW(Tree<int> tree(1));
 }
@@ -15,6 +15,12 @@ TEST(Tree, created_tree_with_true_one_element)
 {
     Tree<int> tree(1);
     EXPECT_EQ(1, tree.begin()->data);
+}
+
+TEST(Tree, created_element_has_black_color)
+{
+    Tree<int> tree(1);
+    EXPECT_EQ(black, tree.begin()->tcolor);
 }
 
 TEST(Tree, true_when_tree_is_empty)
@@ -51,391 +57,226 @@ TEST(Tree, method_size_gets_true_size)
 {
     Tree<int> tree(1);
     EXPECT_EQ(1, tree.size());
-}*/
-
-/*TEST(Tree, can_copy_empty_list)
-{
-    List<int> list;
-    ASSERT_NO_THROW(List<int> list1(list));
 }
 
-TEST(List, can_copy_list_with_one_element)
+TEST(Tree, pushing_increase_size_on_one)
 {
-    List<int> list(1);
-    ASSERT_NO_THROW(List<int> list1(list));
+    Tree<int> tree(10);
+    tree.push(11);
+    EXPECT_EQ(2, tree.size());
 }
 
-TEST(List, copied_list_with_one_element_has_true_size)
+TEST(Tree, pushing_duplicate_dont_increase_size)
 {
-    List<int> list(1);
-    List<int> list1(list);
-    EXPECT_EQ(1, list1.size());
+    Tree<int> tree(10);
+    tree.push(10);
+    EXPECT_EQ(1, tree.size());
 }
 
-TEST(List, copied_list_with_one_element_is_true)
-{
-    List<int> list(1);
-    List<int> list1(list);
-    EXPECT_EQ(1, list1.begin()->data);
-}
-
-TEST(List, copied_list_with_one_element_with_own_memory)
-{
-    List<int> list(1);
-    List<int> list1(list);
-    list1.begin()->data = 2;
-    EXPECT_EQ(1, list.begin()->data);
-}
-
-TEST(List, can_copy_list_with_elements)
-{
-    List<int> list;
-    for (int i = 0; i < 10; i++)
-    {
-        list.push(i);
-    }
-    ASSERT_NO_THROW(List<int> list1(list));
-}
-
-TEST(List, copied_list_with_elements_has_true_size)
-{
-    List<int> list;
-
-    for (int i = 10; i > -1; i--)
-        list.push(i);
-
-    List<int> list1(list);
-    EXPECT_EQ(11, list1.size());
-}
-
-TEST(List, copied_list_with_elements_is_true)
-{
-    List<int> list;
-
-    for (int i = 10; i > -1; i--)
-        list.push(i);
-
-    List<int> list1(list);
-    Node<int>* temp = list1.begin();
-    for (size_t i = 0; i < list.size(); i++, temp = temp->next)
-        EXPECT_EQ(i, temp->data);
-}
-
-TEST(List, copied_list_with_elements_with_own_memory)
-{
-    List<int> list;
-
-    for (int i = 10; i > -1; i--)
-        list.push(i);
-
-    List<int> list1(list);
-    Node<int>* o = list1.begin();
-    Node<int>* t = list.begin();
-
-    for (size_t i = 0; i < list.size(); i++, o = o->next, t = t->next)
-    {
-        t->data = 5;
-        EXPECT_EQ(i, o->data);
-    }
-}
-*/
-/*TEST(List, can_use_method_clear)
-{
-    List<int> list(1);
-    ASSERT_NO_THROW(list.clear());
-}
-
-TEST(List, method_clear_changes_size_to_zero)
-{
-    List<int> list(1);
-    list.clear();
-    EXPECT_EQ(0, list.size());
-}
-
-TEST(List, method_clear_changes_tail_to_nullptr)
-{
-    List<int> list(1);
-    list.clear();
-    EXPECT_EQ(1, list.isEmpty());
-}
-*/
-/*TEST(List, can_use_operator_equal_list_to_itself)
-{
-    List<int> list(2);
-    ASSERT_NO_THROW(list == list);
-}
-
-TEST(List, using_operator_equal_list_to_itself_true)
-{
-    List<int> list(2);
-    EXPECT_EQ(1, list == list);
-}
-
-TEST(List, can_use_operator_equal_empty_list)
-{
-    List<int> list;
-    List<int> list1;
-    ASSERT_NO_THROW(list == list1);
-}
-
-TEST(List, using_operator_equal_empty_list_true)
-{
-    List<int> list;
-    List<int> list1;
-    EXPECT_EQ(1, list == list1);
-}
-
-TEST(List, can_use_operator_equal_list_with_one_element)
-{
-    List<int> list(2);
-    List<int> list1(2);
-    ASSERT_NO_THROW(list == list1);
-}
-
-TEST(List, using_operator_equal_list_with_one_element_true)
-{
-    List<int> list(2);
-    List<int> list1(2);
-    EXPECT_EQ(1, list == list1);
-}
-
-TEST(List, using_operator_equal_list_with_one_element_false)
-{
-    List<int> list(3);
-    List<int> list1(2);
-    EXPECT_EQ(0, list == list1);
-}
-
-TEST(List, can_use_operator_equal_list)
-{
-    List<int> list(2);
-    list.push(3);
-    List<int> list1(2);
-    list1.push(3);
-    ASSERT_NO_THROW(list == list1);
-}
-
-TEST(List, using_operator_equal_list_true)
-{
-    List<int> list(2);
-    list.push(3);
-    List<int> list1(2);
-    list1.push(3);
-    EXPECT_EQ(1, list == list1);
-}
-
-TEST(List, using_operator_equal_list_false)
-{
-    List<int> list(2);
-    list.push(5);
-    List<int> list1(2);
-    list1.push(3);
-    EXPECT_EQ(0, list == list1);
-}
-
-TEST(List, using_operator_equal_list_with_other_size_false)
-{
-    List<int> list(2);
-    list.push(3);
-    list.push(3);
-    List<int> list1(2);
-    list1.push(3);
-    EXPECT_EQ(0, list == list1);
-}
-
-TEST(List, can_use_operator_not_equal_list)
-{
-    List<int> list(2);
-    list.push(3);
-    List<int> list1(2);
-    list1.push(3);
-    ASSERT_NO_THROW(list == list1);
-}
-
-TEST(List, using_operator_not_equal_list_true)
-{
-    List<int> list(2);
-    list.push(4);
-    List<int> list1(2);
-    list1.push(3);
-    EXPECT_EQ(1, list != list1);
-}
-
-TEST(List, can_assign_list_to_itself)
-{
-    List<int> list(2);
-    ASSERT_NO_THROW(list = list);
-}
-
-TEST(List, assign_list_to_itself_do_not_change_data)
-{
-    List<int> list(2);
-    list = list;
-    EXPECT_EQ(2, list.begin()->data);
-}
-
-TEST(List, can_assign_equal_size_list_with_one_element)
-{
-    List<int> list(3);
-    List<int> list1(2);
-    ASSERT_NO_THROW(list = list1);
-}
-
-TEST(List, assign_equal_size_list_with_one_element_true)
-{
-    List<int> list(2);
-    List<int> list1(3);
-    list = list1;
-    EXPECT_EQ(true, list == list1);
-}
-
-TEST(List, can_assign_equal_size_list)
-{
-    List<int> list(3);
-    List<int> list1(2);
-    ASSERT_NO_THROW(list = list1);
-}
-
-TEST(List, assign_equal_size_list_true)
-{
-    List<int> list(2);
-    list.push(4);
-    List<int> list1(2);
-    list1.push(3);
-    list = list1;
-    EXPECT_EQ(true, list == list1);
-}
-
-TEST(List, can_assign_not_equal_size_list_when_other_list_is_empty)
-{
-    List<int> list(3);
-    List<int> list1;
-    ASSERT_NO_THROW(list = list1);
-}
-
-TEST(List, assign_not_equal_size_list_when_other_list_is_empty_true)
-{
-    List<int> list(2);
-    List<int> list1;
-    list = list1;
-    EXPECT_EQ(true, list == list1);
-}
-
-TEST(List, can_assign_not_equal_size_list_when_other_list_with_one_element)
-{
-    List<int> list(2);
-    list.push(3);
-    List<int> list1(2);
-    ASSERT_NO_THROW(list = list1);
-}
-
-TEST(List, assign_not_equal_size_list_when_other_list_with_one_element_true)
-{
-    List<int> list(2);
-    list.push(3);
-    List<int> list1(2);
-    list = list1;
-    EXPECT_EQ(true, list == list1);
-}
-
-TEST(List, can_assign_not_equal_size_list)
-{
-    List<int> list(3);
-    List<int> list1(2);
-    list1.push(4);
-    ASSERT_NO_THROW(list = list1);
-}
-
-TEST(List, assign_not_equal_size_list_true)
-{
-    List<int> list(2);
-    List<int> list1(2);
-    list1.push(3);
-    list = list1;
-    EXPECT_EQ(true, list == list1);
-}
-
-TEST(List, can_merge_two_lists)
-{
-    List<int> list(2);
-    List<int> list1(2);
-    ASSERT_NO_THROW(list.merge(list1));
-}
-
-TEST(List, merge_two_lists_true)
-{
-    List<int> list(1);
-    list.push(3);
-    list.push(4);
-    List<int> list1(0);
-    list1.push(2);
-    list.merge(list1);
-    Node<int>* temp = list.begin();
-    for (size_t i = 0; i < 5; i++, temp = temp->next)
-        EXPECT_EQ(i, temp->data);
-}
-*/
-/*TEST(Tree, can_push_elements)
+TEST(Tree, can_push_root)
 {
     Tree<int> tree;
-    ASSERT_NO_THROW(tree.push(2));
-}*/
+    ASSERT_NO_THROW(tree.push(1));
+}
 
-/*TEST(Tree, push_adds_elements_in_true_order)
+TEST(Tree, pushing_root_true)
 {
     Tree<int> tree;
-    for (int i = 10; i > -1; i--)
-        list.push(i);
-    Node<int>* temp = list.begin();
-    for (size_t i = 0; i < 10; i++, temp = temp->next)
-        EXPECT_EQ(i, temp->data);
-}*/
-
-/*TEST(List, can_delete_node)
-{
-    List<int> list(1);
-    list.push(1);
-    ASSERT_NO_THROW(list.deleteNode(list.begin()->next));
+    tree.push(1);
+    EXPECT_EQ(1, tree.begin()->data);
 }
 
-TEST(List, no_throw_if_delete_node_in_empty_list)
+TEST(Tree, can_push_left_element_with_root_parent)
 {
-    List<int> list;
-    ASSERT_NO_THROW(list.deleteNode(list.begin()));
+    Tree<int> tree(2);
+    ASSERT_NO_THROW(tree.push(1));
 }
 
-TEST(List, no_throw_if_delete_node_in_list_with_one_element)
+TEST(Tree, pushing_left_element_with_root_parent_true)
 {
-    List<int> list;
-    ASSERT_NO_THROW(list.deleteNode(list.begin()));
+    Tree<int> tree(2);
+    tree.push(1);
+    EXPECT_EQ(1, tree.begin()->left->data);
 }
 
-TEST(List, true_deleting_first_node_in_list)
+TEST(Tree, pushing_left_element_with_root_parent_true_color)
 {
-    List<int> list(1);
-    list.deleteNode(list.begin());
-    EXPECT_EQ(nullptr, list.begin());
+    Tree<int> tree(2);
+    tree.push(1);
+    EXPECT_EQ(red, tree.begin()->left->tcolor);
 }
 
-TEST(List, true_deleting_node_in_list)
+TEST(Tree, can_push_right_element_with_root_parent)
 {
-    List<int> list(0);
-    list.push(1);
-    list.push(2);
-    list.push(3);
-    list.push(4);
-    list.deleteNode(list.begin()->next->next);
-    Node<int>* temp = list.begin();
-    for (int i = 0; i < list.size(); i++, temp = temp->next)
-    {
-        if (i < 2) EXPECT_EQ(i, temp->data);
-        else EXPECT_EQ(i + 1, temp->data);
-    }
+    Tree<int> tree(2);
+    ASSERT_NO_THROW(tree.push(3));
 }
 
-TEST(List, deleting_node_change_true_size)
+TEST(Tree, pushing_right_element_with_root_parent_true)
 {
-    List<int> list(1);
-    list.deleteNode(list.begin());
-    EXPECT_EQ(0, list.size());
-}*/
+    Tree<int> tree(2);
+    tree.push(3);
+    EXPECT_EQ(3, tree.begin()->right->data);
+}
+
+TEST(Tree, pushing_right_element_with_root_parent_true_color)
+{
+    Tree<int> tree(2);
+    tree.push(3);
+    EXPECT_EQ(red, tree.begin()->right->tcolor);
+}
+
+TEST(Tree, can_push_left_element_with_red_parent_and_red_uncle)
+{
+    Tree<int> tree(5);
+    tree.push(3);
+    tree.push(7);
+    ASSERT_NO_THROW(tree.push(1));
+}
+
+TEST(Tree, pushing_left_element_with_red_parent_and_red_uncle_true)
+{
+    Tree<int> tree(5);
+    tree.push(3);
+    tree.push(7);
+    tree.push(1);
+    EXPECT_EQ(1, tree.begin()->left->left->data);
+}
+
+TEST(Tree, pushing_left_element_with_red_parent_and_red_uncle_true_color)
+{
+    Tree<int> tree(5);
+    tree.push(3);
+    tree.push(7);
+    tree.push(1);
+    EXPECT_EQ(red, tree.begin()->left->left->tcolor);
+    EXPECT_EQ(black, tree.begin()->right->tcolor);
+    EXPECT_EQ(black, tree.begin()->left->tcolor);
+}
+
+TEST(Tree, can_push_right_element_with_red_parent_and_red_uncle)
+{
+    Tree<int> tree(5);
+    tree.push(3);
+    tree.push(7);
+    ASSERT_NO_THROW(tree.push(10));
+}
+
+TEST(Tree, pushing_right_element_with_red_parent_and_red_uncle_true)
+{
+    Tree<int> tree(5);
+    tree.push(3);
+    tree.push(7);
+    tree.push(10);
+    EXPECT_EQ(10, tree.begin()->right->right->data);
+}
+
+TEST(Tree, pushing_right_element_with_red_parent_and_red_uncle_true_color)
+{
+    Tree<int> tree(5);
+    tree.push(3);
+    tree.push(7);
+    tree.push(10);
+    EXPECT_EQ(red, tree.begin()->right->right->tcolor);
+    EXPECT_EQ(black, tree.begin()->right->tcolor);
+    EXPECT_EQ(black, tree.begin()->left->tcolor);
+}
+
+TEST(Tree, can_push_left_element_with_red_parent_and_black_uncle)
+{
+    Tree<int> tree(5);
+    tree.push(3);
+    ASSERT_NO_THROW(tree.push(1));
+}
+
+TEST(Tree, pushing_left_element_with_red_parent_and_black_uncle_true)
+{
+    Tree<int> tree(5);
+    tree.push(3);
+    tree.push(1);
+    EXPECT_EQ(1, tree.begin()->left->data);
+}
+
+TEST(Tree, pushing_left_element_with_red_parent_and_black_uncle_true_color)
+{
+    Tree<int> tree(5);
+    tree.push(3);
+    tree.push(1);
+    EXPECT_EQ(black, tree.begin()->tcolor);
+    EXPECT_EQ(red, tree.begin()->right->tcolor);
+    EXPECT_EQ(red, tree.begin()->left->tcolor);
+}
+
+TEST(Tree, can_push_right_element_with_red_parent_and_black_uncle)
+{
+    Tree<int> tree(5);
+    tree.push(7);
+    ASSERT_NO_THROW(tree.push(10));
+}
+
+TEST(Tree, pushing_right_element_with_red_parent_and_black_uncle_true)
+{
+    Tree<int> tree(5);
+    tree.push(7);
+    tree.push(10);
+    EXPECT_EQ(10, tree.begin()->right->data);
+}
+
+TEST(Tree, pushing_right_element_with_red_parent_and_black_uncle_true_color)
+{
+    Tree<int> tree(5);
+    tree.push(7);
+    tree.push(10);
+    EXPECT_EQ(black, tree.begin()->tcolor);
+    EXPECT_EQ(red, tree.begin()->right->tcolor);
+    EXPECT_EQ(red, tree.begin()->left->tcolor);
+}
+
+TEST(Tree, can_use_method_search_in_empty_tree)
+{
+    Tree<int> tree;
+    ASSERT_NO_THROW(tree.search(32));
+}
+
+TEST(Tree, method_search_in_empty_tree_return_nullptr)
+{
+    Tree<int> tree;
+    EXPECT_EQ(nullptr, tree.search(32));
+}
+
+TEST(Tree, can_use_method_search_in_tree)
+{
+    Tree<int> tree(5);
+    ASSERT_NO_THROW(tree.search(5));
+}
+
+TEST(Tree, method_search_in_tree_return_true)
+{
+    Tree<int> tree(5);
+    EXPECT_EQ(5, tree.search(5)->data);
+}
+
+TEST(Tree, method_search_in_tree_return_nullptr)
+{
+    Tree<int> tree(5);
+    EXPECT_EQ(nullptr, tree.search(50));
+}
+
+TEST(Tree, can_delete_node_in_empty_tree)
+{
+    Tree<int> tree;
+    ASSERT_NO_THROW(tree.deleteNode(tree.begin()));
+}
+
+TEST(Tree, can_delete_node_in_tree)
+{
+    Tree<int> tree(4);
+    ASSERT_NO_THROW(tree.deleteNode(tree.begin()));
+}
+
+TEST(Tree, deleting_node_in_tree_decrease_size_on_one)
+{
+    Tree<int> tree(5);
+    tree.deleteNode(tree.begin());
+    EXPECT_EQ(0, tree.size());
+}

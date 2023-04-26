@@ -1,0 +1,14 @@
+Wed Apr 26 22:00:11 2023
+HashTable::search() "hash" call number: 1
+Wed Apr 26 22:00:11 2023
+UnorderedTable::search() "if" call number: 0
+Wed Apr 26 22:00:11 2023
+UnorderedTable::push() (if only in search) "if" call number: 0
+Wed Apr 26 22:00:11 2023
+HashTable::search() "hash" call number: 1
+Wed Apr 26 22:00:11 2023
+HashTable::push() "hash" call number: 1
+Wed Apr 26 22:00:20 2023
+HashTable::search() "hash" call number: 1
+Wed Apr 26 22:00:33 2023
+Tree<T>::deleteNode() "transitions" call number: 2

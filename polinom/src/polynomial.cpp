@@ -58,6 +58,8 @@ void Polynomial::truePolynomial()
 
 void Polynomial::setPolynomial()
 {
+	if (!tData.isEmpty()) tData.clear();
+
 	size_t degree;
 	int size;
 	double coef;
