@@ -5,31 +5,23 @@ template<class T>
 class Singleton
 {
 private:
-	static T* instance;
+	static std::unique_ptr<T> instance;
 protected:
 	Singleton() {}
 	virtual ~Singleton() {}
 public:
-	static T* GetInstance();
-	void ResetInstance()
-	{
-		if (instance)
-		{
-			delete instance;
-		}
-		instance = nullptr;
-	}
+	static std::unique_ptr<T>& GetInstance();
 };
 
-template<class T> 
-T* Singleton<T>::instance = nullptr;
+template<class T>
+std::unique_ptr<T> Singleton<T>::instance = nullptr;
 
 template<class T>
-T* Singleton<T>::GetInstance()
+std::unique_ptr<T>& Singleton<T>::GetInstance()
 {
 	if (!instance)
 	{
-		instance = new T;
+		instance = std::unique_ptr<T>(new T());
 	}
 	return instance;
 }
@@ -84,12 +76,7 @@ public:
 	}
 };
 
-#define logs_counter(name, count) Logger::GetInstance()->counter(name, count)
-#define logs_success(message) Logger::GetInstance()->success(message)
-#define logs_warning(message) Logger::GetInstance()->warning(message)
-#define logs_error(message) Logger::GetInstance()->error(message)
-
-void reset_logger()
-{
-	Logger::GetInstance()->ResetInstance();
-}
+#define LOGS_COUNTER(name, count) Logger::GetInstance()->counter(name, count)
+#define LOGS_SUCCESS(message) Logger::GetInstance()->success(message)
+#define LOGS_WARNING(message) Logger::GetInstance()->warning(message)
+#define LOGS_ERROR(message) Logger::GetInstance()->error(message)
