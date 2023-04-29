@@ -17,6 +17,8 @@ public:
 
 	HashTable(const size_t user_size) // size table > user_size && size table = 2^n
 	{
+		if (user_size < 0)
+			throw std::exception("ERROR: negative length");
 		int tmp = log2(user_size);
 		this->size = pow(2, tmp + 1);
 		this->structure.resize(size);

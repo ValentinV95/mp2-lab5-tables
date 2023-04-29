@@ -139,7 +139,11 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="..\..\polinom\src\polinom.cpp" />
     <ClCompile Include="..\..\samples\main_tables.cpp" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="..\..\polinom\include\polinom.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

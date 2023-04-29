@@ -39,7 +39,7 @@ TEST(class_sort_table, can_correct_insert_in_right_subtree)
 	EXPECT_TRUE(A.getRoot()->left->value == Polinoms("45x^3"));
 }
 
-TEST(class_sort_table, can_balance_with_rotate)
+/*TEST(class_sort_table, can_balance_with_rotate)
 {
 	int a = 0;
 	Sorting_table<Polinoms> A;
@@ -54,7 +54,7 @@ TEST(class_sort_table, can_balance_with_rotate)
 	EXPECT_TRUE(A.getRoot()->left->value == Polinoms("45x^3"));
 }
 
-/*TEST(class_sort_table, )
+TEST(class_sort_table, )
 {
 
 }

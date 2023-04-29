@@ -1,10 +1,8 @@
-
 #include <iostream>
 #include <iomanip>
 #include <windows.h>
 #include <string>
 #include "../include/array.h"
-#include "../polinom/src/polinom.cpp"
 #include "../polinom/include/polinom.h"
 #include "../include/AVL_Tree.h"
 #include "../include/hash-table.h"
@@ -73,7 +71,7 @@ void run_insert(const std::string& com, non_sort_table<Polinoms>& A, Sorting_tab
 					A.Add(key, Polinoms(polinom) * Polinoms(polinom1));
 					B.Add(key, Polinoms(polinom) * Polinoms(polinom1));
 					C.Add(key, Polinoms(polinom) * Polinoms(polinom1));
-				}	
+				}
 			}
 			else
 			{
@@ -89,7 +87,7 @@ void run_insert(const std::string& com, non_sort_table<Polinoms>& A, Sorting_tab
 				}
 				else
 					std::cout << "error: no correct command" << std::endl;
-			}	
+			}
 		}
 		else
 			std::cout << "error: no correct command" << std::endl;
@@ -205,7 +203,7 @@ int main()
 	non_sort_table<Polinoms> A(size);
 	Sorting_table<Polinoms> B;
 	HashTable<Polinoms> C(size);
-	Sleep(1000);
+	system("pause");
 	while (true)
 	{
 		system("cls");
