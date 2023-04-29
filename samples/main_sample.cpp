@@ -165,7 +165,8 @@ int main()
 
 				Polynomial A = *table3.search(name);
 				Polynomial B, C;
-
+				cout << "Полином \"" << name << "\": ";
+				A.getPolynomial();
 				cout << endl;
 
 				cout << "Выберите операцию: " << endl;
@@ -197,6 +198,10 @@ int main()
 					}
 
 					B = *table3.search(name);
+
+					cout << "Полином \"" << name << "\": ";
+					A.getPolynomial();
+					cout << endl;
 				}
 
 				while (1)

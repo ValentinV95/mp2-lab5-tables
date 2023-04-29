@@ -1,7 +1,6 @@
 ﻿#pragma once
 
 #include <iostream>
-#include <queue>
 #include "logger.h"
 #include "pair.hpp"
 
@@ -27,11 +26,6 @@ struct RBNode
 
 	RBNode(const T& var) : tcolor(red), data(var), left(nullptr), right(nullptr), parent(nullptr)
 	{}
-
-	void getNode() const
-	{
-		std::cout << "(" << data << ", " << (tcolor ? "red" : "black") << ")";
-	}
 
 	RBNode<T>* maxLeft()                                   // Максимальный левый потомок
 	{
@@ -73,7 +67,7 @@ private:
 	void swapColor(RBNode<T>*, RBNode<T>*);                // Обмен цветами
 	void rightRotate(RBNode<T>*);                          // Правое вращение
 	void leftRotate(RBNode<T>*);                           // Левое вращение
-    void balancePush(RBNode<T>*);                          // Балансировка вставки
+	void balancePush(RBNode<T>*);                          // Балансировка вставки
 	void balanceDelete(RBNode<T>*);                        // Балансировка удаления
 	void DFS(RBNode<T>*) const;                            // Поиск в глубину
 

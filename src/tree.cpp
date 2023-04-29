@@ -8,8 +8,7 @@ void Tree<int>::DFS(RBNode<int>* cur) const
 	if (cur)
 	{
 		DFS(cur->left);
-		std::cout << std::endl;
-		cur->getNode();
+		std::cout << cur->data << std::endl;
 		DFS(cur->right);
 	}
 }
