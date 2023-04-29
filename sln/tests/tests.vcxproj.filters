@@ -30,6 +30,9 @@
     <ClCompile Include="..\..\test\test_hash_table.cpp">
       <Filter>Файлы ресурсов</Filter>
     </ClCompile>
+    <ClCompile Include="..\..\polinom\src\polinom.cpp">
+      <Filter>Исходные файлы</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\..\gtest\gtest.h">

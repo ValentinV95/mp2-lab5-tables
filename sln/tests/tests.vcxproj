@@ -140,6 +140,7 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="..\..\gtest\gtest-all.cc" />
+    <ClCompile Include="..\..\polinom\src\polinom.cpp" />
     <ClCompile Include="..\..\test\test_hash_table.cpp" />
     <ClCompile Include="..\..\test\test_main.cpp" />
     <ClCompile Include="..\..\test\test_non_sort_table.cpp" />

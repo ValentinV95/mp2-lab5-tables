@@ -396,7 +396,7 @@ public:
 		std::cout << std::setw(20) << std::left << "| " + t->key;
 		std::cout << "| ";
 		t->value.show();
-		//std::cout << '\t' << t->height << '\n';
+		std::cout << '\n';
 		std::cout << std::string(60, '-') << std::endl;
 	}
 

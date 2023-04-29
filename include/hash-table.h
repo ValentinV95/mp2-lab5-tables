@@ -118,7 +118,8 @@ public:
 		std::cout << std::setw(22) << std::left << "| NAME" << "| POLINOM" << std::endl;
 		for (int i = 0; i < structure.size(); i++)
 		{
-			show(structure[i]);
+			if (std::get<std::string>(structure[i]) != "\0")
+				show(structure[i]);
 		}
 	}
 
