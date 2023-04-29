@@ -2,13 +2,14 @@
 #include "pair.hpp"
 #include "polynomial.h"
 
-template<class T>
-void Tree<T>::DFS(RBNode<T>* cur) const
+template<>
+void Tree<int>::DFS(RBNode<int>* cur) const
 {
 	if (cur)
 	{
 		DFS(cur->left);
-		std::cout << cur->data << std::endl;
+		std::cout << std::endl;
+		cur->getNode();
 		DFS(cur->right);
 	}
 }

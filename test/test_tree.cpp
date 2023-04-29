@@ -280,3 +280,64 @@ TEST(Tree, deleting_node_in_tree_decrease_size_on_one)
     tree.deleteNode(tree.begin());
     EXPECT_EQ(0, tree.size());
 }
+
+TEST(Tree, can_delete_root)
+{
+    Tree<int> tree(5);
+    ASSERT_NO_THROW(tree.deleteNode(tree.begin()));
+}
+
+TEST(Tree, deleting_root_true)
+{
+    Tree<int> tree(5);
+    tree.deleteNode(tree.begin());
+    EXPECT_EQ(nullptr, tree.begin());
+}
+
+TEST(Tree, can_delete_root_with_one_left_child)
+{
+    Tree<int> tree(5);
+    tree.push(3);
+    ASSERT_NO_THROW(tree.deleteNode(tree.begin()));
+}
+
+TEST(Tree, deleting_root_with_one_left_child_true)
+{
+    Tree<int> tree(5);
+    tree.push(3);
+    tree.deleteNode(tree.begin());
+    EXPECT_EQ(3, tree.begin()->data);
+}
+
+TEST(Tree, can_delete_root_with_one_right_child)
+{
+    Tree<int> tree(5);
+    tree.push(6);
+    ASSERT_NO_THROW(tree.deleteNode(tree.begin()));
+}
+
+TEST(Tree, deleting_root_with_one_right_child_true)
+{
+    Tree<int> tree(5);
+    tree.push(6);
+    tree.deleteNode(tree.begin());
+    EXPECT_EQ(6, tree.begin()->data);
+}
+
+TEST(Tree, can_delete_root_with_two_childs)
+{
+    Tree<int> tree(5);
+    tree.push(3);
+    tree.push(6);
+    ASSERT_NO_THROW(tree.deleteNode(tree.begin()));
+}
+
+TEST(Tree, deleting_root_with_two_childs_true)
+{
+    Tree<int> tree(5);
+    tree.push(3);
+    tree.push(6);
+    tree.deleteNode(tree.begin());
+    EXPECT_EQ(6, tree.begin()->data);
+    EXPECT_EQ(black, tree.begin()->tcolor);
+}

@@ -10,7 +10,7 @@ using namespace std;
 
 enum MainMenu
 {
-	enter = 1, output, operations, deleting, logs,
+	enter = 1, output, operations, deleting,
 };
 
 enum OutputMenu
@@ -36,26 +36,25 @@ void longLine()
 int main()
 {
 	setlocale(LC_ALL, "Russian");
-	ofstream out("../../src/logs.txt", ofstream::trunc);
-	out.close();
-
-	int strNum = 0;
 	UnorderedTable<Polynomial> table1;
 	OrderedTable<Polynomial> table2;
 	HashTable<Polynomial> table3;
 	int choice1 = 0, choice2 = 0, choice3 = 0, exitcode = 1;
+	bool logsout = true;
 	string name;
 
 	try
 	{
 		while (exitcode)
 		{
+			ofstream out("../../src/logs.txt", ofstream::trunc);
+			out.close();
+
 			cout << "Выберите действие: " << endl;
 			cout << "1) Ввести полином" << endl;
 			cout << "2) Вывести полином/ы" << endl;
 			cout << "3) Операция над полиномом/ами" << endl;
 			cout << "4) Удалить полином из таблицы" << endl;
-			cout << "5) Посмотреть логи" << endl;
 			cout << "Другие клавиши - выйти " << endl;
 			cout << "Ваш выбор: ";
 			cin >> choice1;
@@ -89,6 +88,7 @@ int main()
 				{
 					cout << "Полином с таким названием уже есть" << endl;
 					cout << "Повторите попытку" << endl;
+					logsout = false;
 					break;
 				}
 
@@ -115,6 +115,7 @@ int main()
 				switch (choice2) {
 				case out_all:
 				{
+					logsout = false;
 					cout << "Неупорядочная таблица: " << endl;
 					table1.getTable();
 					cout << endl <<  "Упорядочная таблица: " << endl;
@@ -132,7 +133,7 @@ int main()
 					cout << "1) В неупорядочной таблице: ";
 					if (table1.search(name)) table1.search(name)->getPolynomial();
 					else cout << "nullptr" << endl;
-					cout << "2) В упорядочной таблице: " << endl;
+					cout << "2) В упорядочной таблице: ";
 					if (table2.search(name)) table2.search(name)->getPolynomial();
 					else cout << "nullptr" << endl;
 					cout << "3) В хэш таблице: ";
@@ -158,6 +159,7 @@ int main()
 				{
 					cout << "Полинома с таким названием нет" << endl;
 					cout << "Повторите попытку" << endl;
+					logsout = false;
 					break;
 				}
 
@@ -190,6 +192,7 @@ int main()
 					{
 						cout << "Полинома с таким названием нет" << endl;
 						cout << "Повторите попытку" << endl;
+						logsout = false;
 						break;
 					}
 
@@ -286,6 +289,7 @@ int main()
 				{
 					cout << "Полинома с таким названием нет" << endl;
 					cout << "Повторите попытку" << endl;
+					logsout = false;
 					break;
 				}
 
@@ -296,53 +300,35 @@ int main()
 				break;
 			}
 
-			case logs:
-			{
-				cout << "Результат работы программы: " << endl;
-
-				string outputLogs;
-				ifstream in("../../src/logs.txt");
-
-				if (!in.is_open()) throw std::runtime_error("File didn't open");
-
-				while (getline(in, outputLogs))
-					cout << outputLogs << endl;
-
-				in.close();
-
-				break;
-			}
-
 			default:
 			{
 				exitcode = 0;
+				logsout = false;
 				break;
 			}
 			}
 
-			if (enter <= choice1 && choice1 <= deleting && choice2 != out_all)
+			if (enter <= choice1 && choice1 <= deleting && logsout == true)
 			{
 				string outputSample = " ";
 				ifstream input("../../src/logs.txt");
-
-				if(!input.is_open()) throw std::runtime_error("File didn't open");
 
 				shortLine();
 				
 				cout << "Логи: " << endl;
 
-				for (int i = 0; i < strNum; i++)
-					getline(input, outputSample);
-
-				while (getline(input, outputSample))
+				if (input.is_open())
 				{
-					strNum++;
-					cout << outputSample << endl;
+					while (getline(input, outputSample))
+					{
+						cout << outputSample << endl;
+					}
 				}
 
 				input.close();
 			}
 
+			logsout = true;
 			shortLine();
 		}
 	}

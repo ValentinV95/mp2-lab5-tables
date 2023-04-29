@@ -18,7 +18,7 @@ private:
 public:
 	HashTable();                                           // Конструктор по умолчанию                  
 	~HashTable();                                          // Деструктор                    
-	int hash(const std::string&);                                 // Хэш-функция(остаток от деления)                                                        
+	int hash(const std::string&);                          // Хэш-функция(остаток от деления)                                                        
 	TData* search(const std::string&);                     // Поиск
 	void push(const Pair<TData>&);                         // Вставка
 	void deleteRow(const std::string&);                    // Удаление                    

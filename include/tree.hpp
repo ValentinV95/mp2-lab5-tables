@@ -32,6 +32,34 @@ struct RBNode
 	{
 		std::cout << "(" << data << ", " << (tcolor ? "red" : "black") << ")";
 	}
+
+	RBNode<T>* maxLeft()                                   // Максимальный левый потомок
+	{
+		RBNode<T>* temp = this->left;
+
+		while (temp->right)
+		{
+			++treeTable;
+			temp = temp->right;
+		}
+
+		return temp;
+	}
+
+	RBNode<T>* minRight()                                  // Минимальный правый потомок
+	{
+		RBNode<T>* temp = this->right;
+
+		while (temp->left)
+		{
+			++treeTable;
+			temp = temp->left;
+		}
+
+
+		return temp;
+	}
+
 };
 
 template<class T>
@@ -40,16 +68,14 @@ class Tree
 private:
 	RBNode<T>* root;                                       // Указатель на корень
 	int tsize;                                             // Количество узлов в данный момент
-	std::vector<int> map_of_tree;
 
 	void swapData(RBNode<T>*, RBNode<T>*);                 // Обмен данными
 	void swapColor(RBNode<T>*, RBNode<T>*);                // Обмен цветами
 	void rightRotate(RBNode<T>*);                          // Правое вращение
-    void leftRotate(RBNode<T>*);                           // Левое вращение
+	void leftRotate(RBNode<T>*);                           // Левое вращение
     void balancePush(RBNode<T>*);                          // Балансировка вставки
 	void balanceDelete(RBNode<T>*);                        // Балансировка удаления
-	RBNode<T>* maxLeft(RBNode<T>*);                        // Максимальный левый потомок
-	RBNode<T>* minRight(RBNode<T>*);                       // Минимальный правый потомок
+	void DFS(RBNode<T>*) const;                            // Поиск в глубину
 
 public:
 	Tree();                                                // Конструктор по умолчанию
@@ -63,7 +89,6 @@ public:
 	int size() const;                                      // Получение количества узлов в данный момент
 	void clear();                                          // Удаление всех узлов в дереве
 	void getTree() const;                                  // Функция вызова поиска в глубину
-	void DFS(RBNode<T>*) const;                            // Поиск в глубину
 
 };
 
@@ -182,115 +207,88 @@ void Tree<T>::balancePush(RBNode<T>* cur)
 
 template<class T>
 void Tree<T>::balanceDelete(RBNode<T>* cur)
-{  
-	if (cur->tcolor == red) return;   // Удаляемый узел красный
+{
+	RBNode<T>* father = cur->parent;
+	RBNode<T>* brother;
+	RBNode<T>* nephewleft;
+	RBNode<T>* nephewright;
 
-	RBNode<T>* temp;
+	if (cur->tcolor == red) return;                        // Если удаляемый узел - красный, то просто удаляем его
 
-	++treeTable;
-
-	if (cur->left || cur->right)            // Удаляемый узел черный с одним ребенком
+	if (!father)                                           // Если удаляемый узел - корень, то красим в черный
 	{
-		//if (cur == this->root) cur->left ? cur->left->tcolor = black : cur->right->tcolor = black;
-		//else 
-		cur->left ? swapColor(cur->left, cur) : swapColor(cur->right, cur);
+		cur->tcolor = black;
+		return;
 	}
 
-	else if (cur->parent && !cur->left && !cur->right)            // Удаляемый узел черный без детей
+	brother = father->right == cur ? father->left : father->right;	
+	nephewleft = brother->left;
+	nephewright = brother->right;
+
+	if (brother->tcolor == red)                            // Брат удаляемого узла - красный
 	{
-		RBNode<T>* father = cur->parent;
-		RBNode<T>* brother = father->right == cur ? father->left : father->right;
-		RBNode<T>* nephewleft = brother->left;
-		RBNode<T>* nephewright = brother->right;
+		swapColor(father, brother);
 
-		if (brother->tcolor == black)                                      // Брат удаляемого узла черный
+		if (father->left == cur) leftRotate(father);       // Удаляемый узел - левый сын
+		else rightRotate(father);                          // Удаляемый узел - правый сын
+
+		balanceDelete(cur);
+	}
+
+	else                                                   // Брат удаляемого узла - черный
+	{
+		if ((!nephewleft || nephewleft->tcolor == black) &&  // Дети брата - черные или их нет
+			(!nephewright || nephewright->tcolor == black))
 		{
-			if (nephewright && nephewright->tcolor == red)                 // Правый ребенок брата удаляемого узла красный
+			if (father->tcolor == red)                     // Отец красный
 			{
-				if (father->left == cur)                                   // Случай, когда удаляемый узел левый сын
-				{
-					brother->tcolor = father->tcolor;
-					father->tcolor = black;
-					if (nephewright)nephewright->tcolor = black;
-					leftRotate(father);
-				}
-
-				else                                                       // Случай, когда удаляемый узел правый сын
-				{
-					if (nephewleft && nephewright) swapColor(nephewleft, nephewright);
-					else if (nephewright) nephewright->tcolor = black;
-					else if (nephewleft) nephewleft->tcolor = black;
-					leftRotate(brother);
-					balanceDelete(cur);
-				}
+				swapColor(father, brother);
 			}
 
-			else if (nephewleft && nephewleft->tcolor == red)              // Левый ребенок брата удаляемого узла красный
+			else                                           // Отец черный
 			{
-				if (father->left == cur)                                   // Случай, когда удаляемый узел левый сын
+				brother->tcolor = red;
+				balanceDelete(father);
+			}
+		}
+
+		else                                               // Есть хоть один красный сын у брата
+		{
+			if (father->left == cur)                       // Удаляемый узел - левый сын
+			{
+				if (nephewleft && nephewleft->tcolor == red) // Левый сын брата - красный
 				{
-					if (nephewleft && nephewright) swapColor(nephewleft, nephewright);
-					else if (nephewright) nephewright->tcolor = black;
-					else if (nephewleft) nephewleft->tcolor = black;
+					swapColor(brother, nephewleft);
 					rightRotate(brother);
 					balanceDelete(cur);
 				}
 
-				else                                                       // Случай, когда удаляемый узел правый сын
+				else                                       // Правый сын брата - черный
 				{
-					brother->tcolor = father->tcolor;
-					father->tcolor = black;
-					if (nephewright)nephewright->tcolor = black;
-					rightRotate(father);
+					swapColor(brother, father);
+					nephewright->tcolor = black;
+					leftRotate(father);
 				}
 			}
 
-			else if ((!nephewleft || nephewleft->tcolor == black) &&
-				(!nephewright || nephewright->tcolor == black))             // Оба ребенка брата удаляемого узла черные
+			else                                           // Удаляемый узел - правый сын
 			{
-				brother->tcolor = red;
-				if (father->tcolor == black) balanceDelete(father);
-				else father->tcolor = black;
+				if (nephewleft && nephewleft->tcolor == red) // Левый сын брата - красный
+				{
+					swapColor(brother, father);
+					nephewleft->tcolor = black;
+					rightRotate(father);
+				}
+
+				else                                       // Правый сын брата - красный
+				{
+					swapColor(brother, nephewright);
+					leftRotate(brother);
+					balanceDelete(cur);
+				}
 			}
 		}
-
-		else                                                               // Брат удаляемого узла красный         
-		{
-			father->tcolor = red;
-			//brother->tcolor = red;
-			cur == father->left ? leftRotate(father) : rightRotate(father);// левый или правый удаляемый узел
-			balanceDelete(cur);
-		}
 	}
-}
-
-template<class T>
-RBNode<T>* Tree<T>::maxLeft(RBNode<T>* cur)
-{
-	RBNode<T>* temp = cur->left;
-
-	while (temp->right)
-	{
-		++treeTable;
-		temp = temp->right;
-	}
-
-	return temp;
-}
-
-template<class T>
-RBNode<T>* Tree<T>::minRight(RBNode<T>* cur)
-{
-	RBNode<T>* temp = cur->right;
-
-	while (temp->left)
-	{
-		++treeTable;
-		temp = temp->left;
-	}
-
-
-	return temp;
 }
 
 template<class T>
@@ -407,40 +405,27 @@ void Tree<T>::deleteNode(RBNode<T>* cur)
 		RBNode<T>* temp;
 		RBNode<T>* father = cur->parent;
 
-		if (cur->left && cur->right)
+		if (!cur->left && !cur->right)
 		{
-			temp = minRight(cur);
-			
-			swapData(temp, cur);
-			deleteNode(temp);
-		}
-
-		else
-		{
-			//balanceDelete(cur);
-
-			if (cur->left || cur->right)
-			{
-				if (cur->left) temp = cur->left;
-				else temp = cur->right;
-
-				temp->parent = father;
-
-				if (!father) this->root = temp;
-				else father->left == cur ? father->left = temp : father->right = temp;
-
-			}
-
+			if (!father) this->root = nullptr;
 			else
 			{
-				if (!father) this->root = nullptr;
-				else father->left == cur ? father->left = nullptr : father->right = nullptr;
+				balanceDelete(cur);
+				father->left == cur ? father->left = nullptr : father->right = nullptr;
 			}
 
 			delete cur;
 			cur = nullptr;
 			tsize--;
 			treeTable.Logmsg("Tree<T>::deleteNode()");
+		}
+
+		else
+		{
+			if (cur->left && cur->right) temp = cur->minRight();
+			else cur->left ? temp = cur->left : temp = cur->right;
+			swapData(temp, cur);
+			deleteNode(temp);
 		}
 	}
 }
@@ -479,6 +464,4 @@ void Tree<T>::getTree() const
 	{
 		DFS(this->root);
 	}
-
-	std::cout << std::endl;
 }

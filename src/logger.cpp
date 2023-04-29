@@ -18,12 +18,12 @@ void LogTable::Logmsg(std::string func_name)
     auto now = std::chrono::system_clock::now();
     std::time_t end_time = std::chrono::system_clock::to_time_t(now);
 
-    if (!out.is_open()) throw std::runtime_error("File didn't open");
-
-    out << std::ctime(&end_time) << func_name << " ";
-    if (func_name == "UnorderedTable::push()") out << "(if only in search) ";
-    out << "\"" << operation << "\" call number: " << operation_number << std::endl;
-
+    if (out.is_open())
+    {
+        out << std::ctime(&end_time) << func_name << " ";
+        if (func_name == "UnorderedTable::push()") out << "(if only in search) ";
+        out << "\"" << operation << "\" call number: " << operation_number << std::endl;
+    }
     out.close();
 
     operation_number = 0;

@@ -8,12 +8,12 @@
 class LogTable
 {
 private:
-    std::string operation;
-    int operation_number;
+    std::string operation;                                 // Название операции
+    int operation_number;                                  // Количество операций
+
 public:
-    LogTable(std::string);
+    LogTable(std::string);                                 // Конструктор, принимающий название класса
+    const LogTable& operator ++();                         // Префиксный инкремент, для увеличения количества совершенных операций
+    void Logmsg(std::string);                              // Запись в файл информации о совершенных действиях
 
-    const LogTable& operator ++();
-
-    void Logmsg(std::string);
 };

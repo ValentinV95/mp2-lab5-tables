@@ -1,8 +1,8 @@
 #include "pair.hpp"
 #include "polynomial.h"
 
-template<class TData>
-void Pair<TData>::getPair()
+template<>
+void Pair<int>::getPair()
 {
 	std::cout << "|" << key;
 	for (size_t i = 0; i < (24 - key.size()); i++)

@@ -32,8 +32,8 @@ public:
 
 	Polynomial operator *(const Polynomial&) const;     // Оператор *
 
-	void truePolynomial();                              // Удаляет мономы с нулевыми коэффициентами 
-                                                        // или складывает мономы с одинаковыми степенями
+	void truePolynomial();                              // Удаляет мономы с нулевыми коэффициентами
+	                                                    // или складывает мономы с одинаковыми степенями
 	void setPolynomial();                               // Ввести полином
 
 	void getPolynomial();                               // Вывести полином на экран
