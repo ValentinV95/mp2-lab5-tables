@@ -2,6 +2,7 @@
 #pragma once
 #include <vector>
 #include <iostream>
+#include "../polinom/include/polinom.h"
 
 template <typename T>
 class HashTable {

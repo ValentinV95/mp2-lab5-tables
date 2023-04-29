@@ -44,5 +44,8 @@
     <ClInclude Include="..\..\include\hash-table.h">
       <Filter>Исходные файлы</Filter>
     </ClInclude>
+    <ClInclude Include="..\..\polinom\include\polinom.h">
+      <Filter>Исходные файлы</Filter>
+    </ClInclude>
   </ItemGroup>
 </Project>
