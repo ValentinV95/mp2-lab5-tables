@@ -200,7 +200,7 @@ int main()
 					B = *table3.search(name);
 
 					cout << "Полином \"" << name << "\": ";
-					A.getPolynomial();
+					B.getPolynomial();
 					cout << endl;
 				}
 
