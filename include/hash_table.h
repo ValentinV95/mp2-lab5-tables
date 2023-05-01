@@ -3,7 +3,7 @@
 
 using std::string;
 
-namespace ht_constants
+namespace hash_constants
 {
 	const double GOLDEN_RATIO = (sqrt(5) - 1) / 2;
 }
@@ -33,7 +33,7 @@ private:
 		{
 			sum += character;
 		}
-		return static_cast<int>(capacity * fmod(sum * ht_constants::GOLDEN_RATIO, 1.0));
+		return static_cast<int>(capacity * fmod(sum * hash_constants::GOLDEN_RATIO, 1.0));
 	}
 	int probe(int hash_index)
 	{

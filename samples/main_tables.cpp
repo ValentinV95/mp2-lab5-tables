@@ -1,3 +1,5 @@
+#include <iostream>
+#include <string>
 #include "unordered_table.h"
 #include "ordered_table.h"
 #include "hash_table.h"
@@ -5,16 +7,25 @@
 #include "logger.h"
 
 #define SIZE 100
+#undef max
 
 using std::cin;
 using std::cout;
 using std::endl;
 
+template<typename type>
+void input(type& buffer)
+{
+	cin >> buffer;
+	cin.clear();
+	cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
+}
+
 bool fill(Polynom& poly) // return false if the polynomial could not be filled in
 {
 	int num;
 	cout << "\nEnter the number of monomials in the polynomial: ";
-	cin >> num;
+	input(num);
 	if (num < 1)
 	{
 		LOGS_ERROR("Non-positive number of monomials");
@@ -27,9 +38,9 @@ bool fill(Polynom& poly) // return false if the polynomial could not be filled i
 	for (int i = 0; i < num; i++)
 	{
 		cout << "\nEnter the coefficient: ";
-		cin >> coefficient;
+		input(coefficient);
 		cout << endl << "Enter the degree: ";
-		cin >> degree;
+		input(degree);
 		try
 		{
 			poly.add_monom(coefficient, degree);
@@ -47,7 +58,7 @@ void insert_into_tables(Polynom& pol, UnorderedTable<Polynom>& uT, OrderedTable<
 {
 	string name = "";
 	cout << "\nEnter name of the polynomial: ";
-	cin >> name;
+	std::getline(cin, name);
 	try
 	{
 		uT.insert(name, pol);
@@ -69,8 +80,8 @@ void insert_into_tables(Polynom& pol, UnorderedTable<Polynom>& uT, OrderedTable<
 void remove_from_tables(UnorderedTable<Polynom>& uT, OrderedTable<Polynom>& oT, HashTable<Polynom>& hT)
 {
 	string name = "";
-	cout << "\n\nEnter name of the polynomial: ";
-	cin >> name;
+	cout << "\nEnter name of the polynomial: ";
+	std::getline(cin, name);
 	try
 	{
 		uT.remove(name);
@@ -93,22 +104,36 @@ Polynom* find_in_tables(UnorderedTable<Polynom>& uT, OrderedTable<Polynom>& oT, 
 {
 	string name = "";
 	cout << "\nEnter name of the polynomial: ";
-	cin >> name;
-	if (uT.find(name) != nullptr)
+	std::getline(cin, name);
+	Polynom* pol_uT = uT.find(name);
+	Polynom* pol_oT = oT.find(name);
+	Polynom* pol_hT = hT.find(name);
+	char counter_found = 0;
+	if (pol_uT != nullptr)
 	{
 		LOGS_SUCCESS("the polynomial has been found in the unordered table");
 		LOGS_COUNTER("comparisons", uT.get_operations_number());
+		counter_found++;
 	}
-	if (oT.find(name) != nullptr)
+	if (pol_oT != nullptr)
 	{
 		LOGS_SUCCESS("the polynomial has been found in the ordered table");
 		LOGS_COUNTER("comparisons", oT.get_operations_number());
+		counter_found++;
 	}
-	if (hT.find(name) != nullptr)
+	if (pol_hT != nullptr)
 	{
 		LOGS_SUCCESS("the polynomial has been found in the hash table");
 		LOGS_COUNTER("probings", hT.get_operations_number());
-		return hT.find(name);
+		counter_found++;
+	}
+	if (counter_found == 3)
+	{
+		if ((*pol_uT) == (*pol_oT) && (*pol_hT) == (*pol_uT) && (*pol_hT) == (*pol_oT))
+		{
+			LOGS_SUCCESS("the polynomials found in different tables are the same");
+			return pol_hT;
+		}
 	}
 	LOGS_WARNING("polynomial was not found");
 	return nullptr;
@@ -116,18 +141,18 @@ Polynom* find_in_tables(UnorderedTable<Polynom>& uT, OrderedTable<Polynom>& oT, 
 
 void insert_result(Polynom& _res, UnorderedTable<Polynom>& uT, OrderedTable<Polynom>& oT, HashTable<Polynom>& hT)
 {
-	int select;
+	short select;
 	cout << "\n\n1 - insert result" << endl;
 	cout << "2 - do not insert result" << endl;
 	cout << "Enter: ";
-	cin >> select;
+	input(select);
 	if (select == 1) // insert allowed
 	{
 		insert_into_tables(_res, uT, oT, hT);
 	}
 	else if (select != 2)
 	{
-		LOGS_WARNING("invalid number");
+		LOGS_ERROR("invalid number - the result was not inserted");
 	}
 }
 
@@ -139,14 +164,14 @@ enum polynom_operations {
 };
 bool perform_operations(UnorderedTable<Polynom>& uT, OrderedTable<Polynom>& oT, HashTable<Polynom>& hT)
 {
-	int select;
-	cout << "\n\nSelect an operation:\n" << endl;
+	short select;
+	cout << "\nSelect an operation:\n" << endl;
 	cout << "1 - addition" << endl;
 	cout << "2 - subtraction" << endl;
 	cout << "3 - multiplication" << endl;
 	cout << "4 - multiplication by a number" << endl;
 	cout << "\nOperation number: ";
-	cin >> select;
+	input(select);
 
 	switch (select)
 	{
@@ -164,7 +189,7 @@ bool perform_operations(UnorderedTable<Polynom>& uT, OrderedTable<Polynom>& oT, 
 			break;
 		}
 		Polynom res = *pol1 + *pol2;
-		cout << "\n\nResult: ";
+		cout << "\nResult: ";
 		res.show();
 		insert_result(res, uT, oT, hT);
 		break;
@@ -183,7 +208,7 @@ bool perform_operations(UnorderedTable<Polynom>& uT, OrderedTable<Polynom>& oT, 
 			break;
 		}
 		Polynom res = *pol1 - *pol2;
-		cout << "\n\nResult: ";
+		cout << "\nResult: ";
 		res.show();
 		insert_result(res, uT, oT, hT);
 		break;
@@ -204,13 +229,13 @@ bool perform_operations(UnorderedTable<Polynom>& uT, OrderedTable<Polynom>& oT, 
 		try
 		{
 			Polynom res = (*pol1) * (*pol2);
-			cout << "\n\nResult: ";
+			cout << "\nResult: ";
 			res.show();
 			insert_result(res, uT, oT, hT);
 		}
 		catch (const exception& except)
 		{
-			LOGS_WARNING(except.what());
+			LOGS_ERROR(except.what());
 		}
 		break;
 	}
@@ -224,10 +249,10 @@ bool perform_operations(UnorderedTable<Polynom>& uT, OrderedTable<Polynom>& oT, 
 		}
 		double number;
 		cout << "\nEnter the number: ";
-		cin >> number;
+		input(number);
 
 		Polynom res = *pol1 * number;
-		cout << "\n\nResult: ";
+		cout << "\nResult: ";
 		res.show();
 		insert_result(res, uT, oT, hT);
 		break;
@@ -238,7 +263,6 @@ bool perform_operations(UnorderedTable<Polynom>& uT, OrderedTable<Polynom>& oT, 
 		return false;
 	}
 	}
-	cout << endl;
 	return true;
 }
 
@@ -255,7 +279,6 @@ int main()
 	cout << " 1) All rules for entering polynomials remain unchanged" << endl;
 	cout << " 2) The limit of the number of polynomials in tables is " << SIZE << " instances" << endl;
 	cout << " 3) Operations with polynomials are performed only with polynomials inserted into tables" << endl;
-	cout << " 4) Incorrect input while working with tables can lead to loss of table data and termination of the program" << endl;
 
 	UnorderedTable<Polynom> unorderedT(SIZE);
 	OrderedTable<Polynom> orderedT;
@@ -268,8 +291,8 @@ int main()
 		PERFORM_POLYNOMIAL_OPERATIONS,
 		EXIT
 	};
-
-	int select;
+	
+	short select;
 	while (true)
 	{
 		cout << endl << "1 - insert new polynomial into the table" << endl;
@@ -278,7 +301,7 @@ int main()
 		cout << "4 - perform polynomial operations" << endl;
 		cout << "5 - exit" << endl;
 		cout << "Enter: ";
-		cin >> select;
+		input(select);
 		if (select == EXIT) break;
 		else
 		{
@@ -287,11 +310,10 @@ int main()
 			case INSERT_POLYNOMIAL:
 			{
 				Polynom pol;
-				if (!fill(pol))
+				if (fill(pol))
 				{
-					return 1;
+					insert_into_tables(pol, unorderedT, orderedT, hashT);
 				}
-				insert_into_tables(pol, unorderedT, orderedT, hashT);
 				break;
 			}
 			case REMOVE_POLYNOMIAL:
@@ -312,16 +334,13 @@ int main()
 			}
 			case PERFORM_POLYNOMIAL_OPERATIONS:
 			{
-				if (!perform_operations(unorderedT, orderedT, hashT))
-				{
-					return 1;
-				}
+				perform_operations(unorderedT, orderedT, hashT);
 				break;
 			}
 			default:
 			{
 				LOGS_ERROR("invalid operation number");
-				return 1;
+				break;
 			}
 			}
 		}

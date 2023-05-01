@@ -60,6 +60,7 @@ public:
                 }
                 tail = new_node;
             }
+            size = list.size;
         }
         return *this;
     }
