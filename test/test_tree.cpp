@@ -38,6 +38,24 @@ TEST(RBT_TABLE, can_delete_leaf)
 	ASSERT_NO_THROW(table.Delete(string("Two")));
 }
 
+TEST(RBT_TABLE, can_delete_leaf_correctly)
+{
+	TRBTree<int> test;
+
+	test.Insert(0);
+	test.Insert(1);
+	test.Insert(2);
+	test.Insert(3);
+	test.Insert(4);
+	test.Insert(5);
+	test.Insert(6);
+	test.Insert(7);
+
+	test.Delete(3);//Тут все норм
+	test.Delete(6); //Тут теряется 7
+	ASSERT_NO_THROW(test.Search(7));
+}
+
 TEST(RBT_TABLE, can_insert_element_after_delete_root)
 {
 	TRBTreeTable<size_t, size_t> table;

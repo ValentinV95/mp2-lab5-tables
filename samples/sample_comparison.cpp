@@ -150,14 +150,14 @@ int main()
     TUnorderedTable<string, Polinom> arrTable;
     TRBTreeTable<string, Polinom> RBTTable;
 
-    bool exit = false;
-    while(!exit)
+    while(true)
     {
         cout << "Выберите операцию:" << endl
             << "<1> создать и сохранить полином." << endl
             << "<2> найти полином." << endl
             << "<3> удалить полином." << endl
-            << "<4> Выполнить арифметическую операцию" << endl;
+            << "<4> Выполнить арифметическую операцию" << endl
+            << "<5> Закрыть приложение" << endl;
 
         char choose = 0;
         cin >> choose;
@@ -179,6 +179,8 @@ int main()
         case '4':
             Arifmetic(hashTable, arrTable, RBTTable);
             break;
+        case '5':
+            exit(0);
         default:
             cout << "Неверный ввод!" << endl;
         }

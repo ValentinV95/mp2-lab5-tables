@@ -83,7 +83,7 @@ class TRBTree
 	
 	bool isLeaf(Node* node)
 	{
-		if((node->lChild == null && node->rChild == null) || node == null)
+		if(node == null)
 		{
 			return true;
 		}
