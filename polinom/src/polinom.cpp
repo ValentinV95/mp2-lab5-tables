@@ -332,7 +332,7 @@ Polinoms Polinoms::operator+(const Polinoms& pln)
         i = i->pNext;
     }
 
-    while (pln_ptr != nullptr)
+    while (pln_ptr != nullptr && pln_ptr->factor != 0)
     {
         res.push_back(pln_ptr->factor, pln_ptr->pow);
         pln_ptr = pln_ptr->pNext;

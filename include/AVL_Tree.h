@@ -31,141 +31,6 @@ private:
 	Node *root;
 	int size;
 
-public:
-	/*--------------------обход в глубину-----------------------*/
-	class iterator {
-	private:
-		Node* ptr;
-	public:
-		iterator() {}
-
-		iterator(Node* p)
-		{
-			ptr = p;
-		}
-
-		iterator& operator++(int) {
-			if (ptr->right != nullptr) {
-				ptr = ptr->right;
-				while (ptr->left != nullptr)
-				{
-					ptr = ptr->left;
-				}
-			}
-			else {
-				Node* tmp = ptr->parent;
-				while (tmp != nullptr && ptr == tmp->right) {
-					ptr = tmp;
-					tmp = tmp->parent;
-				}
-				ptr = tmp;
-			}
-			return *this;
-		}
-
-		Node* operator*()
-		{
-			return ptr;
-		}
-
-		bool operator==(const Node* second) const
-		{
-			return ((ptr->key == second->key) && (ptr->value == second->value));
-		}
-
-		bool operator!=(const Node* second) const
-		{
-			return !(ptr == second);
-		}
-
-		~iterator() { delete ptr; }
-	};
-
-	Node* begin() const
-	{
-		if (root == nullptr)
-			return nullptr;
-		Node* a = root;
-		while (a->left != nullptr)
-			a = a->left;
-		return a;
-	}
-
-	Node* end() const
-	{
-		return nullptr;
-	}
-	/*----------------------------------------------------------*/
-
-	Sorting_table()
-	{
-		root = nullptr;
-		size = 0;
-		std::cout << "LOG: Sorting table construct" << std::endl;
-	}
-
-	Node* getRoot()
-	{
-		return root;
-	}
-
-	void insert(std::string key, T data, int& log_count)  //right - max, left - min
-	{
-		Node* prev = root;
-		bool flag_right = true;
-		Node *tmp = root;
-		if (root == nullptr)
-		{
-			log_count++;
-			root = new Node(key, data);
-		}
-		else
-		{
-			while (tmp != nullptr)
-			{
-				log_count++;
-				if (tmp->left != nullptr || tmp->right != nullptr)
-				{
-					log_count++;
-					tmp->height = tmp->height + 1;
-				}
-				if (key > tmp->key)
-				{
-					log_count++;
-					prev = tmp;
-					tmp = tmp->right;
-				}
-				else if (key < tmp->key)
-				{
-					log_count++;
-					prev = tmp;
-					tmp = tmp->left;
-					flag_right = false;
-				}
-				else
-				{
-					throw std::exception("ERROR: this name already used");
-				}
-			}
-
-			tmp = new Node(key, data, prev);
-
-			balance(root, log_count);
-
-			if (flag_right)
-			{
-				log_count++;
-				prev->right = tmp;
-			}
-			else
-			{
-				log_count++;
-				prev->left = tmp;
-			}
-		}
-		size++;
-	}
-
 	/*-------------------------балансировка дерева---------------------------------*/
 	int balanceFactor(Node* ptr)
 	{
@@ -257,6 +122,140 @@ public:
 		rotateRight(ptr);
 	}
 	/*--------------------------------------------------------------------------------*/
+public:
+	/*--------------------обход в глубину-----------------------*/
+	class iterator {
+	private:
+		Node* ptr;
+	public:
+		iterator() {}
+
+		iterator(Node* p)
+		{
+			ptr = p;
+		}
+
+		iterator& operator++(int) {
+			if (ptr->right != nullptr) {
+				ptr = ptr->right;
+				while (ptr != nullptr && ptr->left != nullptr)
+				{
+					ptr = ptr->left;
+				}
+			}
+			else {
+				Node* tmp = ptr->parent;
+				while (tmp != nullptr && ptr == tmp->right) {
+					ptr = tmp;
+					tmp = tmp->parent;
+				}
+				ptr = tmp;
+			}
+			return *this;
+		}
+
+		Node* operator*()
+		{
+			return ptr;
+		}
+
+		bool operator==(const Node* second) const
+		{
+			return ((ptr->key == second->key) && (ptr->value == second->value));
+		}
+
+		bool operator!=(const Node* second) const
+		{
+			return !(ptr == second);
+		}
+
+		~iterator() { }
+	};
+
+	Node* begin() const
+	{
+		if (root == nullptr)
+			return nullptr;
+		Node* a = root;
+		while (a->left != nullptr)
+			a = a->left;
+		return a;
+	}
+
+	Node* end() const
+	{
+		return nullptr;
+	}
+	/*----------------------------------------------------------*/
+
+	Sorting_table()
+	{
+		root = nullptr;
+		size = 0;
+		std::cout << "LOG: Sorting table construct" << std::endl;
+	}
+
+	Node* getRoot()
+	{
+		return root;
+	}
+
+	void insert(std::string key, T data, int& log_count)  //right - max, left - min
+	{
+		Node* prev = root;
+		bool flag_right = true;
+		Node *tmp = root;
+		if (root == nullptr)
+		{
+			log_count++;
+			root = new Node(key, data);
+		}
+		else
+		{
+			while (tmp != nullptr)
+			{
+				log_count++;
+				if (tmp->left != nullptr || tmp->right != nullptr)
+				{
+					log_count++;
+					tmp->height = tmp->height + 1;
+				}
+				if (key > tmp->key)
+				{
+					log_count++;
+					prev = tmp;
+					tmp = tmp->right;
+				}
+				else if (key < tmp->key)
+				{
+					log_count++;
+					prev = tmp;
+					tmp = tmp->left;
+					flag_right = false;
+				}
+				else
+				{
+					throw std::exception("ERROR: this name already used");
+				}
+			}
+
+			tmp = new Node(key, data, prev);
+
+			balance(root, log_count);
+
+			if (flag_right)
+			{
+				log_count++;
+				prev->right = tmp;
+			}
+			else
+			{
+				log_count++;
+				prev->left = tmp;
+			}
+		}
+		size++;
+	}
 
 	/*----------------------------------взаимодействия с таблицей--------------------------------------------*/
 	void Add(std::string key, T value)
@@ -322,9 +321,9 @@ public:
 	{
 		int log_comparison = 0;
 		Node* curr_ptr = AVLSearch(current_key, log_comparison);
-		Node* p = curr_ptr->parent;
 		if (curr_ptr != nullptr)
 		{
+			Node* p = curr_ptr->parent;
 			log_comparison++;
 			if (curr_ptr->left == nullptr && curr_ptr->right == nullptr)
 			{
@@ -336,17 +335,27 @@ public:
 			{
 				log_comparison++;
 				Node* p = curr_ptr->parent;
-				Node* child = curr_ptr->left;
+				Node* child;
+				child = curr_ptr->left;
 				if (curr_ptr->left == nullptr)
 					child = curr_ptr->right;
 				log_comparison++;
-				if (child->key > p->key)
+				if (p != nullptr && child->key > p->key)
+				{
 					p->right = child;
-				else
+					child->parent = p;
+				}
+				else if (p != nullptr && child->key < p->key)
+				{
 					p->left = child;
+					child->parent = p;
+				}
+				else
+				{
+					root = child;
+				}
 
 				log_comparison++;
-				child->parent = p;
 
 				delete curr_ptr;
 			}
@@ -357,24 +366,38 @@ public:
 				Node* child_r = curr_ptr->right;
 				Node* child_l = curr_ptr->left;
 				Node* minimum = minNode(child_r);
-				if (minimum->key > p->key)
+				log_comparison++;
+				if (p != nullptr && minimum->key > p->key)
 					p->right = minimum;
-				else
+				else if (p != nullptr && minimum->key < p->key)
 					p->left = minimum;
+				else
+				{
+					root = minimum;
+				}
 				minimum->parent = p;
 				minimum->left = child_l;
 				minimum->right = child_r;
 				log_comparison++;
 				delete curr_ptr;
 			}
-
-			for (Node* tmp = p->parent; p->parent != nullptr; tmp = tmp->parent)
+			
+			for (Node* tmp = p; p != nullptr && tmp != nullptr; tmp = tmp->parent)
 			{
 				log_comparison++;
 				fixHeight(p);
 			}
 
-			balance(p, log_comparison);
+			if (p != nullptr)
+				balance(p, log_comparison);
+			log_comparison++;
+
+			std::cout << "LOG: row delete\nLOG: made " << log_comparison << " comparison in AVLTree(if)" << std::endl;
+		}
+		else
+		{
+			std::cout << "LOG: this key not in sort table" << std::endl;
+			std::cout << "LOG: made " << log_comparison << " comparison in AVLTree(if)" << std::endl;
 		}
 	}
 	/*-------------------------------------------------------------------------------------------------------*/
@@ -403,6 +426,7 @@ public:
 	~Sorting_table()
 	{
 		for (iterator it = begin(); it != end(); )
+		{
 			if ((*it)->left == nullptr && (*it)->right == nullptr)
 			{
 				Node* tmp = (*it);
@@ -413,5 +437,6 @@ public:
 			{
 				it++;
 			}
+		}
 	}
 };

@@ -37,7 +37,7 @@ public:
 	/*----------------------------------взаимодействия-с-таблицей--------------------------------------------*/
 	void Add(std::string key, T value)
 	{
-		if (std::get<std::string>(Search(key)) != "0")
+		if (Search(key).first != "0")
 			throw std::exception("this name already using");
 		structure.insert(structure.end(), std::pair<std::string, T>(key, value));
 		int log_count_plusplus = structure.size();
@@ -51,11 +51,11 @@ public:
 	{
 		for (int i = 0; i < structure.size(); i++)
 		{
-			if (std::get<std::string>(structure[i]) == current_key)
+			if (structure[i].first == current_key)
 			{
 				std::cout << "LOG: polinom ";
-				std::get<T>(structure[i]).show();
-				std::cout << "with name " << std::get<std::string>(structure[i]) << "found" << std::endl;
+				structure[i].second.show();
+				std::cout << "with name " << structure[i].first << "found" << std::endl;
 				std::cout << "LOG: made " << i << " transition in array(++)" << std::endl;
 				return structure[i];
 			}
@@ -71,7 +71,7 @@ public:
 		bool flag_empty = true;
 		for (auto it = structure.begin(); it != structure.end(); it++)
 		{
-			if (std::get<std::string>(structure[i]) == current_key)
+			if (structure[i].first == current_key)
 			{
 				structure.erase(it);
 				flag_empty = false;
@@ -101,8 +101,8 @@ public:
 	void show(std::pair<std::string, T> t)
 	{
 		std::cout << std::string(60, '-') << std::endl;
-		std::cout << "| " << std::setw(20) << std::left << std::get<std::string>(t) << "| ";
-		std::get<T>(t).show();
+		std::cout << "| " << std::setw(20) << std::left << t.first << "| ";
+		t.second.show();
 		std::cout << "\n";
 		std::cout << std::string(60, '-') << std::endl;
 	}

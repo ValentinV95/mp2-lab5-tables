@@ -2,6 +2,7 @@
 #include <iomanip>
 #include <windows.h>
 #include <string>
+#include <locale.h>
 #include "../include/array.h"
 #include "../polinom/include/polinom.h"
 #include "../include/AVL_Tree.h"
@@ -22,7 +23,7 @@ void run_insert(const std::string& com, non_sort_table<Polinoms>& A, Sorting_tab
 		}
 		i++;
 		std::string polinom;
-		if (com[i] == '[') //insert[][]
+		if ((i+1) < com.size() && com[i] == '[' && com[i + 1] != '[') //insert[][]
 		{
 			i++;
 			
@@ -38,56 +39,85 @@ void run_insert(const std::string& com, non_sort_table<Polinoms>& A, Sorting_tab
 			B.Add(key, Polinoms(polinom));
 			C.Add(key, Polinoms(polinom));
 		}
-		else if (com[i] == '+' || com[i] == '-' || com[i] == '*') //insert[]+[]
+		else if ((i + 1) < com.size() && com[i] == '[' && com[i + 1] == '[') //insert[][[]!operator![]]
 		{
-			char id_op = com[i];
-			i++;
-			if (com[i] == '[')
+			i += 2;
+			std::string name_polinom1;
+			std::string name_polinom2;
+			char id_op;
+			while (i < com.size() && com[i] != ']')
 			{
+				name_polinom1 += com[i];
 				i++;
-				std::string polinom1;
-				for (; i < com.size(); i++)
+			}
+			i++;
+			if (i < com.size() && (com[i] == '+' || com[i] == '*' || com[i] == '-'))
+			{
+				id_op = com[i];
+				i++;
+				if (i < com.size() && com[i] == '[')
 				{
-					if (com[i] == ']')
-						break;
-					else
-						polinom1 += com[i];
-				}
+					i++;
+					std::cout << "\n\n" << com[i] << "\n\n" << std::endl;
+					while (i < com.size() && com[i] != ']')
+					{
+						name_polinom2 += com[i];
+						i++;
+					}
 
-				if (id_op == '+')
-				{
-					A.Add(key, Polinoms(polinom) + Polinoms(polinom1));
-					B.Add(key, Polinoms(polinom) + Polinoms(polinom1));
-					C.Add(key, Polinoms(polinom) + Polinoms(polinom1));
+					if (id_op == '+')
+					{
+						std::cout << "\n\n" << name_polinom2 << "\n\n" << std::endl;
+						Polinoms New_polinom = A.Search(name_polinom1).second + A.Search(name_polinom2).second;
+						A.Add(key, New_polinom);
+						B.Add(key, New_polinom);
+						C.Add(key, New_polinom);
+					}
+					else if (id_op == '*')
+					{
+						Polinoms New_polinom = A.Search(name_polinom1).second * A.Search(name_polinom2).second;
+						A.Add(key, New_polinom);
+						B.Add(key, New_polinom);
+						C.Add(key, New_polinom);
+					}
+					else if (id_op == '-')
+					{
+						Polinoms New_polinom = A.Search(name_polinom1).second + ((A.Search(name_polinom2).second) * (-1));
+						A.Add(key, New_polinom);
+						B.Add(key, New_polinom);
+						C.Add(key, New_polinom);
+					}
+					else
+						std::cout << "what????error" << std::endl;
 				}
-				else if (id_op == '-')
+				else if (i < com.size() && com[i] >= '0' && com[i] <= '9')
 				{
-					A.Add(key, Polinoms(polinom) + (Polinoms(polinom1) * (-1)));
-					B.Add(key, Polinoms(polinom) + (Polinoms(polinom1) * (-1)));
-					C.Add(key, Polinoms(polinom) + (Polinoms(polinom1) * (-1)));
+					std::string num;
+					while (i < com.size() && com[i] == ']')
+					{
+						num += com[i];
+						i++;
+					}
+					double koef = convert(num);
+
+					if (id_op == '*')
+					{
+						A.Add(key, Polinoms(name_polinom1) * koef);
+						B.Add(key, Polinoms(name_polinom1) * koef);
+						C.Add(key, Polinoms(name_polinom1) * koef);
+					}
+					else
+					{
+						std::cout << "error: no correct command" << std::endl;
+					}
 				}
 				else
 				{
-					A.Add(key, Polinoms(polinom) * Polinoms(polinom1));
-					B.Add(key, Polinoms(polinom) * Polinoms(polinom1));
-					C.Add(key, Polinoms(polinom) * Polinoms(polinom1));
+					std::cout << "error: no correct command" << std::endl;
 				}
 			}
 			else
-			{
-				if (com[i] >= '0' && com[i] <= '9') //insert[]*a
-				{
-					std::string num;
-					while (i < com.size())
-						num += com[i];
-
-					A.Add(key, Polinoms(polinom) * convert(num));
-					B.Add(key, Polinoms(polinom) * convert(num));
-					C.Add(key, Polinoms(polinom) * convert(num));
-				}
-				else
-					std::cout << "error: no correct command" << std::endl;
-			}
+				std::cout << "error: no correct command" << std::endl;
 		}
 		else
 			std::cout << "error: no correct command" << std::endl;
@@ -100,16 +130,17 @@ void run_insert(const std::string& com, non_sort_table<Polinoms>& A, Sorting_tab
 
 void run_extract(const std::string& com, non_sort_table<Polinoms>& A, Sorting_table<Polinoms>& B, HashTable<Polinoms>& C)
 {
-	if (com[4] == '[')
+	if (com[7] == '[')
 	{
 		std::string key;
-		for (int i = 5; i < com.size(); i++)
+		for (int i = 8; i < com.size(); i++)
 		{
 			if (com[i] == ']')
 			{
 				A.Extract(key);
 				B.Extract(key);
 				C.Extract(key);
+				break;
 			}
 			else
 				key += com[i];
@@ -139,34 +170,7 @@ void run_show(const std::string& com, non_sort_table<Polinoms>& A, Sorting_table
 	}
 	else
 	{
-		if (com[4] == '[')
-		{
-			std::string key;
-			for (int i = 5; i < com.size(); i++)
-			{
-				key += com[i];
-				if (com[i] == ']')
-				{
-					int c;
-					std::cout << "from which structure to show the table?\n1 - non_sort_table\n2 - sorting table\n3 - hash table" << std::endl;
-					std::cin >> c;
-					if (c == 1)
-						A.show(A.Search(key));
-					else if (c == 2)
-						B.show(B.Search(key));
-					else if (c == 3)
-						C.show(C.Search(key));
-					else
-						std::cout << "error: no correct choose" << std::endl;
-				}
-				else
-					key += com[i];
-			}
-		}
-		else
-		{
-			std::cout << "error: no correct command" << std::endl;
-		}
+		std::cout << "error: no correct command" << std::endl;
 	}
 }
 
@@ -196,6 +200,7 @@ void Parse_command(const std::string& com, non_sort_table<Polinoms>& A, Sorting_
 
 int main()
 {
+	setlocale(LC_ALL, "Rus");
 	int size;
 	std::cout << std::setw(60) << "3 TYPE TABLE WITH POLINOMS" << std::endl;
 	std::cout << "Select the table size (number of rows):" << std::endl;
@@ -210,12 +215,12 @@ int main()
 		std::string command;
 		std::cout << std::setw(60) << "3 TYPE TABLE WITH POLINOMS" << std::endl;
 		std::cout << "RULES: 1) dont use: space, name - ONLY letters and numbers \n2) Name is less than 21 characters" << std::endl;
-		std::cout << "Enter your request using this commands:\n1.1) insert[name][polinom] - insert new polinom in table\n1.2) insert[name]!operation![name] - insert polinom as sum or multiplication\n1.3) insert[name]!operation!!number! - insert polinom as multiplication with number" << std::endl;
-		std::cout << "EXAMPLE:\ninsert[abc][123xyz]\ninsert[abc]+[def]\ninsert[abc]*4" << std::endl;
+		std::cout << "Enter your request using this commands:\n1.1) insert[name][polinom] - insert new polinom in table\n1.2) insert[new_name][[name]!operation![name]] - insert polinom as sum or multiplication\n1.3) insert[new_name][[name]!operation!!number!] - insert polinom as multiplication with number" << std::endl;
+		std::cout << "EXAMPLE:\ninsert[abc][123xyz]\ninsert[name][[abc]+[def]]\ninsert[name][[abc]*4]" << std::endl;
 		std::cout << "2) extract[name] - delete polinom in table" << std::endl;
 		std::cout << "EXAMPLE:\nextract[abc]" << std::endl;
-		std::cout << "3.1) show[name] - show polinom in table\n3.2) show - show all table" << std::endl;
-		std::cout << "EXAMPLE:\nshow[abc]\nshow" << std::endl;
+		std::cout << "3) show - show all table" << std::endl;
+		std::cout << "EXAMPLE:\nshow" << std::endl;
 		std::cout << "4) exit - exit in programm and finished" << std::endl;
 		std::cout << "/> ";
 		std::cin >> command;
