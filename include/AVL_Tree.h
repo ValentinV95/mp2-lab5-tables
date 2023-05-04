@@ -53,7 +53,6 @@ private:
 	{
 		if (balanceFactor(ptr) == 2)
 		{
-			std::cout << "RotateLeft";
 			log_count++;
 			if (balanceFactor(ptr->left) > 0)
 			{
@@ -64,7 +63,6 @@ private:
 		}
 		else if (balanceFactor(ptr) == -2)
 		{
-			std::cout << "RotateRight";
 			log_count++;
 			if (balanceFactor(ptr->right) < 0)
 			{
@@ -192,7 +190,10 @@ public:
 	{
 		root = nullptr;
 		size = 0;
-		std::cout << "LOG: Sorting table construct" << std::endl;
+		SetConsoleTextAttribute(console, GREEN);
+		std::cout << "LOG | CONSTRUCT:";
+		SetConsoleTextAttribute(console, WHITE);
+		std::cout << " Sorting table construct" << std::endl;
 	}
 
 	Node* getRoot()
@@ -264,10 +265,16 @@ public:
 			throw std::exception("this name already using");
 		int log_comparison = 0;
 		this->insert(key, value, log_comparison);
-		std::cout << "LOG: polinom  ";
+		SetConsoleTextAttribute(console, GREEN);
+		std::cout << "LOG | ADD:";
+		SetConsoleTextAttribute(console, WHITE);
+		std::cout << " polinom  ";
 		value.show();
 		std::cout << " with name '" << key << "' added in non sort table" << std::endl;
-		std::cout << "LOG: made " << log_comparison << " comparison in AVL Tree(if)" << std::endl;
+		SetConsoleTextAttribute(console, GREEN);
+		std::cout << "LOG | COMPLEXITY:";
+		SetConsoleTextAttribute(console, WHITE);
+		std::cout << " made " << log_comparison << " comparison in AVL Tree(if)" << std::endl;
 	}
 
 	Node* AVLSearch(std::string current_key, int& log_count) //вспомогающая функция
@@ -298,14 +305,26 @@ public:
 		Node* tmp = AVLSearch(current_key, log_comparison);
 		if (tmp == nullptr)
 		{
-			std::cout << "LOG: This key not in table" << std::endl;
-			std::cout << "LOG: made " << log_comparison << " comparison in AVL Tree(if)" << std::endl;
+			SetConsoleTextAttribute(console, GREEN);
+			std::cout << "LOG | SEARCH:";
+			SetConsoleTextAttribute(console, WHITE);
+			std::cout << " This key not in table" << std::endl;
+			SetConsoleTextAttribute(console, GREEN);
+			std::cout << "LOG | COMPLEXITY:";
+			SetConsoleTextAttribute(console, WHITE);
+			std::cout << " made " << log_comparison << " comparison in AVL Tree(if)" << std::endl;
 			return nullptr;
 		}
-		std::cout << "LOG: polinom ";
+		SetConsoleTextAttribute(console, GREEN);
+		std::cout << "LOG | SEARCH:";
+		SetConsoleTextAttribute(console, WHITE);
+		std::cout << " polinom ";
 		tmp->value.show();
 		std::cout << " with name " << tmp->key << "found" << std::endl;
-		std::cout << "LOG: made " << log_comparison << " transition in array(++)" << std::endl;
+		SetConsoleTextAttribute(console, GREEN);
+		std::cout << "LOG | COMPLEXITY:";
+		SetConsoleTextAttribute(console, WHITE);
+		std::cout << " made " << log_comparison << " transition in array(++)" << std::endl;
 		return tmp;
 	}
 
@@ -392,12 +411,25 @@ public:
 				balance(p, log_comparison);
 			log_comparison++;
 
-			std::cout << "LOG: row delete\nLOG: made " << log_comparison << " comparison in AVLTree(if)" << std::endl;
+			SetConsoleTextAttribute(console, GREEN);
+			std::cout << "LOG | DELETE:";
+			SetConsoleTextAttribute(console, WHITE);
+			std::cout << " row delete" << std::endl;
+			SetConsoleTextAttribute(console, GREEN);
+			std::cout << "LOG | COMPLEXITY:";
+			SetConsoleTextAttribute(console, WHITE);
+			std::cout << " made " << log_comparison << " comparison in AVLTree(if)" << std::endl;
 		}
 		else
 		{
-			std::cout << "LOG: this key not in sort table" << std::endl;
-			std::cout << "LOG: made " << log_comparison << " comparison in AVLTree(if)" << std::endl;
+			SetConsoleTextAttribute(console, GREEN);
+			std::cout << "LOG | SEARCH:";
+			SetConsoleTextAttribute(console, WHITE);
+			std::cout << " this key not in sort table" << std::endl;
+			SetConsoleTextAttribute(console, GREEN);
+			std::cout << "LOG | COMPLEXITY:";
+			SetConsoleTextAttribute(console, WHITE);
+			std::cout << " made " << log_comparison << " comparison in AVLTree(if)" << std::endl;
 		}
 	}
 	/*-------------------------------------------------------------------------------------------------------*/

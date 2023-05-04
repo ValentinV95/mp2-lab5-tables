@@ -4,6 +4,9 @@
 #include <iostream>
 #include <iomanip>
 #include "../polinom/include/polinom.h"
+#define GREEN 10
+#define WHITE 7
+HANDLE console = GetStdHandle(STD_OUTPUT_HANDLE);
 
 template<typename T>
 class non_sort_table {
@@ -27,7 +30,10 @@ public:
 		if (size <= 0)
 			throw std::exception("ERROR: negative length");
 		this->size = size;
-		std::cout << "LOG: Non sorting table construct" << std::endl;
+		SetConsoleTextAttribute(console, GREEN);
+		std::cout << "LOG | CONSTRUCT:";
+		SetConsoleTextAttribute(console, WHITE);
+		std::cout << " Non sorting table construct" << std::endl;
 	}
 
 	std::pair<std::string, T> operator[](int i)
@@ -41,10 +47,16 @@ public:
 			throw std::exception("this name already using");
 		structure.insert(structure.end(), std::pair<std::string, T>(key, value));
 		int log_count_plusplus = structure.size();
-		std::cout << "LOG: polinom  ";
+		SetConsoleTextAttribute(console, GREEN);
+		std::cout << "LOG | ADD:";
+		SetConsoleTextAttribute(console, WHITE);
+		std::cout << " polinom ";
 		value.show();
 		std::cout << " with name '" << key << "' added in sort table" << std::endl;
-		std::cout << "LOG: made " << log_count_plusplus << " transition in array(++)" << std::endl;
+		SetConsoleTextAttribute(console, GREEN);
+		std::cout << "LOG | COMPLEXITY:";
+		SetConsoleTextAttribute(console, WHITE);
+		std::cout << " made " << log_count_plusplus << " transition in array(++)" << std::endl;
 	}
 
 	std::pair<std::string, T> Search(std::string current_key)
@@ -53,15 +65,27 @@ public:
 		{
 			if (structure[i].first == current_key)
 			{
-				std::cout << "LOG: polinom ";
+				SetConsoleTextAttribute(console, GREEN);
+				std::cout << "LOG | SEARCH:";
+				SetConsoleTextAttribute(console, WHITE);
+				std::cout << " polinom ";
 				structure[i].second.show();
 				std::cout << "with name " << structure[i].first << "found" << std::endl;
-				std::cout << "LOG: made " << i << " transition in array(++)" << std::endl;
+				SetConsoleTextAttribute(console, GREEN);
+				std::cout << "LOG | COMPLEXITY:";
+				SetConsoleTextAttribute(console, WHITE);
+				std::cout << " made " << i << " transition in array(++)" << std::endl;
 				return structure[i];
 			}
 		}
-		std::cout << "LOG: This key not in table" << std::endl;
-		std::cout << "LOG: made " << structure.size() << " transition in array(++)" << std::endl;
+		SetConsoleTextAttribute(console, GREEN);
+		std::cout << "LOG | SEARCH:";
+		SetConsoleTextAttribute(console, WHITE);
+		std::cout << " This key not in table" << std::endl;
+		SetConsoleTextAttribute(console, GREEN);
+		std::cout << "LOG | COMPLEXITY:";
+		SetConsoleTextAttribute(console, WHITE);
+		std::cout << " made " << structure.size() << " transition in array(++)" << std::endl;
 		return std::pair<std::string, T>("0", Polinoms("0"));
 	}
 
@@ -75,15 +99,28 @@ public:
 			{
 				structure.erase(it);
 				flag_empty = false;
-				std::cout << "LOG: row delete\nLOG: made " << i << " transition in array(++)" << std::endl;
+				SetConsoleTextAttribute(console, GREEN);
+				std::cout << "LOG | DELETE:";
+				SetConsoleTextAttribute(console, WHITE);
+				std::cout << " row delete" << std::endl;
+				SetConsoleTextAttribute(console, GREEN);
+				std::cout << "LOG | COMPLEXITY:";
+				SetConsoleTextAttribute(console, WHITE);
+				std::cout << " made " << i << " transition in array(++)" << std::endl;
 				break;
 			}
 			i++;
 		}
 		if (flag_empty)
 		{
-			std::cout << "This key not in table";
-			std::cout << "LOG: made " << i << " transition in array(++)" << std::endl;
+			SetConsoleTextAttribute(console, GREEN);
+			std::cout << "LOG | SEARCH:";
+			SetConsoleTextAttribute(console, WHITE);
+			std::cout << " This key not in table";
+			SetConsoleTextAttribute(console, GREEN);
+			std::cout << "LOG | COMPLEXITY:";
+			SetConsoleTextAttribute(console, WHITE);
+			std::cout << " made " << i << " transition in array(++)" << std::endl;
 		}
 	}
 	/*-------------------------------------------------------------------------------------------------------*/

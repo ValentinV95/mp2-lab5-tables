@@ -58,7 +58,6 @@ void run_insert(const std::string& com, non_sort_table<Polinoms>& A, Sorting_tab
 				if (i < com.size() && com[i] == '[')
 				{
 					i++;
-					std::cout << "\n\n" << com[i] << "\n\n" << std::endl;
 					while (i < com.size() && com[i] != ']')
 					{
 						name_polinom2 += com[i];
@@ -67,7 +66,6 @@ void run_insert(const std::string& com, non_sort_table<Polinoms>& A, Sorting_tab
 
 					if (id_op == '+')
 					{
-						std::cout << "\n\n" << name_polinom2 << "\n\n" << std::endl;
 						Polinoms New_polinom = A.Search(name_polinom1).second + A.Search(name_polinom2).second;
 						A.Add(key, New_polinom);
 						B.Add(key, New_polinom);
@@ -168,6 +166,20 @@ void run_show(const std::string& com, non_sort_table<Polinoms>& A, Sorting_table
 		else
 			std::cout << "error: no correct choose" << std::endl;
 	}
+	else if (com[4] == '[')
+	{
+		std::string key;
+		for (size_t i = 5; com[i] != ']' && i < com.size(); i++)
+		{
+			key += com[i];
+		}
+		std::cout << "Unsorting Table:" << std::endl;
+		A.show(A.Search(key));
+		std::cout << "\nSort Table:" << std::endl;
+		B.show(B.Search(key));
+		std::cout << "\nHash Table:" << std::endl;
+		C.show(C.Search(key));
+	}
 	else
 	{
 		std::cout << "error: no correct command" << std::endl;
@@ -219,8 +231,8 @@ int main()
 		std::cout << "EXAMPLE:\ninsert[abc][123xyz]\ninsert[name][[abc]+[def]]\ninsert[name][[abc]*4]" << std::endl;
 		std::cout << "2) extract[name] - delete polinom in table" << std::endl;
 		std::cout << "EXAMPLE:\nextract[abc]" << std::endl;
-		std::cout << "3) show - show all table" << std::endl;
-		std::cout << "EXAMPLE:\nshow" << std::endl;
+		std::cout << "3) show - show all table, show[name] - show row" << std::endl;
+		std::cout << "EXAMPLE:\nshow\nshow[abc]" << std::endl;
 		std::cout << "4) exit - exit in programm and finished" << std::endl;
 		std::cout << "/> ";
 		std::cin >> command;
