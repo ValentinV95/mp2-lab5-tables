@@ -3,6 +3,9 @@
 #include <vector>
 #include <iostream>
 #include "../polinom/include/polinom.h"
+#include <Windows.h>
+#define GREEN 10
+#define WHITE 7
 
 template <typename T>
 class HashTable {
@@ -23,9 +26,9 @@ public:
 		int tmp = log2(user_size);
 		this->size = pow(2, tmp + 1);
 		this->structure.resize(size);
-		SetConsoleTextAttribute(console, GREEN);
+		SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE), GREEN);
 		std::cout << "LOG | CONSTRUCT:";
-		SetConsoleTextAttribute(console, WHITE);
+		SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE), WHITE);
 		std::cout << " Hash table construct" << std::endl;
 	}
 
@@ -69,15 +72,15 @@ public:
 			throw std::exception("this name already using");
 		int log_collision = 0;
 		insert(key, value, log_collision);
-		SetConsoleTextAttribute(console, GREEN);
+		SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE), GREEN);
 		std::cout << "LOG | ADD:";
-		SetConsoleTextAttribute(console, WHITE);
+		SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE), WHITE);
 		std::cout << " polinom ";
 		value.show();
 		std::cout << " with name '" << key << "' added in hash table" << std::endl;
-		SetConsoleTextAttribute(console, GREEN);
+		SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE), GREEN);
 		std::cout << "LOG | COMPLEXITY:";
-		SetConsoleTextAttribute(console, WHITE);
+		SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE), WHITE);
 		std::cout << " made " << log_collision << " collision" << std::endl;
 	}
 
@@ -88,26 +91,26 @@ public:
 		{
 			if (std::get<std::string>(structure[doubleHashFunction(current_key, i)]) == current_key)
 			{
-				SetConsoleTextAttribute(console, GREEN);
+				SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE), GREEN);
 				std::cout << "LOG | SEARCH:";
-				SetConsoleTextAttribute(console, WHITE);
+				SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE), WHITE);
 				std::cout << " polinom ";
 				std::get<T>(structure[i]).show();
 				std::cout << "with name " << std::get<std::string>(structure[i]) << "found" << std::endl;
-				SetConsoleTextAttribute(console, GREEN);
+				SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE), GREEN);
 				std::cout << "LOG | COMPLEXITY:";
-				SetConsoleTextAttribute(console, WHITE);
+				SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE), WHITE);
 				std::cout << " made " << i << " collision" << std::endl;
 				return structure[doubleHashFunction(current_key, i)];
 			}
 		}
-		SetConsoleTextAttribute(console, GREEN);
+		SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE), GREEN);
 		std::cout << "LOG | SEARCH:";
-		SetConsoleTextAttribute(console, WHITE);
+		SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE), WHITE);
 		std::cout << " This key not in table" << std::endl;
-		SetConsoleTextAttribute(console, GREEN);
+		SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE), GREEN);
 		std::cout << "LOG | SEARCH:";
-		SetConsoleTextAttribute(console, WHITE);
+		SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE), WHITE);
 		std::cout << " made " << structure.size() << " transition in array(++)" << std::endl;
 		return std::pair<std::string, T>("0", Polinoms("0"));
 	}
@@ -122,25 +125,25 @@ public:
 			{
 				structure[doubleHashFunction(current_key, i)] = std::make_pair("\0", T("0"));
 				flag_empty = false;
-				SetConsoleTextAttribute(console, GREEN);
+				SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE), GREEN);
 				std::cout << "LOG | DELETE:";
-				SetConsoleTextAttribute(console, WHITE);
+				SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE), WHITE);
 				std::cout << " row delete" << std::endl;
-				SetConsoleTextAttribute(console, GREEN);
+				SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE), GREEN);
 				std::cout << "LOG | COMPLEXITY:";
-				SetConsoleTextAttribute(console, WHITE);
+				SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE), WHITE);
 				std::cout << " made " << i << " collision" << std::endl;
 			}
 		}
 		if (flag_empty)
 		{
-			SetConsoleTextAttribute(console, GREEN);
+			SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE), GREEN);
 			std::cout << "LOG | SEARCH:";
-			SetConsoleTextAttribute(console, WHITE);
+			SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE), WHITE);
 			std::cout << "This key not in table" << std::endl;
-			SetConsoleTextAttribute(console, GREEN);
+			SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE), GREEN);
 			std::cout << "LOG | COMPLEXITY:";
-			SetConsoleTextAttribute(console, WHITE);
+			SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE), WHITE);
 			std::cout << " made " << i << " collision" << std::endl;
 		}
 	}

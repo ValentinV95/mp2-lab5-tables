@@ -1,6 +1,7 @@
 #include "../gtest/gtest.h"
 #include "../include/array.h"
 #include "../polinom/include/polinom.h"
+#include <Windows.h>
 
 TEST(class_non_sort_table, can_make_array_default)
 {

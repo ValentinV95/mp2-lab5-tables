@@ -2,6 +2,7 @@
 #include "../gtest/gtest.h"
 #include "../include/hash-table.h"
 #include "../polinom/include/polinom.h"
+#include <Windows.h>
 
 TEST(class_HashTable, can_make_HashTable)
 {

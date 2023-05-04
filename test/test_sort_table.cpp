@@ -1,6 +1,7 @@
 #include "../gtest/gtest.h"
 #include "../include/AVL_Tree.h"
 #include "../polinom/include/polinom.h"
+#include <Windows.h>
 
 TEST(class_sort_table, can_make_avltree)
 {

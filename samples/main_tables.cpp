@@ -7,6 +7,7 @@
 #include "../polinom/include/polinom.h"
 #include "../include/AVL_Tree.h"
 #include "../include/hash-table.h"
+#include <windows.h>
 
 void run_insert(const std::string& com, non_sort_table<Polinoms>& A, Sorting_table<Polinoms>& B, HashTable<Polinoms>& C)
 {

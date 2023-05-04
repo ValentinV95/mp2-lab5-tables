@@ -4,6 +4,9 @@
 #include <iomanip>
 #include "../polinom/include/polinom.h"
 #define uchar unsigned char
+#include <Windows.h>
+#define GREEN 10
+#define WHITE 7
 
 template <typename T>
 class Sorting_table {
@@ -190,9 +193,9 @@ public:
 	{
 		root = nullptr;
 		size = 0;
-		SetConsoleTextAttribute(console, GREEN);
+		SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE), GREEN);
 		std::cout << "LOG | CONSTRUCT:";
-		SetConsoleTextAttribute(console, WHITE);
+		SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE), WHITE);
 		std::cout << " Sorting table construct" << std::endl;
 	}
 
@@ -265,15 +268,15 @@ public:
 			throw std::exception("this name already using");
 		int log_comparison = 0;
 		this->insert(key, value, log_comparison);
-		SetConsoleTextAttribute(console, GREEN);
+		SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE), GREEN);
 		std::cout << "LOG | ADD:";
-		SetConsoleTextAttribute(console, WHITE);
+		SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE), WHITE);
 		std::cout << " polinom  ";
 		value.show();
 		std::cout << " with name '" << key << "' added in non sort table" << std::endl;
-		SetConsoleTextAttribute(console, GREEN);
+		SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE), GREEN);
 		std::cout << "LOG | COMPLEXITY:";
-		SetConsoleTextAttribute(console, WHITE);
+		SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE), WHITE);
 		std::cout << " made " << log_comparison << " comparison in AVL Tree(if)" << std::endl;
 	}
 
@@ -305,25 +308,25 @@ public:
 		Node* tmp = AVLSearch(current_key, log_comparison);
 		if (tmp == nullptr)
 		{
-			SetConsoleTextAttribute(console, GREEN);
+			SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE), GREEN);
 			std::cout << "LOG | SEARCH:";
-			SetConsoleTextAttribute(console, WHITE);
+			SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE), WHITE);
 			std::cout << " This key not in table" << std::endl;
-			SetConsoleTextAttribute(console, GREEN);
+			SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE), GREEN);
 			std::cout << "LOG | COMPLEXITY:";
-			SetConsoleTextAttribute(console, WHITE);
+			SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE), WHITE);
 			std::cout << " made " << log_comparison << " comparison in AVL Tree(if)" << std::endl;
 			return nullptr;
 		}
-		SetConsoleTextAttribute(console, GREEN);
+		SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE), GREEN);
 		std::cout << "LOG | SEARCH:";
-		SetConsoleTextAttribute(console, WHITE);
+		SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE), WHITE);
 		std::cout << " polinom ";
 		tmp->value.show();
 		std::cout << " with name " << tmp->key << "found" << std::endl;
-		SetConsoleTextAttribute(console, GREEN);
+		SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE), GREEN);
 		std::cout << "LOG | COMPLEXITY:";
-		SetConsoleTextAttribute(console, WHITE);
+		SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE), WHITE);
 		std::cout << " made " << log_comparison << " transition in array(++)" << std::endl;
 		return tmp;
 	}
@@ -411,24 +414,24 @@ public:
 				balance(p, log_comparison);
 			log_comparison++;
 
-			SetConsoleTextAttribute(console, GREEN);
+			SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE), GREEN);
 			std::cout << "LOG | DELETE:";
-			SetConsoleTextAttribute(console, WHITE);
+			SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE), WHITE);
 			std::cout << " row delete" << std::endl;
-			SetConsoleTextAttribute(console, GREEN);
+			SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE), GREEN);
 			std::cout << "LOG | COMPLEXITY:";
-			SetConsoleTextAttribute(console, WHITE);
+			SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE), WHITE);
 			std::cout << " made " << log_comparison << " comparison in AVLTree(if)" << std::endl;
 		}
 		else
 		{
-			SetConsoleTextAttribute(console, GREEN);
+			SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE), GREEN);
 			std::cout << "LOG | SEARCH:";
-			SetConsoleTextAttribute(console, WHITE);
+			SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE), WHITE);
 			std::cout << " this key not in sort table" << std::endl;
-			SetConsoleTextAttribute(console, GREEN);
+			SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE), GREEN);
 			std::cout << "LOG | COMPLEXITY:";
-			SetConsoleTextAttribute(console, WHITE);
+			SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE), WHITE);
 			std::cout << " made " << log_comparison << " comparison in AVLTree(if)" << std::endl;
 		}
 	}
