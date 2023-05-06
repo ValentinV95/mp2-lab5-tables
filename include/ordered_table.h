@@ -20,7 +20,7 @@ private:
 
     Node* root;
     Node* nil;
-    Node* find_node(string _key)
+    Node* find_node(const string& _key)
     {
         operations_count = 0;
         if (root == nil) return nullptr;
@@ -256,7 +256,7 @@ public:
     }
 
     /// Return entry's data pointer
-    T* find(string _key)
+    T* find(const string& _key)
     {
         Node* node = find_node(_key);
 
@@ -264,7 +264,7 @@ public:
 
         return &node->data;
     }
-    void insert(string _key, T _data)
+    void insert(const string& _key, const T& _data)
     {
         operations_count = 0;
         if (root == nil)
@@ -299,7 +299,7 @@ public:
         }
         throw std::exception("key duplicate insert failure");
     }
-    void remove(string _key)
+    void remove(const string& _key)
     {
         Node* node = find_node(_key);
         if (node == nullptr)

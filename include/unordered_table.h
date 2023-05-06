@@ -11,10 +11,9 @@ private:
 		string key;
 		T data;
 	};
-	Entry** table;
+	Entry* table;
 	size_t capacity;
 	size_t length;
-
 	size_t operations_count;
 public:
 	UnorderedTable(size_t size) : capacity(size), length(0), operations_count(0)
@@ -23,12 +22,7 @@ public:
 		{
 			throw std::exception("Table size should be greater than zero");
 		}
-		else
-		{
-			table = new Entry*[capacity];
-			for (size_t i = 0; i < capacity; i++)
-				table[i] = nullptr;
-		}
+		else table = new Entry[capacity];
 	}
 
 	size_t get_length() const noexcept
@@ -41,20 +35,20 @@ public:
 	}
 
 	/// Return entry's data pointer
-	T* find(string _key)
+	T* find(const string& _key)
 	{
 		operations_count = 0;
 		for (size_t index = 0; index < length; index++)
 		{
 			operations_count++;
-			if (table[index]->key == _key)
+			if (table[index].key == _key)
 			{
-				return &table[index]->data;
+				return &table[index].data;
 			}
 		}
 		return nullptr;
 	}
-	void insert(string _key, T _data)
+	void insert(const string& _key, const T& _data)
 	{
 		if (length == capacity)
 		{
@@ -64,19 +58,17 @@ public:
 		{
 			throw std::exception("key duplicate insert failure");
 		}
-		table[length++] = new Entry{ _key, _data };
+		table[length++] = Entry{ _key, _data };
 	}
-	void remove(string _key)
+	void remove(const string& _key)
 	{
 		operations_count = 0;
 		for (size_t index = 0; index < length; index++)
 		{
 			operations_count++;
-			if (table[index]->key == _key)
+			if (table[index].key == _key)
 			{
-				delete table[index];
 				table[index] = table[length - 1];
-				table[length - 1] = nullptr;
 				length--;
 				return;
 			}
@@ -86,13 +78,6 @@ public:
 
 	~UnorderedTable()
 	{
-		for (size_t index = 0; index < length; index++)
-		{
-			if (table[index] != nullptr)
-			{
-				delete table[index];
-			}
-		}
 		delete[] table;
 	}
 };

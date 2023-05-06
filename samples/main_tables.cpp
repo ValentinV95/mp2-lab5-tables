@@ -13,7 +13,7 @@ using std::cin;
 using std::cout;
 using std::endl;
 
-template<typename type>
+template <typename type>
 void input(type& buffer)
 {
 	cin >> buffer;
@@ -28,7 +28,7 @@ bool fill(Polynom& poly) // return false if the polynomial could not be filled i
 	input(num);
 	if (num < 1)
 	{
-		LOGS_ERROR("Non-positive number of monomials");
+		LOG_ERROR("Non-positive number of monomials");
 		return false;
 	}
 	cout << "\nFilling the polynomial" << endl;
@@ -47,7 +47,7 @@ bool fill(Polynom& poly) // return false if the polynomial could not be filled i
 		}
 		catch (const exception& except)
 		{
-			LOGS_ERROR(except.what());
+			LOG_ERROR(except.what());
 			return false;
 		}
 	}
@@ -62,18 +62,18 @@ void insert_into_tables(Polynom& pol, UnorderedTable<Polynom>& uT, OrderedTable<
 	try
 	{
 		uT.insert(name, pol);
-		LOGS_SUCCESS("new polynomial has been inserted in the unordered table");
-		LOGS_COUNTER("comparisons", uT.get_operations_number());
+		LOG_SUCCESS("new polynomial has been inserted in the unordered table");
+		LOG_COUNTER("comparisons", uT.get_operations_number());
 		oT.insert(name, pol);
-		LOGS_SUCCESS("new polynomial has been inserted in the ordered table");
-		LOGS_COUNTER("comparisons", oT.get_operations_number());
+		LOG_SUCCESS("new polynomial has been inserted in the ordered table");
+		LOG_COUNTER("comparisons", oT.get_operations_number());
 		hT.insert(name, pol);
-		LOGS_SUCCESS("new polynomial has been inserted in the hash table");
-		LOGS_COUNTER("probings", hT.get_operations_number());
+		LOG_SUCCESS("new polynomial has been inserted in the hash table");
+		LOG_COUNTER("probings", hT.get_operations_number());
 	}
 	catch (const exception& except)
 	{
-		LOGS_WARNING(except.what());
+		LOG_WARNING(except.what());
 	}
 }
 
@@ -85,18 +85,18 @@ void remove_from_tables(UnorderedTable<Polynom>& uT, OrderedTable<Polynom>& oT, 
 	try
 	{
 		uT.remove(name);
-		LOGS_SUCCESS("the polynomial has been removed from the unordered table");
-		LOGS_COUNTER("comparisons", uT.get_operations_number());
+		LOG_SUCCESS("the polynomial has been removed from the unordered table");
+		LOG_COUNTER("comparisons", uT.get_operations_number());
 		oT.remove(name);
-		LOGS_SUCCESS("the polynomial has been removed from the ordered table");
-		LOGS_COUNTER("comparisons", oT.get_operations_number());
+		LOG_SUCCESS("the polynomial has been removed from the ordered table");
+		LOG_COUNTER("comparisons", oT.get_operations_number());
 		hT.remove(name);
-		LOGS_SUCCESS("the polynomial has been removed from the hash table");
-		LOGS_COUNTER("probings", hT.get_operations_number());
+		LOG_SUCCESS("the polynomial has been removed from the hash table");
+		LOG_COUNTER("probings", hT.get_operations_number());
 	}
 	catch (const exception& except)
 	{
-		LOGS_WARNING("polynomial was not found");
+		LOG_WARNING("polynomial was not found");
 	}
 }
 
@@ -111,31 +111,31 @@ Polynom* find_in_tables(UnorderedTable<Polynom>& uT, OrderedTable<Polynom>& oT, 
 	char counter_found = 0;
 	if (pol_uT != nullptr)
 	{
-		LOGS_SUCCESS("the polynomial has been found in the unordered table");
-		LOGS_COUNTER("comparisons", uT.get_operations_number());
+		LOG_SUCCESS("the polynomial has been found in the unordered table");
+		LOG_COUNTER("comparisons", uT.get_operations_number());
 		counter_found++;
 	}
 	if (pol_oT != nullptr)
 	{
-		LOGS_SUCCESS("the polynomial has been found in the ordered table");
-		LOGS_COUNTER("comparisons", oT.get_operations_number());
+		LOG_SUCCESS("the polynomial has been found in the ordered table");
+		LOG_COUNTER("comparisons", oT.get_operations_number());
 		counter_found++;
 	}
 	if (pol_hT != nullptr)
 	{
-		LOGS_SUCCESS("the polynomial has been found in the hash table");
-		LOGS_COUNTER("probings", hT.get_operations_number());
+		LOG_SUCCESS("the polynomial has been found in the hash table");
+		LOG_COUNTER("probings", hT.get_operations_number());
 		counter_found++;
 	}
 	if (counter_found == 3)
 	{
 		if ((*pol_uT) == (*pol_oT) && (*pol_hT) == (*pol_uT) && (*pol_hT) == (*pol_oT))
 		{
-			LOGS_SUCCESS("the polynomials found in different tables are the same");
+			LOG_SUCCESS("the polynomials found in different tables are the same");
 			return pol_hT;
 		}
 	}
-	LOGS_WARNING("polynomial was not found");
+	LOG_WARNING("polynomial was not found");
 	return nullptr;
 }
 
@@ -152,7 +152,7 @@ void insert_result(Polynom& _res, UnorderedTable<Polynom>& uT, OrderedTable<Poly
 	}
 	else if (select != 2)
 	{
-		LOGS_ERROR("invalid number - the result was not inserted");
+		LOG_ERROR("invalid number - the result was not inserted");
 	}
 }
 
@@ -162,7 +162,7 @@ enum polynom_operations {
 	MULTIPLY_POLYNOMIALS,
 	MULTIPLY_POLYNOMIAL_BY_NUMBER
 };
-bool perform_operations(UnorderedTable<Polynom>& uT, OrderedTable<Polynom>& oT, HashTable<Polynom>& hT)
+void perform_operations(UnorderedTable<Polynom>& uT, OrderedTable<Polynom>& oT, HashTable<Polynom>& hT)
 {
 	short select;
 	cout << "\nSelect an operation:\n" << endl;
@@ -235,7 +235,7 @@ bool perform_operations(UnorderedTable<Polynom>& uT, OrderedTable<Polynom>& oT, 
 		}
 		catch (const exception& except)
 		{
-			LOGS_ERROR(except.what());
+			LOG_ERROR(except.what());
 		}
 		break;
 	}
@@ -259,11 +259,10 @@ bool perform_operations(UnorderedTable<Polynom>& uT, OrderedTable<Polynom>& oT, 
 	}
 	default:
 	{
-		LOGS_ERROR("invalid operation number");
-		return false;
+		LOG_ERROR("invalid operation number");
+		break;
 	}
 	}
-	return true;
 }
 
 int main()
@@ -339,7 +338,7 @@ int main()
 			}
 			default:
 			{
-				LOGS_ERROR("invalid operation number");
+				LOG_ERROR("invalid operation number");
 				break;
 			}
 			}
