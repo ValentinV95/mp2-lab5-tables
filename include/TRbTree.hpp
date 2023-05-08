@@ -30,21 +30,21 @@ class TRbTree
 	Node* sheet = new Node();//Ôèêòèâíàÿ âåğøèíà ÷åğíîãî öâåòà, ëåâûé è ïğàâûé ïîòîìîê nullptr. 
 	Node* root = sheet;
 
+	unsigned int compareCount = 1;
+
 	Node* findeNode(const T& data)
 	{
 		Node* current = root;
-		size_t i = 0;
 
 		while (current != sheet && current->data != data)
 		{
-			i++;
+			compareCount++;
 			if (current->data > data)
 				current = current->left;
 			else
 				current = current->right;
 		}
 
-		Logger::log(CONTEXT(), "While finding node by key in RB tree " + to_string(i) + " compares was made", Info);
 		return current;
 	}
 
@@ -226,17 +226,19 @@ class TRbTree
 	}
 
 public:
-	TRbTree() { Logger::log(CONTEXT(), "RB tree was created successfully " + std::to_string((int)this), Info); }
-
 	T find(const T& key)
 	{
-		Logger::log(CONTEXT(), "In RB tree serching node for finde data was called", Info);
-
 		Node* node = findeNode(key);
 		if (node != sheet)
+		{
+			Logger::log(CONTEXT(), "RbTree : The number of comparisons in the search - " + std::to_string(compareCount),Info);
+			compareCount = 1;
 			return node->data;
+		}
 		else
+		{
 			throw std::invalid_argument("Key was not found");
+		}
 	}
 
 	void insert(T key)
@@ -244,8 +246,10 @@ public:
 		if (findeNode(key) != sheet)
 			throw std::invalid_argument("Such key olready exists");
 
+		compareCount = 1;
 		if (root == sheet)
 		{
+			Logger::log(CONTEXT(), "RbTree : The number of comparisons in the insert - 1", Info);
 			root = new Node(key, COLOR_BLACK, sheet, sheet, sheet);
 		}
 		else
@@ -255,14 +259,15 @@ public:
 
 			while (current->right != sheet && current->data < key || current->left != sheet && current->data > key)
 			{
-				i++;
+				compareCount++;
 				if (current->data < key)
 					current = current->right;
 				else
 					current = current->left;
 			}
 
-			Logger::log(CONTEXT(), "While serching place for insert in RB tree " + to_string(i) + " compares was made", Info);
+			Logger::log(CONTEXT(), "RbTree : The number of comparisons in the insert - " + to_string(compareCount), Info);
+			compareCount = 1;
 
 			if (current->data < key)
 			{
@@ -327,8 +332,9 @@ public:
 	//Óäàëèòü ıëåìåíò
 	void remove(const T& key)
 	{
-		Logger::log(CONTEXT(), "In RB tree serching node for remove data was called", Info);
 		Node* current = findeNode(key);
+		Logger::log(CONTEXT(), "RbTree : The number of comparisons in the delete - " + to_string(compareCount), Info);
+		compareCount = 1;
 
 		if (current != sheet)
 		{
@@ -450,4 +456,29 @@ public:
 
 		return dataVec;
 	}
+
+	//class WideIterator:iterator
+	//{
+	//public:
+	//	WideIterator()
+	//	{
+
+	//	}
+
+	//	const T& operator *()
+	//	{
+
+	//	}
+
+	//	void operator ++(int)
+	//	{
+
+	//	}
+	//};
+
+	//class DeepIterator:iterator
+	//{
+	//public:
+	//
+	//};
 };

@@ -7,22 +7,15 @@
 
 using namespace std;
 
-Polynom finde(string name, THashTable<string, Polynom> &hashTbl,TRbTreeTable<string, Polynom> &treeTbl,TTable<string, Polynom> &simpleTbl)
+Polynom finde(string name, THashTable<string, Polynom>& hashTbl, TRbTreeTable<string, Polynom>& treeTbl, TTable<string, Polynom>& simpleTbl)
 {
-	try
-	{
-		treeTbl.find(name);
-		simpleTbl.find(name);
-		Polynom poly = hashTbl.find(name);
+	treeTbl.find(name);
+	simpleTbl.find(name);
+	Polynom poly = hashTbl.find(name);
 
-		Logger::log(CONTEXT(), "Polynom " + name + " was found successfully in all tables", Info);
-		return poly;
-	}
-	catch (const std::exception& exc)
-	{
-		Logger::log(CONTEXT(), "Polynom " + name + " was not found successfully" + "\n[Exception message]\n" + exc.what(), Error);
-		throw;
-	}
+	Logger::log(CONTEXT(), "Polynom " + name + " was found successfully in all tables", Info);
+	Logger::log(CONTEXT(), " ", Info);
+	return poly;
 }
 
 void remove(string name, THashTable<string, Polynom>& hashTbl, TRbTreeTable<string, Polynom>& treeTbl, TTable<string, Polynom>& simpleTbl)
@@ -32,23 +25,18 @@ void remove(string name, THashTable<string, Polynom>& hashTbl, TRbTreeTable<stri
 	hashTbl.remove(name);
 
 	Logger::log(CONTEXT(), "Polynom " + name + " was deleted successfully from all tables", Info);
+	Logger::log(CONTEXT(), " ", Info);
 }
 
-void insert(string name,Polynom poly, THashTable<string, Polynom>& hashTbl, TRbTreeTable<string, Polynom>& treeTbl, TTable<string, Polynom>& simpleTbl)
+void insert(string name, Polynom poly, THashTable<string, Polynom>& hashTbl, TRbTreeTable<string, Polynom>& treeTbl, TTable<string, Polynom>& simpleTbl)
 {
-	try
-	{
-		hashTbl.insert(name,poly);
-		simpleTbl.insert(name, poly);
-		treeTbl.insert(name, poly);
 
-		Logger::log(CONTEXT(), "Polynom " + poly.toString() + " as " + name + " was insert successfully in all tables", Info);
-	}
-	catch (const std::exception& exc)
-	{
-		Logger::log(CONTEXT(), "While insert polynom " + poly.toString() + " as " + name + " something went wrong" + "\n[Exception message]\n" + exc.what(), Error);
-		throw;
-	}
+	hashTbl.insert(name, poly);
+	simpleTbl.insert(name, poly);
+	treeTbl.insert(name, poly);
+
+	Logger::log(CONTEXT(), "Polynom " + poly.toString() + " as " + name + " was insert successfully in all tables", Info);
+	Logger::log(CONTEXT(), " ", Info);
 }
 
 void showInfo()
@@ -85,7 +73,8 @@ void showInfo()
 
 void main()
 {
-	Logger::log(CONTEXT(),"Program started",Info);
+	Logger::log(CONTEXT(), " ", Info);
+	Logger::log(CONTEXT(), "Program started", Info);
 
 	setlocale(LC_ALL, "Russian");
 
@@ -119,52 +108,40 @@ void main()
 					string name2 = command.substr(operationPos + 1, command.size());
 					char operation = command[operationPos];
 
-					Polynom poly1, poly2,poly3;
+					Polynom poly1, poly2, poly3;
 
-					poly1 = finde(name1,hashTbl,treeTbl,simpleTbl);
+					poly1 = finde(name1, hashTbl, treeTbl, simpleTbl);
 					poly2 = finde(name2, hashTbl, treeTbl, simpleTbl);
 
-					try
+					switch (operation)
 					{
-						switch (operation)
-						{
-						case('+'):
-							poly3=poly1 + poly2;
-							Logger::log(CONTEXT(), "Polynom " + poly1.toString() + " and " + poly2.toString() + " was added successfully. Result - " + poly3.toString(), Info);
-							break;
-						case('-'):
-							poly3 = poly1 - poly2;
-							Logger::log(CONTEXT(), "Polynom " + poly1.toString() + " and " + poly2.toString() + " was subtracted successfully. Result - " + poly3.toString(), Info);
-							break;
-						case('*'):
-							poly3 = poly1 * poly2;
-							Logger::log(CONTEXT(), "Polynom " + poly1.toString() + " and " + poly2.toString() + " was multiplied successfully. Result - " + poly3.toString(), Info);
-							break;
-						}
-
-						cout << poly3 << endl;
-
-						cout << "\tХотите сохранить результат? yes/no : ";
-						cin >> command;
-
-						if (command == "yes")
-						{
-							cout << "\n\tВведите имя для полинома ";
-							cin>>name1;
-							
-							remove(name1, hashTbl, treeTbl, simpleTbl);
-							insert(name1, poly3, hashTbl, treeTbl, simpleTbl);
-						}
+					case('+'):
+						poly3 = poly1 + poly2;
+						break;
+					case('-'):
+						poly3 = poly1 - poly2;
+						break;
+					case('*'):
+						poly3 = poly1 * poly2;
+						break;
 					}
-					catch (const std::exception& exc)
+
+					cout << poly3 << endl;
+
+					cout << "\tХотите сохранить результат? yes/no : ";
+					cin >> command;
+
+					if (command == "yes")
 					{
-						Logger::log(CONTEXT(), "Operation " + to_string(operation) + " with polynom " + poly1.toString() + " and " + poly2.toString() + " was not successfully" + "\nException message:\n" + exc.what(), Error);
-						throw;
+						cout << "\n\tВведите имя для полинома ";
+						cin >> name1;
+
+						remove(name1, hashTbl, treeTbl, simpleTbl);
+						insert(name1, poly3, hashTbl, treeTbl, simpleTbl);
 					}
 				}
 				else
 				{
-					Logger::log(CONTEXT(), "The user tried to perform operations with empty tables", Info);
 					cout << "Таблицы не содержат ни одного полинома." << endl
 						<< "Для выполнения арифметических операций таблицы должны" << endl
 						<< "содержать хотябы один полином" << endl;
@@ -175,13 +152,11 @@ void main()
 				string name, polinom;
 				cout << "\tВведите имя полинома: ";
 				cin >> name;
-				Logger::log(CONTEXT(), "User enter the polynom name " + name, Info);
 				cout << "\tВведите полином: ";
 				cin >> polinom;
-				Logger::log(CONTEXT(), "User enter the polynom " + polinom, Info);
 
-				insert(name,Polynom(polinom), hashTbl, treeTbl, simpleTbl);
-				cout <<endl <<"Полином был успешно добавоен!" << endl;
+				insert(name, Polynom(polinom), hashTbl, treeTbl, simpleTbl);
+				cout << endl << "Полином был успешно добавоен!" << endl;
 			}
 			else if (command == "delete")
 			{
@@ -197,44 +172,40 @@ void main()
 				cout << "НЕУПОРЯДОЧЕННАЯ ТАБЛИЦА: " << endl;
 				simpleTbl.show();
 				cout << endl;
-				Logger::log(CONTEXT(), "Simple table was shown for user", Info);
 
 				cout << "ХЭШ-ТАБЛИЦА: " << endl;
 				hashTbl.show();
 				cout << endl;
-				Logger::log(CONTEXT(), "Hash table was shown for user", Info);
 
 				cout << "КРАСНО-ЧЕРНОЕ ДЕРЕВО: " << endl;
 				treeTbl.show();
 				cout << endl;
-				Logger::log(CONTEXT(), "RB tree table was shown for user", Info);
 			}
-			else if (command=="finde")
+			else if (command == "finde")
 			{
 				string name;
 				cout << "\tВведите имя полинома: ";
 				cin >> name;
-				Logger::log(CONTEXT(), "User serching polynome named " + name, Info);
 
-				cout << "\tPolynom named as " <<name <<" is - " << finde(name, hashTbl, treeTbl, simpleTbl) << endl;
+				cout << "\tPolynom named as " << name << " is - " << finde(name, hashTbl, treeTbl, simpleTbl) << endl;
 			}
 			else if (command == "end")
 			{
 				end = true;
-				Logger::log(CONTEXT(), "User applicaton work was ended", Info);
 			}
 			else
 			{
 				cout << "Неизвестная команда попробуйте еще раз" << endl;
-				Logger::log(CONTEXT(), "Uncnown command was entered by user", Info);
 			}
 		}
 		catch (const std::exception& exc)
 		{
-			Logger::log(CONTEXT(), exc.what(), Error);
 			cout << endl;
-			cout << "Произошла ошибка: "<<endl << exc.what();
+			cout << "Произошла ошибка: " << endl << exc.what();
 			cout << endl;
 		}
 	}
+
+	Logger::log(CONTEXT(), "Program finished", Info);
+	Logger::log(CONTEXT(), " ", Info);
 }

@@ -99,8 +99,6 @@ public:
 
 		table.resize(m1);
 		freeCellCount = m1;
-
-		Logger::log(CONTEXT(), "Hash table was created successfully " + std::to_string((int)this), Info);
 	}
 
 	//Найти
@@ -112,7 +110,7 @@ public:
 		
 		if (table[h(key, i)].state == full)
 		{
-			Logger::log(CONTEXT(), "While serching in hash table " + to_string(i) + " tests was made", Info);
+			Logger::log(CONTEXT(), "HashTable : The number of tests in the search - " + to_string(i+1), Info);
 			return table[h(key, i)].data;
 		}
 		else
@@ -136,7 +134,7 @@ public:
 			i++;
 		}
 
-		Logger::log(CONTEXT(), "While insert in hash table " + to_string(i) + " tests was made", Info);
+		Logger::log(CONTEXT(), "HashTable : The number of tests in the insert - " + to_string(i+1), Info);
 
 		table[h(key, i)] = Cell(key, data);
 		freeCellCount--;
@@ -149,7 +147,7 @@ public:
 		while (table[h(key, i)].state == full && table[h(key, i)].key != key && table[h(key, i)].state != free)
 			i++;
 
-		Logger::log(CONTEXT(), "While remove from hash table " + to_string(i) + " tests was made", Info);
+		Logger::log(CONTEXT(), "HashTable : The number of tests in the remove - " + to_string(i+1), Info);
 
 		if (table[h(key, i)].state != free)
 		{

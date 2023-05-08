@@ -28,7 +28,6 @@ class TRbTreeTable
 	TRbTree<KeyValuePair<KeyType, DataType>> data;
 public:
 	//Найти
-	TRbTreeTable() { Logger::log(CONTEXT(), "Rb tree table was created successfully " + std::to_string((int)this), Info); }
 	DataType find(const KeyType& key)
 	{
 		KeyValuePair<KeyType, DataType> tmp = data.find(KeyValuePair<KeyType, DataType>(key, DataType()));

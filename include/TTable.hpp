@@ -4,26 +4,22 @@
 #include <iomanip>
 #include "Logger.hpp"
 
-unsigned int TTABLE_find_compare_count = 0;
-unsigned int TTABLE_delete_compare_count = 0;
-
 template<typename KeyType, typename DataType>
 class TTable
 {
 	std::vector<std::pair<KeyType, DataType>> table;
+	unsigned int compareCount = 1;
 public:
 	//Найти
-	TTable() {Logger::log(CONTEXT(), "Unsortes table was created successfully " + std::to_string((int)this), Info);}
-
 	DataType find(const KeyType& key)
 	{
 		for (auto iter = table.begin(); iter != table.end(); iter++)
 		{
-			TTABLE_find_compare_count++;
+			compareCount++;
 			if ((*iter).first == key)
 			{
-				Logger::log(CONTEXT(), "While serch in unsorted table " + to_string(TTABLE_find_compare_count) + " key compares was made", Info);
-				TTABLE_find_compare_count = 0;
+				Logger::log(CONTEXT(), "Table : The number of comparisons in the search - " + to_string(compareCount), Info);
+				compareCount = 1;
 				return DataType((*iter).second);
 			}
 		}
@@ -39,7 +35,7 @@ public:
 				throw std::invalid_argument("Such key olready exists in table");
 
 		table.push_back(std::make_pair(key, data));
-		Logger::log(CONTEXT(), "While append in unsorted table 1 push back was made", Info);
+		Logger::log(CONTEXT(), "Table : The number of operations in the insert - 1", Info);
 	}
 
 	//Удалить
@@ -48,7 +44,7 @@ public:
 		bool isRemoved = false;
 		for (int i = 0; i < table.size() && !isRemoved; i++)
 		{
-			TTABLE_delete_compare_count++;
+			compareCount++;
 			if (table[i].first == key)
 			{
 				table[i].first = table[table.size() - 1].first;
@@ -58,8 +54,8 @@ public:
 			}
 		}
 
-		Logger::log(CONTEXT(),"While removing from unsorted table " + to_string(TTABLE_delete_compare_count) + " compares was made", Info);
-		TTABLE_delete_compare_count = 0;
+		Logger::log(CONTEXT(), "Table : The number of comparisons in the remove - " + to_string(compareCount), Info);
+		compareCount = 1;
 	}
 
 	bool isEmpty() const { return table.size(); }

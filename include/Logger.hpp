@@ -43,10 +43,13 @@ public:
 		string fileName(context.file);
 		fileName = fileName.substr(fileName.find_last_of('\\') + 1, fileName.size() - 1);
 
+		string functionName(context.function);
+		functionName = functionName.substr(functionName.find_last_of(':') + 1, functionName.size() - 1);
+
 		if(logType == 0)
-			outStream << "[INFO] " <<"In file - \""<< fileName <<"\"" << " Function - \"" << context.function << "\"" <<endl << "\t[MESSAGE] " << msg << endl;
+			outStream << "[INFO] " << msg << endl;
 		else
-			outStream << "[EROR] " << "in file " << fileName << " function " << context.function << endl << "\t[MESSAGE] " << msg << endl;
+			outStream << "[EROR] " << msg << endl;
 
 		outStream.close();
 	}
