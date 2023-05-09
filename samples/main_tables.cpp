@@ -8,6 +8,7 @@
 #include "../include/AVL_Tree.h"
 #include "../include/hash-table.h"
 #include <windows.h>
+#define RED 4
 
 void run_insert(const std::string& com, non_sort_table<Polinoms>& A, Sorting_table<Polinoms>& B, HashTable<Polinoms>& C)
 {
@@ -175,11 +176,35 @@ void run_show(const std::string& com, non_sort_table<Polinoms>& A, Sorting_table
 			key += com[i];
 		}
 		std::cout << "Unsorting Table:" << std::endl;
-		A.show(A.Search(key));
+		if (A.Search(key).first == "0")
+		{
+			SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE), RED);
+			std::cout << "ERROR |";
+			SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE), WHITE);
+			std::cout << "This key not in table" << std::endl;
+		}
+		else
+			A.show(A.Search(key));
 		std::cout << "\nSort Table:" << std::endl;
-		B.show(B.Search(key));
+		if (B.Search(key) == nullptr)
+		{
+			SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE), RED);
+			std::cout << "ERROR |";
+			SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE), WHITE);
+			std::cout << "This key not in table" << std::endl;
+		}
+		else
+			B.show(B.Search(key));
 		std::cout << "\nHash Table:" << std::endl;
-		C.show(C.Search(key));
+		if (A.Search(key).first == "0")
+		{
+			SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE), RED);
+			std::cout << "ERROR |";
+			SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE), WHITE);
+			std::cout << "This key not in table" << std::endl;
+		}
+		else
+			C.show(C.Search(key));
 	}
 	else
 	{
@@ -227,7 +252,7 @@ int main()
 		system("cls");
 		std::string command;
 		std::cout << std::setw(60) << "3 TYPE TABLE WITH POLINOMS" << std::endl;
-		std::cout << "RULES: 1) dont use: space, name - ONLY letters and numbers \n2) Name is less than 21 characters" << std::endl;
+		std::cout << "RULES: 1) dont use: space, name - ONLY letters and numbers \n2) Name is less than 21 characters and name '0' cannot be used" << std::endl;
 		std::cout << "Enter your request using this commands:\n1.1) insert[name][polinom] - insert new polinom in table\n1.2) insert[new_name][[name]!operation![name]] - insert polinom as sum or multiplication\n1.3) insert[new_name][[name]!operation!!number!] - insert polinom as multiplication with number" << std::endl;
 		std::cout << "EXAMPLE:\ninsert[abc][123xyz]\ninsert[name][[abc]+[def]]\ninsert[name][[abc]*4]" << std::endl;
 		std::cout << "2) extract[name] - delete polinom in table" << std::endl;

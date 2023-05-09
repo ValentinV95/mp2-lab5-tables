@@ -39,33 +39,3 @@ TEST(class_sort_table, can_correct_insert_in_right_subtree)
 	EXPECT_TRUE(A.getRoot()->left->key == "b");
 	EXPECT_TRUE(A.getRoot()->left->value == Polinoms("45x^3"));
 }
-
-/*TEST(class_sort_table, can_balance_with_rotate)
-{
-	int a = 0;
-	Sorting_table<Polinoms> A;
-	A.insert("a", Polinoms("123xyz"), a);
-	A.insert("b", Polinoms("45x^3"), a);
-	A.insert("c", Polinoms("43y^2+4z"), a);
-	EXPECT_TRUE(A.getRoot()->key == "a");
-	EXPECT_TRUE(A.getRoot()->value == Polinoms("123xyz"));
-	EXPECT_TRUE(A.getRoot()->right->key == "c");
-	EXPECT_TRUE(A.getRoot()->right->value == Polinoms("45y^2+4z"));
-	EXPECT_TRUE(A.getRoot()->left->key == "a");//
-	EXPECT_TRUE(A.getRoot()->left->value == Polinoms("45x^3"));
-}
-
-TEST(class_sort_table, )
-{
-
-}
-
-TEST(class_sort_table, )
-{
-
-}
-
-TEST(class_sort_table, )
-{
-
-}*/

@@ -178,6 +178,8 @@ public:
 		if (root == nullptr)
 			return nullptr;
 		Node* a = root;
+		if (root == nullptr)
+			return a;
 		while (a->left != nullptr)
 			a = a->left;
 		return a;
@@ -211,6 +213,7 @@ public:
 		Node *tmp = root;
 		if (root == nullptr)
 		{
+			std::cout << 1;
 			log_count++;
 			root = new Node(key, data);
 		}
@@ -350,8 +353,10 @@ public:
 			if (curr_ptr->left == nullptr && curr_ptr->right == nullptr)
 			{
 				log_comparison++;
+				if (curr_ptr == root)
+					root = nullptr;
+
 				delete curr_ptr;
-				curr_ptr = nullptr;
 			}
 			else if (curr_ptr->left == nullptr || curr_ptr->right == nullptr)
 			{
@@ -378,6 +383,8 @@ public:
 				}
 
 				log_comparison++;
+				if (curr_ptr == root)
+					root = nullptr;
 
 				delete curr_ptr;
 			}
@@ -401,6 +408,9 @@ public:
 				minimum->left = child_l;
 				minimum->right = child_r;
 				log_comparison++;
+				if (curr_ptr == nullptr)
+					root = nullptr;
+
 				delete curr_ptr;
 			}
 			
