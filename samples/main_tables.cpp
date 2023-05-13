@@ -93,7 +93,7 @@ void run_insert(const std::string& com, non_sort_table<Polinoms>& A, Sorting_tab
 				else if (i < com.size() && com[i] >= '0' && com[i] <= '9')
 				{
 					std::string num;
-					while (i < com.size() && com[i] == ']')
+					while (i < com.size() && com[i] != ']')
 					{
 						num += com[i];
 						i++;
@@ -102,9 +102,10 @@ void run_insert(const std::string& com, non_sort_table<Polinoms>& A, Sorting_tab
 
 					if (id_op == '*')
 					{
-						A.Add(key, Polinoms(name_polinom1) * koef);
-						B.Add(key, Polinoms(name_polinom1) * koef);
-						C.Add(key, Polinoms(name_polinom1) * koef);
+						Polinoms new_polinom = A.Search(name_polinom1).second * koef;
+						A.Add(key, new_polinom);
+						B.Add(key, new_polinom);
+						C.Add(key, new_polinom);
 					}
 					else
 					{

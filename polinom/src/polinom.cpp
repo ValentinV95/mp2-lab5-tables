@@ -338,6 +338,9 @@ Polinoms Polinoms::operator+(const Polinoms& pln)
         pln_ptr = pln_ptr->pNext;
     }
 
+    if (res.GetHead() == nullptr)
+        return Polinoms("0");
+
     return res;
 }
 

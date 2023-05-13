@@ -52,7 +52,7 @@ public:
 		SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE), WHITE);
 		std::cout << " polinom ";
 		value.show();
-		std::cout << " with name '" << key << "' added in sort table" << std::endl;
+		std::cout << " with name '" << key << "' added in unsorting table" << std::endl;
 		SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE), GREEN);
 		std::cout << "LOG | COMPLEXITY:";
 		SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE), WHITE);

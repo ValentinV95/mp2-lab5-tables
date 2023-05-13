@@ -213,7 +213,6 @@ public:
 		Node *tmp = root;
 		if (root == nullptr)
 		{
-			std::cout << 1;
 			log_count++;
 			root = new Node(key, data);
 		}
