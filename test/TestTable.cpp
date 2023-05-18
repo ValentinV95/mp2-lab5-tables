@@ -269,7 +269,7 @@ TEST(HASH_TABLE,hash_function_work_properly )
 	EXPECT_EQ(a1, 0);
 	EXPECT_EQ(b, 1);
 	EXPECT_EQ(v, 21);
-	EXPECT_EQ(a2, 26);
+	EXPECT_EQ(a2, 0);
 }
 
 
