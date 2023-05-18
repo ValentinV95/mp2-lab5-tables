@@ -65,7 +65,6 @@ public:
 	{
 		int i = h(tmp);
 		numbers=0;
-		numbers++;
 		for (int count = 0; count < 99; count++)
 		{
 			numbers++;

@@ -253,3 +253,105 @@ TEST(FUNCTIONS, degree_in_range_0_99)
 	B.push(1, 99);
 	EXPECT_ANY_THROW(A = A * B;);
 }
+
+//================================================[ Hash-Table ]===============================================================================
+
+
+TEST(HASH_TABLE,hash_function_work_properly )
+{
+	int a1 = h("a");     //a=97   0
+	int b = h("b");		//b=98   1
+	int v = h("v");		//v=118  21
+	int a2 = h("a");		//a=97   26
+
+
+
+	EXPECT_EQ(a1, 0);
+	EXPECT_EQ(b, 1);
+	EXPECT_EQ(v, 21);
+	EXPECT_EQ(a2, 26);
+}
+
+
+TEST(HASH_TABLE, insert_and_find_work_properly)
+{
+	Hash<polinom> H;
+	polinom pol;
+
+	H.insert("a1", pol);
+	H.insert("b", pol);
+	H.insert("v", pol);
+	H.insert("a2", pol);
+
+	EXPECT_EQ(H.find("a1"), 0);
+	EXPECT_EQ(H.find("b"), 1);
+	EXPECT_EQ(H.find("v"), 21);
+	EXPECT_EQ(H.find("a2"), 26);
+}
+
+
+
+TEST(HASH_TABLE, polinom_deletion_work_properly)
+{
+	Hash<polinom> H;
+	polinom pol;
+
+	H.insert("a1", pol);
+	H.insert("b", pol);
+	H.insert("v", pol);
+	H.insert("a2", pol);
+
+
+	H.vec[H.find("a1")].first = "no!";
+
+	H.vec[H.find("b")].first = "no!";
+
+	H.vec[H.find("v")].first = "no!";
+
+	H.vec[H.find("a2")].first = "no!";
+
+
+	EXPECT_EQ(H.find("a1"), -1);
+	EXPECT_EQ(H.find("b"), -1);
+	EXPECT_EQ(H.find("v"), -1);
+	EXPECT_EQ(H.find("a2"), -1);
+
+
+
+}
+
+
+TEST(HASH_TABLE, number_of_collision_work_properly)
+{
+
+	Hash<polinom> H;
+	polinom pol;
+
+	int start = all_collision;
+	
+	H.insert("a1", pol);
+	H.insert("a2", pol);
+	H.insert("a3", pol);
+	H.insert("a4", pol);
+
+	int end = all_collision;
+
+	start = end - start;
+
+	all_collision = all_collision - 6;
+
+	EXPECT_EQ(start, 6);
+
+	
+
+
+}
+
+
+
+
+
+
+
+
+
