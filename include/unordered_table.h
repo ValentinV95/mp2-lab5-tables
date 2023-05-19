@@ -23,11 +23,21 @@ public:
 
 	unordered_table()
 	{
-		vec = nullptr;
 		size = 0;
 	}
 
-	void set_size(int tmp) { size = tmp; }
+	void set_size(int tmp_size)
+	{
+		size = tmp_size; 
+		vec = new pair<string, T>[size];
+		T tmp;
+		for (int i = 0; i < size; i++)
+		{
+			vec[i].first = "no!";
+			vec[i].second = tmp; //полином по умолчанию 0
+		}
+
+	}
 
 	unordered_table(int tmp_size)
 	{
