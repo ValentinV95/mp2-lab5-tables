@@ -1519,138 +1519,69 @@ void ALL_IN_ONE()
 	cout << "Чтобы сэкономить время пользователю, а также для более эфективных исследований в таблицах уже есть некоторые полиномы:" << endl << endl;
 
 	
-	
-	cout << "Ключ:  n                Полином:   14                                " << endl;
+
+	cout << "Ключ:  a                Полином:   1                                 " << endl;
+	cout << "Ключ:  b                Полином:   2                                 " << endl;
 	cout << "Ключ:  c                Полином:   3                                 " << endl;
-	cout << "Ключ:  m                Полином:   13                                " << endl;
+	cout << "Ключ:  d                Полином:   4                                 " << endl;
+	cout << "Ключ:  e                Полином:   5                                 " << endl;
+	cout << "Ключ:  f                Полином:   6                                 " << endl;
 	cout << "Ключ:  g                Полином:   7                                 " << endl;
 	cout << "Ключ:  h                Полином:   8                                 " << endl;
-	cout << "Ключ:  o                Полином:   15                                " << endl;
-	cout << "Ключ:  j                Полином:   10                                " << endl;
-	cout << "Ключ:  d                Полином:   4                                 " << endl;
-	cout << "Ключ:  l                Полином:   12                                " << endl;
-	cout << "Ключ:  b                Полином:   2                                 " << endl;
-	cout << "Ключ:  e                Полином:   5                                 " << endl;
+	cout << "Ключ:  i                Полином:   9                                 " << endl;	
+	cout << "Ключ:  j                Полином:   10                                " << endl;	
 	cout << "Ключ:  k                Полином:   11                                " << endl;
-	cout << "Ключ:  a                Полином:   1                                 " << endl;
-	cout << "Ключ:  f                Полином:   6                                 " << endl;
-	cout << "Ключ:  i                Полином:   9                                 " << endl;
+	cout << "Ключ:  l                Полином:   12                                " << endl;
+	cout << "Ключ:  m                Полином:   13                                " << endl;
+	cout << "Ключ:  n                Полином:   14                                " << endl;
+	cout << "Ключ:  o                Полином:   15                                " << endl;
+	
+	
+	
 	
 	unordered_table<polinom> UN_all(50);
 	R_B_Tree<polinom> RB_all;
 	Hash<polinom> H_all;
-	polinom t;
 
 
 //==========================
 
 //==========================
 
-	t.push(14, 0);
-	RB_all.insert("n", t);
-	H_all.insert("n", t);
-	UN_all.insert("n", t);
-	t.clear();
+	polinom t[15];
+	string b;
+	char* a = new char[2];
+	a[0] = 'a';
+	a[1] = '\0';
+	for (int violla = 0; violla < 15; violla++)
+	{
+		t[violla].push(violla+1, 0);
+		b = string(a);
 
-	t.push(3, 0);
-	RB_all.insert("c", t);
-	H_all.insert("c", t);
-	UN_all.insert("c", t);
-	t.clear();
+		RB_all.insert(b, t[violla]);
+		H_all.insert(b, t[violla]);
+		UN_all.insert(b, t[violla]);
+		a[0]++;
+	}
 
-	t.push(13, 0);
-	RB_all.insert("m", t);
-	H_all.insert("m", t);
-	UN_all.insert("m", t);
-	t.clear();
+	
 
-	t.push(7, 0);
-	RB_all.insert("g", t);
-	H_all.insert("g", t);
-	UN_all.insert("g", t);
-	t.clear();
-
-	t.push(8, 0);
-	RB_all.insert("h", t);
-	H_all.insert("h", t);
-	UN_all.insert("h", t);
-	t.clear();
-
-	t.push(15, 0);
-	RB_all.insert("o", t);
-	H_all.insert("o", t);
-	UN_all.insert("o", t);
-	t.clear();
-
-	t.push(10, 0);
-	RB_all.insert("j", t);
-	H_all.insert("j", t);
-	UN_all.insert("j", t);
-	t.clear();
-
-	t.push(4, 0);
-	RB_all.insert("d", t);
-	H_all.insert("d", t);
-	UN_all.insert("d", t);
-	t.clear();
-
-	t.push(12, 0);
-	RB_all.insert("l", t);
-	H_all.insert("l", t);
-	UN_all.insert("l", t);
-	t.clear();
-
-	t.push(2, 0);
-	RB_all.insert("b", t);
-	H_all.insert("b", t);
-	UN_all.insert("b", t);
-	t.clear();
-
-	t.push(5, 0);
-	RB_all.insert("e", t);
-	H_all.insert("e", t);
-	UN_all.insert("e", t);
-	t.clear();
-
-	t.push(11, 0);
-	RB_all.insert("k", t);
-	H_all.insert("k", t);
-	UN_all.insert("k", t);
-	t.clear();
-
-	t.push(1, 0);
-	RB_all.insert("a", t);
-	H_all.insert("a", t);
-	UN_all.insert("a", t);
-	t.clear();
-
-	t.push(6, 0);
-	RB_all.insert("f", t);
-	H_all.insert("f", t);
-	UN_all.insert("f", t);
-	t.clear();
-
-	t.push(9, 0);
-	RB_all.insert("i", t);
-	H_all.insert("i", t);
-	UN_all.insert("i", t);
-	t.clear();
-
+	
 
 //==========================
 
 //==========================
 
-	cout << endl << endl << "Для проведения чистого эксперимента. При вводе не будет проверки, существует ли данный полином." << endl;
-	cout << "Если хотите узнать разницу, используйте вариант(2).Поэтому пожалуйста вводите правильно ключи" << endl << endl;
+	
 	while (true)
 	{
+		cout << endl << endl << endl;
 		cout<<endl<<endl << "  __Меню__" << endl;
 		cout << "1) Ввод элемента" << endl;
 		cout << "2) Поиск элемента" << endl;
 		cout << "3)Удаление элемента" << endl;
 
-		cout << endl << "4) Показать шаблоны (не вся таблица)" << endl;
+		cout << endl << "4) Показать таблицу с полиномами " << endl;
 
 		cout << endl << "0) Выход";
 		int choice = -1;
@@ -1667,32 +1598,19 @@ void ALL_IN_ONE()
 
 		if (choice == 1)
 		{
-			cout << endl << "Ввод полинома:" << endl << endl;
-
-			cout << "Введите количество мономов в полиноме:  ";
-			int n = amount_of_monoms();
-
-			polinom A = create_polinom(n);
-
-			cout << endl << endl;
-			show_polinom(A);
-
-			cout << endl << endl;
-
-			cout << " Придумайте свой уникальный ключ для данного полинома (первый символ - латинская маленькая буква). ";
-			cout << endl << " Ввод ключа: ";
-			string tmp;
-			cin >> tmp;
-
-
-			RB_all.insert(tmp, A);
-			H_all.insert(tmp, A);
-			UN_all.insert(tmp, A);
-			A.clear();
+			UN_all.input();
+			
+			string cur_key= UN_all.secret_info;
+			polinom cur_pol;
+			
+			cur_pol = UN_all.vec[UN_all.find(cur_key)].second;
+				
+			RB_all.insert(cur_key, cur_pol);
+			H_all.insert(cur_key, cur_pol);
 
 			cout << endl << endl<<" Логгирование: "<<endl;
 			cout <<endl<< " Неупорядоченный массив:  " << UN_all.get_numbers();
-			cout << endl << " Хэш-Таблица:  " << H_all.get_numbers();
+			cout << endl << " Хэш-Таблица (кол-во коллизий):  " << H_all.get_numbers();
 			cout << endl << " Красно чёрное дерево:  " << RB_all.get_numbers();
 		}
 
@@ -1711,7 +1629,7 @@ void ALL_IN_ONE()
 			cout << "2)Поменять ключ" << endl << endl << "Выбор: ";
 			int nnn;
 			cin >> nnn;
-			if (nnn = 1)break;
+			if (nnn == 1)break;
 			}
 
 			RB_all.find(main_key);
@@ -1752,94 +1670,10 @@ void ALL_IN_ONE()
 			cout << endl << " Красно чёрное дерево:  " << RB_all.get_numbers();
 		}
 
-
-
 		if (choice == 4)
 		{
-			if (RB_all.find("n"))
-			{
-				cout << "Ключ:  n                Полином:   14                                " << endl;
-
-			}
-			if (RB_all.find("c"))
-			{
-				cout << "Ключ:  c                Полином:   3                                 " << endl;
-
-			}
-			if (RB_all.find("m"))
-			{
-				cout << "Ключ:  m                Полином:   13                                " << endl;
-
-			}
-			if (RB_all.find("g"))
-			{
-				cout << "Ключ:  g                Полином:   7                                 " << endl;
-
-			}
-			if (RB_all.find("h"))
-			{
-				cout << "Ключ:  h                Полином:   8                                 " << endl;
-			}
-			if (RB_all.find("o"))
-			{
-				cout << "Ключ:  o                Полином:   15                                " << endl;
-
-			}
-			if (RB_all.find("j"))
-			{
-				
-				cout << "Ключ:  j                Полином:   10                                " << endl;
-				
-			}
-			if (RB_all.find("d"))
-			{
-				cout << "Ключ:  d                Полином:   4                                 " << endl;
-				
-			}
-			if (RB_all.find("l"))
-			{
-				cout << "Ключ:  l                Полином:   12                                " << endl;
-				
-			}
-			if (RB_all.find("b"))
-			{
-				cout << "Ключ:  b                Полином:   2                                 " << endl;
-				
-			}
-			if (RB_all.find("e"))
-			{
-				cout << "Ключ:  e                Полином:   5                                 " << endl;
-				
-			}
-			if (RB_all.find("k"))
-			{
-				cout << "Ключ:  k                Полином:   11                                " << endl;
-				
-			}
-			if (RB_all.find("a"))
-			{
-				cout << "Ключ:  a                Полином:   1                                 " << endl;
-				
-			}
-			if (RB_all.find("f"))
-			{
-				cout << "Ключ:  f                Полином:   6                                 " << endl;
-				
-			}
-			if (RB_all.find("i"))
-			{
-				cout << "Ключ:  i                Полином:   9                                 " << endl;
-			}
-
+			UN_all.show();
 		}
-
-
-
-
-
-
-
-
 
 	}
 

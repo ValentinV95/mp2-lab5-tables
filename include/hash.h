@@ -159,33 +159,35 @@ public:
 		i = h(tmp_key);
 
 		numbers=0;
-		numbers++;
-
 		while (true)
 		{
-			numbers++;
+			
 			if (vec[i].first != "no!")
 			{
+				numbers++;
 				all_collision++;
 				i = (i + 26) % 99;  // %99 т.к. массив из 99 элементов 
 				numbers++;
 				if (i == h(tmp_key))
 				{
+					numbers++;
 					cout << endl << "   [!] Внимание [!]" << endl << " Ваш ключ не подходит (мест нет). К сожалению ваш ключ либо вылетает из таблицы либо вы заменяете значение полинома в уже записанном ключе" << endl << endl;
 					cout << " 1) Не заменять " << endl;
 					cout << " 2) Заменить" << endl << endl << endl << endl;
 					cout << " Выбор: ";
 					int choice = 0;
 					cin >> choice;
-					numbers++;
+					
 					if (choice == 1)
 					{
+						numbers++;
 						end_collision++;
 						break;
 					}
-					numbers++;
+					
 					if (choice == 2)
 					{
+						numbers++;
 						cout << endl << endl << "Вам будет предоставлена таблица. Запомните нужный вам ключ.";
 						show();
 						cout << endl << endl << "Введите ключ, чтобы заменить полином. Если передумали, то введите 'no!'." << endl << endl << " Ключ: ";
@@ -201,14 +203,15 @@ public:
 
 
 						int k = find(old_key);
-						numbers++;
+						
 						if (k >= 0)
 						{
 							vec[k].second = tmp_T;
 						}
-						numbers++;
+						
 						if (k == -1)
 						{
+							numbers++;
 							cout << endl << endl << "Ключ не нашёлся" << endl << endl;
 						}
 

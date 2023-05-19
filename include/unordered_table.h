@@ -12,7 +12,7 @@ public:
 	int size;
 
 	int numbers;
-
+	string secret_info;
 
 	int get_numbers()
 	{
@@ -48,7 +48,6 @@ public:
 	int find(string tmp)
 	{
 		numbers = 0;
-		numbers++;
 		for (int count = 0; count < size; count++)
 		{
 			numbers++;
@@ -107,14 +106,13 @@ public:
 	{
 		int i;
 		numbers=0;
-		numbers++;
+
 		for (i = 0; i < size; i++)
 		{
 			numbers++;
 			if (vec[i].first == "no!") break;
 
 		}
-		numbers++;
 		if (i == size)
 		{
 			int vibor;
@@ -191,15 +189,9 @@ public:
 				vec[find(tmp_str2)].second = pol;
 				vec[find(tmp_str2)].first = "no!";
 
-
-
-
 				break;
 			}
 		}
-
-
-
 	}
 
 
@@ -243,7 +235,7 @@ public:
 			iter = find(tmp);
 			if (iter == -1)
 			{
-
+				secret_info = tmp;
 				insert(tmp, A);
 				break;
 			}

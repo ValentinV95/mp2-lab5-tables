@@ -54,14 +54,14 @@ public:
 		Node* find(string tmp_key)
 		{
 			numbers = 0;
-			numbers++;
 			if (Root == nil) 
 			{
+				numbers++;
 				return nullptr;
 			}
 
 			Node* t = Root;
-			numbers++;
+
 			while (t != nil)
 			{
 				numbers++;
@@ -90,7 +90,7 @@ public:
 		}
 		else
 		{
-			numbers++;
+
 			if (Parent == Parent->parent->left)
 			{
 				Parent->parent->left = t;
@@ -100,7 +100,6 @@ public:
 		
 		Parent->right = t->left;
 
-		numbers++;
 		if (t->left)
 		{
 			t->left->parent = Parent;
@@ -124,7 +123,6 @@ public:
 		}
 		else 
 		{
-			numbers++;
 			if (Parent == Parent->parent->left)
 			{
 				Parent->parent->left = t;
@@ -133,7 +131,7 @@ public:
 		}
 
 		Parent->left = t->right;                     //не перепутать ('-'  )
-		numbers++;
+
 		if (t->right)
 		{
 			t->right->parent = Parent;
@@ -147,16 +145,6 @@ public:
 
 
 	
-
-
-	
-
-
-
-
-
-
-
 ////////////////////////////////////////////////////////////////[ INSERT ]////////////////////////////////////////////////////
 	
 	void input()
@@ -198,44 +186,29 @@ public:
 
 			cout << endl << endl << "Создан элемент: " << endl << "Ключ: " << bad << endl;
 			show_polinom(A);
-
 		}
-
-
-
 	}
 	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
+
+
 	void insert(string tmp_key, T tmp_data)
 	{
 		numbers = 0;
-		numbers++;
+		
 		if (Root == nil)
 		{
+			numbers++;
 			Root = new Node{ 'b',tmp_data, tmp_key,  nil, nil, nullptr };
 			return;
 		}
 		else
 		{
 			Node* t = Root;
-			numbers++;
 			while (t)
 			{
 				numbers++;
 				if (t->key > tmp_key)
 				{
-					numbers++;
 					if (t->left == nil)
 					{
 						t->left = new Node{ 'r',tmp_data, tmp_key,  nil, nil, t };
@@ -244,9 +217,8 @@ public:
 					}
 					else t = t->left;
 				}
-				else if(++numbers && t->key < tmp_key)
+				else if( t->key < tmp_key)
 				{
-					numbers++;
 					if (t->right == nil)
 					{
 						t->right = new Node{ 'r', tmp_data,tmp_key,  nil, nil, t };
@@ -279,27 +251,29 @@ public:
 		Node* Grandfather = nullptr;
 		Node* Uncle = nullptr;
 
-		numbers++;
+		
 		if (t == Root)
 		{
+			numbers++;
 			t->colour = 'b';
 			return;
 		}
-		numbers++;
+
 		while (t != Root && t->colour == 'r' && t->parent->colour == 'r')
 		{
+			numbers++;
 			Parent = t->parent;
 			Grandfather = Parent->parent;
 
 
-			numbers++;
 			if (Parent == Grandfather->left) //   ( <-- )
 			{
 				Uncle = Grandfather->right;
 
-				numbers++;
+				
 				if (Uncle->colour == 'r')
 				{
+					numbers++;
 					Parent->colour = 'b';
 					Grandfather->colour= 'r';
 					Uncle->colour = 'b';
@@ -307,7 +281,6 @@ public:
 				}
 				else 
 				{
-					numbers++;
 					if (t == Parent->right)
 					{
 						rotateLeft(t);
@@ -315,6 +288,7 @@ public:
 						Parent = t->parent;
 						Grandfather = Parent->parent;
 					}
+					numbers++;
 					Parent->colour = 'b';
 					Grandfather->colour = 'r';
 					rotateRight(Parent);
@@ -324,9 +298,10 @@ public:
 			{
 				Uncle = Grandfather->left;
 
-				numbers++;
+				
 				if (Uncle->colour == 'r') 
 				{
+					numbers++;
 					Parent->colour = 'b';
 					Grandfather->colour = 'r';
 					Uncle->colour = 'b';
@@ -334,7 +309,7 @@ public:
 				}
 				else 
 				{
-					numbers++;
+					
 					if (t == Parent->left)
 					{
 						rotateRight(t);
@@ -342,6 +317,7 @@ public:
 						Parent = t->parent;
 						Grandfather = Parent->parent;
 					}
+					numbers++;
 					Parent->colour = 'b';
 					Grandfather->colour = 'r';
 					rotateLeft(Parent);
@@ -350,10 +326,6 @@ public:
 		}
 		Root->colour= 'b';
 	}
-//--------------[ Insert - end ]-------------------
-
-
-
 
 
 
@@ -605,8 +577,6 @@ public:
 		}
 		Root->colour = 'b';
 	}
-//--------------[ Remove - end ]-------------------
-
 	
 
 

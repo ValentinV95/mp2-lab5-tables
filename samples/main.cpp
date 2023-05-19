@@ -9,7 +9,7 @@ int main()
 
 
 
-/*
+	/*
 
 
 	//                      Зона тестов Красно-чёрного дерева (Снять коментарий)
@@ -53,30 +53,28 @@ int main()
 	A.insert("y", 50);
 	A.insert("z", 50);
 	*/
-
-
 	/*
-
+	A.remove("a");
+	A.remove("b");
+	A.remove("c");
 	A.remove("d");         //   <--- Удаление элемента из дерева
 
 	//        left->       right->   ->left->right->right
 	cout << endl << endl;
 	
-	cout << "Parent:  key = " << A.Root->key << "      colour = " << A.show_colour(A.Root->colour) << endl;
+	cout << "Parent:  key = " << A.Root->right->right->key << "      colour = " << A.show_colour(A.Root->right->right->colour) << endl;
 	cout << endl << endl;
-	cout << "key = a    colour = " << A.show_colour(A.find("a")->colour) <<"       "; show_polinom(A.find("a")->data);
+	cout << "key = j    colour = " << A.show_colour(A.find("j")->colour) <<"       "; show_polinom(A.find("j")->data);
 
+	system("pause");
 
-
-*/
+	*/
 
 
 
 
 	try
 	{
-
-
 
 		unordered_table<polinom> UN;
 		R_B_Tree<polinom> RB;
@@ -98,19 +96,9 @@ int main()
 
 			system("cls");
 
-
-
-
-
-
-
 			if (faith == 1) //неупорядоченная таблица
 			{
-
 				int size;
-
-
-
 				while (true)
 				{
 					cout << endl << endl << "Введите размер таблицы (изменить его потом уже будет нельзя)" << endl << endl;
@@ -137,40 +125,26 @@ int main()
 				UNORDERED_TABLE(UN);
 			}
 
-
-
-
 			if (faith == 2) // Красно - чёрное Дерево
 			{
 				RED_BLACK_TREE(RB);
 			}
-
-
 
 			if (faith == 3) //Хэш-таблица
 			{
 				HASH_TABLE(H);
 			}
 
-
 			if (faith == 4) //Логгирование
 			{
 				ALL_IN_ONE();
 			}
 
-
-
-
-
-
-
 			if (faith == 0) break;
 		}
-
-
-
-
 	}
+
+
 	catch (const exception error)
 	{
 		cout << endl << endl << "  <!> ОШИБКА <!>" << endl << " > " << error.what() << endl;

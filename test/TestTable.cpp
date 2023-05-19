@@ -262,7 +262,7 @@ TEST(HASH_TABLE,hash_function_work_properly )
 	int a1 = h("a");     //a=97   0
 	int b = h("b");		//b=98   1
 	int v = h("v");		//v=118  21
-	int a2 = h("a");		//a=97   26
+	int a2 = h("a");	//a=97   0
 
 
 
@@ -272,6 +272,19 @@ TEST(HASH_TABLE,hash_function_work_properly )
 	EXPECT_EQ(a2, 0);
 }
 
+TEST(HASH_TABLE, constructor_work_properly)
+{
+
+	polinom e;
+	Hash<polinom> H;
+
+	for (int i = 0; i < 99; i++)
+	{
+		EXPECT_EQ(H.vec[i].first, "no!");
+		EXPECT_EQ(H.vec[i].second, e);
+	}
+
+}
 
 TEST(HASH_TABLE, insert_and_find_work_properly)
 {
@@ -291,7 +304,7 @@ TEST(HASH_TABLE, insert_and_find_work_properly)
 
 
 
-TEST(HASH_TABLE, polinom_deletion_work_properly)
+TEST(HASH_TABLE, polinom_delete_work_properly)
 {
 	Hash<polinom> H;
 	polinom pol;
@@ -342,16 +355,355 @@ TEST(HASH_TABLE, number_of_collision_work_properly)
 
 	EXPECT_EQ(start, 6);
 
-	
+}
+
+
+
+//================================================[ Unordered-Table ]===============================================================================
+
+TEST(UNORDERED_TABLE, empty_constructor_work_properly)
+{
+
+	unordered_table<polinom> U;
+
+	EXPECT_EQ(U.vec, nullptr);
+	EXPECT_EQ(U.size, 0);
+}
+
+
+TEST(UNORDERED_TABLE, constructor_with_size_work_properly)
+{
+
+	unordered_table<polinom> U(14);
+	EXPECT_EQ(U.size, 14);
+
+	polinom a;
+	for (int i = 0; i < U.size; i++)
+	{
+		EXPECT_EQ(U.vec[i].first, "no!");
+		EXPECT_EQ(U.vec[i].second, a);
+	}
+
+}
+
+TEST(UNORDERED_TABLE, set_size_work_properly)
+{
+	unordered_table<polinom> U;
+	EXPECT_EQ(U.size, 0);
+
+	U.set_size(27);
+
+	EXPECT_EQ(U.size, 27);
+}
+
+TEST(UNORDERED_TABLE, insert_work_properly)
+{
+	unordered_table<polinom> U(5);
+	polinom a;
+
+	a.push(12.43, 123422);  // a= 12.43 x^12 y^34 z^22
+
+	U.insert("a", a);
+	U.insert("b", a);
+	U.insert("c", a);
+
+	EXPECT_EQ(U.vec[0].first,"a");
+	EXPECT_EQ(U.vec[0].second, a);
+
+	EXPECT_EQ(U.vec[1].first, "b");
+	EXPECT_EQ(U.vec[1].second, a);
+
+	EXPECT_EQ(U.vec[2].first, "c");
+	EXPECT_EQ(U.vec[2].second, a);
+
+}
+
+
+TEST(UNORDERED_TABLE, find_work_properly)
+{
+	unordered_table<polinom> U(5);
+	polinom a;
+
+	a.push(12.43, 123422);  // a= 12.43 x^12 y^34 z^22
+
+	U.insert("a", a);
+	U.insert("b", a);
+	U.insert("c", a);
+
+
+	int f_b = U.find("b");
+	int f_v = U.find("v");
+
+	EXPECT_EQ(f_b, 1);
+	EXPECT_EQ(f_v, -1);
+
+	EXPECT_EQ(U.vec[f_b].first, "b");
+	EXPECT_EQ(U.vec[f_b].second, a);
+}
+
+TEST(UNORDERED_TABLE, polinom_delete_work_properly)
+{
+	unordered_table<polinom> U(5);
+	polinom a;
+
+	a.push(12.43, 123422);  // a= 12.43 x^12 y^34 z^22
+
+	U.insert("a", a);
+	U.insert("b", a);
+	U.insert("c", a);
+
+	EXPECT_EQ(U.vec[2].first, "c");
+	EXPECT_EQ(U.vec[2].second, a);
+
+	polinom pol;
+
+	U.vec[U.find("c")].second = pol;
+	U.vec[U.find("c")].first = "no!";
+
+	EXPECT_EQ(U.find("c"), -1);
+	EXPECT_EQ(U.vec[2].first, "no!");
+	EXPECT_EQ(U.vec[2].second, pol);
+
+}
+
+TEST(UNORDERED_TABLE, logger_work_properly)
+{
+	unordered_table<polinom> U(5);
+	polinom a;
+
+	U.insert("a", a);
+	EXPECT_EQ(U.get_numbers(), 1);
+	U.find("a");
+	EXPECT_EQ(U.get_numbers(), 1);
+
+	U.insert("b", a);
+
+	U.insert("c", a);
+	EXPECT_EQ(U.get_numbers(), 3);
+	U.find("c");
+	EXPECT_EQ(U.get_numbers(), 3);
+
+}
+
+//================================================[ Red_Black-Table ]===============================================================================
+
+
+TEST(RED_BLACK_TREE, no_colour_exception)
+{
+	R_B_Tree<polinom> T;	
+	EXPECT_ANY_THROW(T.show_colour('a'););
+	EXPECT_ANY_THROW(T.show_colour('h'););
+	EXPECT_ANY_THROW(T.show_colour('q'););
+	EXPECT_ANY_THROW(T.show_colour('3'););
+	EXPECT_ANY_THROW(T.show_colour('%'););
+
+}
+
+TEST(RED_BLACK_TREE, empty_constructor_work_properly)
+{
+	R_B_Tree<polinom> T;
+
+	EXPECT_EQ(T.Root, T.nil);
+	EXPECT_EQ(T.Root->colour, 'b');
+	EXPECT_EQ(T.nil->colour, 'b');
+	EXPECT_EQ(T.Root->right, nullptr);
+	EXPECT_EQ(T.nil->left, nullptr);
+	EXPECT_EQ(T.nil->parent, nullptr);
+}
+
+TEST(RED_BLACK_TREE, Root_allways_black)
+{
+	R_B_Tree<polinom> T;
+	EXPECT_EQ(T.Root, T.nil);
+
+	polinom pol;
+	T.insert("a", pol);
+	EXPECT_FALSE(T.Root == T.nil);   // Root поменялся
+	EXPECT_EQ(T.Root->colour, 'b');  // но остался чёрным
+}
+
+TEST(RED_BLACK_TREE, elements_get_right_colour)
+{
+	R_B_Tree<polinom> T;
+	polinom pol; 
+
+	EXPECT_EQ(T.Root->colour, 'b');
+
+	T.insert("a", pol);
+	EXPECT_EQ(T.Root->colour, 'b');
+
+	T.insert("b", pol);
+	T.insert("c", pol);
+
+	EXPECT_EQ(T.Root->colour, 'b');
+	EXPECT_EQ(T.Root->right->colour, 'r');
+	EXPECT_EQ(T.Root->left->colour, 'r');
+
+	T.insert("d", pol);
+	EXPECT_EQ(T.Root->colour, 'b');
+	EXPECT_EQ(T.Root->right->colour, 'b');
+	EXPECT_EQ(T.Root->left->colour, 'b');
+}
+
+TEST(RED_BLACK_TREE, Big_check_insert_example)
+{
+	R_B_Tree<polinom> T;
+	polinom pol;
+
+	T.insert("a", pol);
+	T.insert("b", pol);
+	T.insert("c", pol);
+	T.insert("d", pol);
+	T.insert("e", pol);
+	T.insert("f", pol);
+	T.insert("g", pol);
+	T.insert("h", pol);
+	T.insert("i", pol);
+	T.insert("j", pol);
+	T.insert("k", pol);
+
+
+	EXPECT_EQ(T.Root->colour, 'b');
+	EXPECT_EQ(T.Root->key, "d");
+
+//------- Left subtree --------
+
+	EXPECT_EQ(T.Root->left->colour, 'b');
+	EXPECT_EQ(T.Root->left->key, "b");
+
+	EXPECT_EQ(T.Root->left->left->colour, 'b');
+	EXPECT_EQ(T.Root->left->left->key, "a");
+
+	EXPECT_EQ(T.Root->left->right->colour, 'b');
+	EXPECT_EQ(T.Root->left->right->key, "c");
+
+	//------- Right subtree --------
+
+	EXPECT_EQ(T.Root->right->colour, 'b');
+	EXPECT_EQ(T.Root->right->key, "f");
+
+	EXPECT_EQ(T.Root->right->left->colour, 'b');
+	EXPECT_EQ(T.Root->right->left->key, "e");
+
+	EXPECT_EQ(T.Root->right->right->colour, 'r');
+	EXPECT_EQ(T.Root->right->right->key, "h");
+
+	EXPECT_EQ(T.Root->right->right->left->colour, 'b');
+	EXPECT_EQ(T.Root->right->right->left->key, "g");
+
+	EXPECT_EQ(T.Root->right->right->right->colour, 'b');
+	EXPECT_EQ(T.Root->right->right->right->key, "j");
+
+	EXPECT_EQ(T.Root->right->right->right->left->colour, 'r');
+	EXPECT_EQ(T.Root->right->right->right->left->key, "i");
+
+	EXPECT_EQ(T.Root->right->right->right->right->colour, 'r');
+	EXPECT_EQ(T.Root->right->right->right->right->key, "k");
 
 
 }
 
 
 
+TEST(RED_BLACK_TREE, Big_check_remove_example)
+{
+	R_B_Tree<polinom> A;
+	polinom POL;
+
+	A.insert("a", POL);
+	A.insert("b", POL);
+	A.insert("c", POL);
+	A.insert("d", POL);
+
+	A.insert("e", POL);
+	A.insert("f", POL);
+	A.insert("g", POL);
+	A.insert("h", POL);
+	A.insert("i", POL);
+	A.insert("j", POL);
+	A.insert("k", POL);
+
+	A.remove("a");
+	A.remove("b");
+	A.remove("c");
+	A.remove("d");
 
 
+	EXPECT_EQ(A.Root->colour, 'b');
+	EXPECT_EQ(A.Root->key, "f");
+
+	EXPECT_EQ(A.Root->left->colour, 'b');
+	EXPECT_EQ(A.Root->left->key, "e");
+
+	EXPECT_EQ(A.Root->right->colour, 'r');
+	EXPECT_EQ(A.Root->right->key, "h");
+
+	EXPECT_EQ(A.Root->right->left->colour, 'b');
+	EXPECT_EQ(A.Root->right->left->key, "g");
+
+	EXPECT_EQ(A.Root->right->right->colour, 'b');
+	EXPECT_EQ(A.Root->right->right->key, "j");
+
+	EXPECT_EQ(A.Root->right->right->left->colour, 'r');
+	EXPECT_EQ(A.Root->right->right->left->key, "i");
+
+	EXPECT_EQ(A.Root->right->right->right->colour, 'r');
+	EXPECT_EQ(A.Root->right->right->right->key, "k");
 
 
+}
+
+TEST(RED_BLACK_TREE, find_work_properly)
+{
+	R_B_Tree<polinom> A;
+	polinom POL;
+
+	A.insert("a", POL);
+	A.insert("b", POL);
+	A.insert("c", POL);
+	A.insert("d", POL);
+	A.insert("e", POL);
+	A.insert("f", POL);
+	A.insert("g", POL);
+	A.insert("h", POL);
+	A.insert("i", POL);
+	A.insert("j", POL);
+	A.insert("k", POL);
 
 
+	EXPECT_EQ(A.find("g")->colour, 'b');
+	EXPECT_EQ(A.find("h")->colour, 'r');
+	EXPECT_EQ(A.find("a")->colour, 'b');
+	EXPECT_EQ(A.find("i")->colour, 'r');
+	EXPECT_EQ(A.find("j")->colour, 'b');
+
+
+}
+
+
+TEST(RED_BLACK_TREE, logger_work_properly)
+{
+	R_B_Tree<polinom> A;
+	polinom POL;
+
+	A.insert("a", POL);
+	A.insert("b", POL);
+	A.insert("c", POL);
+	A.insert("d", POL);
+	A.insert("e", POL);
+	A.insert("f", POL);
+	A.insert("g", POL);
+	A.insert("h", POL);
+	A.insert("i", POL);
+	A.insert("j", POL);
+	A.insert("k", POL);
+
+	A.find("g");
+	EXPECT_EQ(A.get_numbers(), 3);
+
+	A.find("a");
+	EXPECT_EQ(A.get_numbers(), 2);
+
+	A.find("i");
+	EXPECT_EQ(A.get_numbers(), 4);
+}
