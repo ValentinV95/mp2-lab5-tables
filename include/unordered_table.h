@@ -15,8 +15,7 @@ public:
 	string secret_info;
 
 	int get_numbers()
-	{
-		vec = nullptr;
+	{	
 		return numbers;
 	}
 
@@ -24,6 +23,7 @@ public:
 
 	unordered_table()
 	{
+		vec = nullptr;
 		size = 0;
 	}
 
