@@ -16,6 +16,7 @@ public:
 
 	int get_numbers()
 	{
+		vec = nullptr;
 		return numbers;
 	}
 
