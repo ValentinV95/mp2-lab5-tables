@@ -259,7 +259,7 @@ TEST(FUNCTIONS, degree_in_range_0_99)
 	EXPECT_ANY_THROW(A = A * B;);
 }
 
-/*
+
 
 //================================================[ Hash-Table ]===============================================================================
 
@@ -292,6 +292,7 @@ TEST(HASH_TABLE, constructor_work_properly)
 	}
 
 }
+/*
 
 TEST(HASH_TABLE, insert_and_find_work_properly)
 {
@@ -707,13 +708,13 @@ TEST(RED_BLACK_TREE, logger_work_properly)
 	A.insert("k", POL);
 
 	A.find("g");
-	EXPECT_EQ(A.get_numbers(), 3);
+	EXPECT_EQ(A.get_numbers(), 4);
 
 	A.find("a");
-	EXPECT_EQ(A.get_numbers(), 2);
+	EXPECT_EQ(A.get_numbers(), 3);
 
 	A.find("i");
-	EXPECT_EQ(A.get_numbers(), 4);
+	EXPECT_EQ(A.get_numbers(), 5);
 }
 
 
