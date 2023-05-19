@@ -364,7 +364,7 @@ TEST(HASH_TABLE, number_of_collision_work_properly)
 
 }
 
-*/
+
 
 //================================================[ Unordered-Table ]===============================================================================
 
@@ -491,8 +491,8 @@ TEST(UNORDERED_TABLE, logger_work_properly)
 	EXPECT_EQ(U.get_numbers(), 3);
 
 }
+*/
 
-/*
 //================================================[ Red_Black-Table ]===============================================================================
 
 
@@ -717,4 +717,3 @@ TEST(RED_BLACK_TREE, logger_work_properly)
 }
 
 
-*/
