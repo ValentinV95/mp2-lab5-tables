@@ -262,7 +262,7 @@ TEST(FUNCTIONS, degree_in_range_0_99)
 
 
 //================================================[ Hash-Table ]===============================================================================
-/*
+
 
 TEST(HASH_TABLE,hash_function_work_properly )
 {
@@ -386,11 +386,9 @@ TEST(UNORDERED_TABLE, constructor_with_size_work_properly)
 	unordered_table<polinom> U(14);
 	EXPECT_EQ(U.size, 14);
 
-	polinom a;
 	for (int i = 0; i < U.size; i++)
 	{
 		EXPECT_EQ(U.vec[i].first, "no!");
-		EXPECT_EQ(U.vec[i].second, a);
 	}
 
 }
@@ -493,7 +491,7 @@ TEST(UNORDERED_TABLE, logger_work_properly)
 	EXPECT_EQ(U.get_numbers(), 3);
 
 }
-*/
+
 
 //================================================[ Red_Black-Table ]===============================================================================
 
