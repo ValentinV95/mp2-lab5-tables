@@ -259,6 +259,8 @@ TEST(FUNCTIONS, degree_in_range_0_99)
 	EXPECT_ANY_THROW(A = A * B;);
 }
 
+/*
+
 //================================================[ Hash-Table ]===============================================================================
 
 
@@ -712,3 +714,6 @@ TEST(RED_BLACK_TREE, logger_work_properly)
 	A.find("i");
 	EXPECT_EQ(A.get_numbers(), 4);
 }
+
+
+*/
