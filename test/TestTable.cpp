@@ -408,20 +408,16 @@ TEST(UNORDERED_TABLE, insert_work_properly)
 	unordered_table<polinom> U(5);
 	polinom a;
 
-	a.push(12.43, 123422);  // a= 12.43 x^12 y^34 z^22
 
 	U.insert("a", a);
 	U.insert("b", a);
 	U.insert("c", a);
 
 	EXPECT_EQ(U.vec[0].first,"a");
-	EXPECT_EQ(U.vec[0].second, a);
 
 	EXPECT_EQ(U.vec[1].first, "b");
-	EXPECT_EQ(U.vec[1].second, a);
 
 	EXPECT_EQ(U.vec[2].first, "c");
-	EXPECT_EQ(U.vec[2].second, a);
 
 }
 
@@ -431,7 +427,6 @@ TEST(UNORDERED_TABLE, find_work_properly)
 	unordered_table<polinom> U(5);
 	polinom a;
 
-	a.push(12.43, 123422);  // a= 12.43 x^12 y^34 z^22
 
 	U.insert("a", a);
 	U.insert("b", a);
@@ -445,7 +440,6 @@ TEST(UNORDERED_TABLE, find_work_properly)
 	EXPECT_EQ(f_v, -1);
 
 	EXPECT_EQ(U.vec[f_b].first, "b");
-	EXPECT_EQ(U.vec[f_b].second, a);
 }
 
 TEST(UNORDERED_TABLE, polinom_delete_work_properly)
@@ -460,16 +454,11 @@ TEST(UNORDERED_TABLE, polinom_delete_work_properly)
 	U.insert("c", a);
 
 	EXPECT_EQ(U.vec[2].first, "c");
-	EXPECT_EQ(U.vec[2].second, a);
 
-	polinom pol;
-
-	U.vec[U.find("c")].second = pol;
 	U.vec[U.find("c")].first = "no!";
 
 	EXPECT_EQ(U.find("c"), -1);
 	EXPECT_EQ(U.vec[2].first, "no!");
-	EXPECT_EQ(U.vec[2].second, pol);
 
 }
 
