@@ -22,6 +22,8 @@ public:
 
 	polinom operator*(const double& var);
 
+	bool operator ==(const polinom& second)const noexcept;
 
+	bool operator !=(const polinom& second)const noexcept;
 
 };

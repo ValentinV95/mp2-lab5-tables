@@ -78,7 +78,7 @@
       <Optimization>Disabled</Optimization>
       <SDLCheck>true</SDLCheck>
       <ConformanceMode>true</ConformanceMode>
-      <DisableSpecificWarnings>STL4002 ; C4996</DisableSpecificWarnings>
+      <DisableSpecificWarnings>4002 ; 4996</DisableSpecificWarnings>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>

@@ -180,3 +180,24 @@ void polinom::clear()
 	}
 	head = nullptr;
 }
+
+
+
+bool polinom::operator ==(const polinom& second) const noexcept
+{
+	auto m_it_1 = head, m_it_2 = second.head;
+	while (m_it_1 != nullptr && m_it_2 != nullptr)
+	{
+		if (m_it_1->data != m_it_2->data || m_it_1->xyz != m_it_2->xyz)
+		{
+			return false;
+		}
+	}
+	if (m_it_1 != nullptr) return false;
+	else if (m_it_2 != nullptr) return false;
+	return true;
+}
+bool polinom::operator!=(const polinom& second) const noexcept
+{
+	return !(*this == second);
+}
