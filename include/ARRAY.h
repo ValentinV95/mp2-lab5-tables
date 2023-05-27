@@ -16,7 +16,24 @@ public:
 	void push(pair<int, T> A)
 	{
 		ARRAY_push_vector++;
-		mas.push_back(A);
+		pair<int, T> I;
+		if (search(A.first).first != -1)
+		{
+			for (int i = 0; i < mas.size(); i++)
+			{
+				I = mas[i];
+				ARRAY_equesions +=2;
+				if (I.first == A.first)
+				{
+					I.second = A.second;
+					mas[i] = I;
+				}
+			}
+		}
+		else
+		{
+			mas.push_back(A);
+		}
 	}
 	pair<int, T> search(int key)
 	{
@@ -47,7 +64,8 @@ public:
 			ARRAY_equesions++;
 			if (I.first == key)
 			{
-				for (int j = i+1; j < mas.size(); j++)
+				ARRAY_equesions++;
+				for (int j = i+1; j < mas.size(); j++, ARRAY_equesions++)
 				{
 					tmp = mas[j - 1];
 					mas[j - 1] = mas[j];

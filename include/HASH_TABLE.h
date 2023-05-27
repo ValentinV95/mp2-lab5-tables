@@ -45,8 +45,7 @@ public:
 		real_size++;
 		if (real_size > size)
 		{
-			cout << "Table if full, dont push anymore!";
-			return;
+			throw out_of_range("Table if full, dont push anymore!");
 		}
 		int key = A.first;
 		int i = 0;
