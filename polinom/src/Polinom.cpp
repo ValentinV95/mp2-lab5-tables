@@ -140,7 +140,7 @@ Polinom Polinom::operator*(Polinom second)
 	for (auto it1 = head; it1 != nullptr; it1 = it1->next)
 		for (auto it2 = second.head; it2 != nullptr; it2 = it2->next)
 		{
-			if (it1->xyz + it2->xyz > 1000 || it1->xyz % 100 + it2->xyz % 100 > 100 || it1->xyz % 10 + it2->xyz % 10 > 10) throw invalid_argument("Over limit of stepen");
+			if (it1->xyz + it2->xyz >= 1000 || it1->xyz % 100 + it2->xyz % 100 >= 100 || it1->xyz % 10 + it2->xyz % 10 >= 10) throw invalid_argument("Over limit of stepen");
 			A.push(it1->k * it2->k, it1->xyz + it2->xyz);
 		}
 	return A;

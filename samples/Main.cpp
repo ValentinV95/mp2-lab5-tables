@@ -117,7 +117,13 @@ int main()
 				else A = zero;
 				if (Array.search(aht).first >= 0) B = Array.search(aht).second;
 				else B = zero;
-				A = A * B;
+				try {
+					A = A * B;
+				}
+				catch (std::exception e)
+				{
+					cout << e.what() << endl;
+				}
 				cout << "Array return: ";
 				A << cout << endl;
 
@@ -125,7 +131,13 @@ int main()
 				else A = zero;
 				if (Table.search(aht).first >= 0) B = Table.search(aht).second;
 				else B = zero;
-				A = A * B;
+				try {
+					A = A * B;
+				}
+				catch (std::exception e)
+				{
+					cout << e.what() << endl;
+				}
 				cout << "Table return: ";
 				A << cout << endl;
 
@@ -133,7 +145,13 @@ int main()
 				else A = zero;
 				if (Tree.search(aht)) B = Tree.search(aht)->data.second;
 				else B = zero;
-				A = A * B;
+				try {
+					A = A * B;
+				}
+				catch (std::exception e)
+				{
+					cout << e.what() << endl;
+				}
 				cout << "Table return: ";
 				A << cout << endl;
 				show_log();
